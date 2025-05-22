@@ -1,5 +1,25 @@
 {
+    "global": {
+        "login": "Connexion",
+        "logout": "Déconnexion",
+        "signup": "Inscription",
+        "play": "Jouer",
+        "leaderboard": "Classement"
+    },
+
+    "footer": {
+        "sloggan": "Le jeu où chaque époque a sa manette"
+    },
+
     "home": {
-        "title": "bonjour"
+        "title": "Bienvenue sur PixelTime",
+        "description": "De Pong à Elden Ring… Revivez l’histoire du jeu vidéo et prouvez que vous êtes incollable sur les époques !",
+        "guest": "Continuer en tant qu'invité",
+        "more": "En savoir plus",
+        "originalTheme": "Thème original",
+        "gameModes": "Modes de jeu",
+        "iconicGames": "Jeux emblématiques",
+        "howItWorks": "PixelTime, comment ça marche ?",
+        "howItWorksDescription": "Plonge dans l’univers vidéoludique et remonte le temps ! À chaque partie, tu reçois une série de cartes représentant des jeux vidéo cultes. Ton objectif ? Les replacer dans l’ordre chronologique sur une frise du temps. À chaque bonne réponse, tu gagnes 10 points. Mais attention : une erreur te coûte 5 points et la carte est retirée. Tu devras alors en piocher une nouvelle.  Trois modes de jeu sont disponibles pour varier les défis : 🕹️ Classique : joue sans pression, à ton rythme ❤️ Avec vies : trois erreurs, et c’est fini ⏱️ Chrono : chaque carte doit être placée en quelques secondes ! Accumule les points, débloque de nouveaux niveaux, et grimpe dans le classement des meilleurs joueurs."
     }
 }
