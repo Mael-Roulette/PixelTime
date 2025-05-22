@@ -1,5 +1,116 @@
 {
+    "global": {
+        "login": "Conexión",
+        "logout": "Desconexión",
+        "signup": "Registro",
+        "play": "Jugar",
+        "leaderboard": "Clasificación",
+        "backHome": "Volver a casa",
+        "classicMode": "Modo classico",
+        "livesMode": "Modo supervivencia",
+        "chronoMode": "Modo chrono"
+    },
+
+    "footer": {
+        "sloggan": "El juego donde cada era tiene su controlador",
+        "navigation": "navigación",
+        "home": "Casa",
+        "myAccount": "Mi cuenta",
+        "contact": "Contacto",
+        "legal": "Avisos legales",
+        "privacy": "Política de privacidad"
+    },
+
     "home": {
-        "title": "Bienvenido en PixelTime"
+        "title": "Bienvenido en PixelTime",
+        "description": "Desde Pong hasta Elden Ring… ¡Revive la historia de los videojuegos y demuestra que lo sabes todo sobre las épocas!",
+        "guest": "Continuar como invitado",
+        "more": "Más información",
+        "originalTheme": "Tema original",
+        "gameModes": "Modos de juego",
+        "iconicGames": "Juegos icónicos",
+        "howItWorks": "PixelTime ¿cómo funciona?",
+        "howItWorksDescription": "¡Sumérgete en el mundo de los videojuegos y viaja en el tiempo! En cada partida, recibirás una serie de cartas que representan videojuegos de culto. ¿Tu objetivo? Colocarlas en orden cronológico en una línea de tiempo. Por cada respuesta correcta, ganas 10 puntos. Pero ten cuidado: un error te cuesta 5 puntos y la carta se elimina. Luego, tendrás que robar una nueva. Hay tres modos de juego disponibles para variar los desafíos: 🕹️ Clásico: juega sin presión, a tu propio ritmo. ❤️ Con vidas: tres errores… ¡y se acaba la partida! ⏱️ Cronometrado: ¡tienes solo unos segundos para colocar cada carta! Acumula puntos, desbloquea nuevos niveles y asciende en el ranking de los mejores jugadores."
+    },
+
+    "signup": {
+        "title": "Crear mi cuenta",
+        "password": "Contraseña",
+        "confirmPassword": "Confirmar contraseña",
+        "fieldsRequired": "Campos obligatorios",
+        "continue": "Continuar",
+        "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+        "login": "Acceso"
+    },
+
+    "login": {
+        "title": "Iniciar sesión",
+        "password": "Contraseña",
+        "continue": "Continuar",
+        "noAccount": "¿Aún no tienes una cuenta?",
+        "signup": "Registrarse"
+    },
+
+    "forgotPassword": {
+        "title": "¿Olvidaste tu contraseña?",
+        "resetPassword": "Restablecer contraseña",
+        "notForgotPassword": "¿Cometiste un error?",
+        "login": "Iniciar sesión"
+    },
+
+    "newPassword": {
+        "title": "Nouveau mot de passe",
+        "password": "Mot de passe",
+        "confirmPassword": "Confirmer le mot de passe",
+        "resetPassword": "Réinitialiser le mot de passe",
+        "fieldsRequired": "Champs obligatoires"
+    },
+
+    "gameChoice": {
+        "title": "Choisissez votre mode de jeu",
+        "description": "Sélectionnez un jeu pour commencer à jouer.",
+        "play": "Jouer",
+        "cancel": "Annuler",
+        "classicModeDescription": "Un mode sans pression : 15 cartes à replacer dans l’ordre, avec un temps et des vies illimités. Chaque carte bien placée vaut +10 points, chaque erreur retire –5 points.",
+        "livesModeDescription": "Tu as 3 vies pour replacer 15 cartes. Le temps est illimité, mais chaque erreur te coûte une vie. Une bonne réponse vaut +10 points, une erreur –5 points. Ton score final est multiplié par x1.5.",
+        "chronoModeDescription": "15 cartes, 5 secondes par carte, 5 vies. Chaque bonne réponse donne +10 points, chaque erreur retire –5 points et une vie. À la fin, ton score est multiplié par x2. Rapide, intense et stratégique !",
+        "trainingWithCatalog": "Entraînez-vous avec le catalogue"
+    },
+
+    "game": {
+        "score": "Score",
+        "time": "Temps",
+        "lives": "Vies",
+        "quit": "Quitter la partie",
+        "previous": "Précédent",
+        "addCard": "Ajouter la carte",
+        "next": "Suivant"
+    },
+
+    "profile": {
+        "stats": "Statistiques",
+        "totalScore": "Score total",
+        "level": "Niveau",
+        "money": "Argent",
+        "pins": "Badges",
+        "levelReach": "Vous avez atteint le niveau {{level}} !"
+    },
+
+    "cardsCatalog": {
+        "title": "Catalogue des cartes",
+        "descriptionPC": "Survolez la carte pour afficher les informations",
+        "descriptionMobile": "Touchez la carte pour afficher les informations"
+    },
+
+    "leaderboard": {
+        "title": "Classement",
+        "general": "Classement général",
+        "level": "Classement par niveau"
+    },
+
+    "page404": {
+        "title": "Erreur 404",
+        "description": "La page que vous cherchez semble avoir été égarée dans le temps.",
+        "backHome": "Retour à la bonne époque"
     }
 }
