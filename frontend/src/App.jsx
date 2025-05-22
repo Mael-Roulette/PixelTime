@@ -3,6 +3,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import { api } from "./services/api";
+import { useTransition } from "react-i18next";
 
 function App() {
 	const [count, setCount] = useState(0);
@@ -20,6 +21,8 @@ function App() {
 			setLoading(false);
 		}
 	};
+
+	const { t, i18n } = useTransition();
 
 	return (
 		<>
@@ -45,6 +48,12 @@ function App() {
 						{loading ? "Testing..." : "Test API Connection"}
 					</button>
 					{apiMessage && <p>API response: {apiMessage}</p>}
+				</div>
+				<div>
+					<p>{t("welcome")}</p>
+					<button onClick={() => i18n.changeLanguage("fr")}>Français</button>
+					<button onClick={() => i18n.changeLanguage("en")}>English</button>
+					<button onClick={() => i18n.changeLanguage("es")}>Español</button>
 				</div>
 			</div>
 			<p className='read-the-docs'>
