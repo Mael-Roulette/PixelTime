@@ -3,7 +3,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import { api } from "./services/api";
-import { useTransition } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 function App() {
 	const [count, setCount] = useState(0);
@@ -22,7 +22,7 @@ function App() {
 		}
 	};
 
-	const { t, i18n } = useTransition();
+	const { t, i18n } = useTranslation();
 
 	return (
 		<>
@@ -50,7 +50,7 @@ function App() {
 					{apiMessage && <p>API response: {apiMessage}</p>}
 				</div>
 				<div>
-					<p>{t("welcome")}</p>
+					<p>{t("home.title")}</p>
 					<button onClick={() => i18n.changeLanguage("fr")}>Français</button>
 					<button onClick={() => i18n.changeLanguage("en")}>English</button>
 					<button onClick={() => i18n.changeLanguage("es")}>Español</button>

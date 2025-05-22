@@ -1,3 +1,5 @@
 {
-    "welcome": "Welcome"
+    "home": {
+        "title": "Welcome"
+    }
 }

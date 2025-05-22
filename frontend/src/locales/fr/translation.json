@@ -1,3 +1,5 @@
 {
-    "welcome": "Bienvenue"
+    "home": {
+        "title": "bonjour"
+    }
 }
