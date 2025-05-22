@@ -7,25 +7,26 @@ import translationEN from "./locales/en/translation.json";
 import translationES from "./locales/es/translation.json";
 
 i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-    .init({
+    .use( LanguageDetector )
+    .use( initReactI18next )
+    .init( {
         resources: {
-        fr: {
-            translation: translationFR,
+            fr: {
+                translation: translationFR,
+            },
+            en: {
+                translation: translationEN,
+            },
+            es: {
+                translation: translationES,
+            },
         },
-        en: {
-            translation: translationEN,
-        },
-        es: {
-            translation: translationES,
-        },
-        },
+        lng: "fr",
         fallbackLng: "fr",
         debug: false,
         interpolation: {
-        escapeValue: false, // React already does escaping
+            escapeValue: false, // React already does escaping
         },
-    });
+    } );
 
 export default i18n;
