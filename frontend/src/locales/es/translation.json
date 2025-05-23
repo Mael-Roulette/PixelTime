@@ -59,58 +59,58 @@
     },
 
     "newPassword": {
-        "title": "Nouveau mot de passe",
-        "password": "Mot de passe",
-        "confirmPassword": "Confirmer le mot de passe",
-        "resetPassword": "Réinitialiser le mot de passe",
-        "fieldsRequired": "Champs obligatoires"
+        "title": "Nueva contraseña",
+        "password": "Contraseña",
+        "confirmPassword": "Confirmar contraseña",
+        "resetPassword": "Restablecer contraseña",
+        "fieldsRequired": "Campos obligatorios"
     },
 
     "gameChoice": {
-        "title": "Choisissez votre mode de jeu",
-        "description": "Sélectionnez un jeu pour commencer à jouer.",
-        "play": "Jouer",
-        "cancel": "Annuler",
-        "classicModeDescription": "Un mode sans pression : 15 cartes à replacer dans l’ordre, avec un temps et des vies illimités. Chaque carte bien placée vaut +10 points, chaque erreur retire –5 points.",
-        "livesModeDescription": "Tu as 3 vies pour replacer 15 cartes. Le temps est illimité, mais chaque erreur te coûte une vie. Une bonne réponse vaut +10 points, une erreur –5 points. Ton score final est multiplié par x1.5.",
-        "chronoModeDescription": "15 cartes, 5 secondes par carte, 5 vies. Chaque bonne réponse donne +10 points, chaque erreur retire –5 points et une vie. À la fin, ton score est multiplié par x2. Rapide, intense et stratégique !",
-        "trainingWithCatalog": "Entraînez-vous avec le catalogue"
+        "title": "Elige tu modo de juego",
+        "description": "Selecciona un juego para comenzar a jugar.",
+        "play": "Jugar",
+        "cancel": "Cancelar",
+        "classicModeDescription": "Un modo sin presión: 15 cartas para ordenar, con tiempo y vidas ilimitados. Cada carta colocada correctamente vale +10 puntos, cada error resta -5 puntos.",
+        "livesModeDescription": "Tienes 3 vidas para reemplazar 15 cartas. El tiempo es ilimitado, pero cada error te cuesta una vida. Una respuesta correcta vale +10 puntos, un error -5 puntos. Tu puntuación final se multiplicará por x1,5.",
+        "chronoModeDescription": "15 cartas, 5 segundos por carta, 5 vidas. Cada respuesta correcta otorga +10 puntos, cada error quita -5 puntos y una vida. Al final, tu puntuación se multiplica por x2. ¡Rápido, intenso y estratégico!",
+        "trainingWithCatalog": "Practica con el catálogo"
     },
 
     "game": {
-        "score": "Score",
-        "time": "Temps",
-        "lives": "Vies",
-        "quit": "Quitter la partie",
-        "previous": "Précédent",
-        "addCard": "Ajouter la carte",
-        "next": "Suivant"
+        "score": "Puntaje",
+        "time": "Tiempo",
+        "lives": "Vidas",
+        "leave": "Abandonar el juego",
+        "previous": "Anterior",
+        "addCard": "Añadir la tarjeta",
+        "next": "Siguiente"
     },
 
     "profile": {
-        "stats": "Statistiques",
-        "totalScore": "Score total",
-        "level": "Niveau",
-        "money": "Argent",
-        "pins": "Badges",
-        "levelReach": "Vous avez atteint le niveau {{level}} !"
+        "stats": "Estadísticas",
+        "totalScore": "Puntuación total",
+        "level": "Nivel",
+        "money": "Dinero",
+        "badges": "Insignias",
+        "levelReach": "Has alcanzado el nivel {{level}} !"
     },
 
     "cardsCatalog": {
-        "title": "Catalogue des cartes",
-        "descriptionPC": "Survolez la carte pour afficher les informations",
-        "descriptionMobile": "Touchez la carte pour afficher les informations"
+        "title": "Catálogo de tarjetas",
+        "descriptionPC": "Pase el cursor sobre el mapa para ver la información",
+        "descriptionMobile": "Toca el mapa para ver la información"
     },
 
     "leaderboard": {
-        "title": "Classement",
-        "general": "Classement général",
-        "level": "Classement par niveau"
+        "title": "Clasificación",
+        "general": "Clasificación general",
+        "level": "Clasificación por nivel"
     },
 
     "page404": {
-        "title": "Erreur 404",
-        "description": "La page que vous cherchez semble avoir été égarée dans le temps.",
-        "backHome": "Retour à la bonne époque"
+        "title": "Error 404",
+        "description": "La página que estás buscando parece haberse perdido en el tiempo.",
+        "backHome": "De vuelta a los buenos tiempos"
     }
 }
