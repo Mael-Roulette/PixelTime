@@ -81,7 +81,7 @@
         "score": "Puntaje",
         "time": "Tiempo",
         "lives": "Vidas",
-        "quit": "Abandonar el juego",
+        "leave": "Abandonar el juego",
         "previous": "Anterior",
         "addCard": "Añadir la tarjeta",
         "next": "Siguiente"
@@ -92,25 +92,25 @@
         "totalScore": "Puntuación total",
         "level": "Nivel",
         "money": "Dinero",
-        "pins": "Insignias",
-        "levelReach": "Vous avez atteint le niveau {{level}} !"
+        "badges": "Insignias",
+        "levelReach": "Has alcanzado el nivel {{level}} !"
     },
 
     "cardsCatalog": {
-        "title": "Catalogue des cartes",
-        "descriptionPC": "Survolez la carte pour afficher les informations",
-        "descriptionMobile": "Touchez la carte pour afficher les informations"
+        "title": "Catálogo de tarjetas",
+        "descriptionPC": "Pase el cursor sobre el mapa para ver la información",
+        "descriptionMobile": "Toca el mapa para ver la información"
     },
 
     "leaderboard": {
-        "title": "Classement",
-        "general": "Classement général",
-        "level": "Classement par niveau"
+        "title": "Clasificación",
+        "general": "Clasificación general",
+        "level": "Clasificación por nivel"
     },
 
     "page404": {
-        "title": "Erreur 404",
-        "description": "La page que vous cherchez semble avoir été égarée dans le temps.",
-        "backHome": "Retour à la bonne époque"
+        "title": "Error 404",
+        "description": "La página que estás buscando parece haberse perdido en el tiempo.",
+        "backHome": "De vuelta a los buenos tiempos"
     }
 }

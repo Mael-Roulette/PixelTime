@@ -81,7 +81,7 @@
         "score": "Score",
         "time": "Temps",
         "lives": "Vies",
-        "quit": "Quitter la partie",
+        "leave": "Quitter la partie",
         "previous": "Précédent",
         "addCard": "Ajouter la carte",
         "next": "Suivant"
@@ -92,7 +92,7 @@
         "totalScore": "Score total",
         "level": "Niveau",
         "money": "Argent",
-        "pins": "Badges",
+        "badges": "Badges",
         "levelReach": "Vous avez atteint le niveau {{level}} !"
     },
 

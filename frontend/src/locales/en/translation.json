@@ -1,5 +1,116 @@
 {
+    "global": {
+        "login": "Log in",
+        "logout": "Log out",
+        "signup": "Signup",
+        "play": "Play",
+        "leaderboard": "Leaderboard",
+        "backHome": "Back to home",
+        "classicMode": "Classic mode",
+        "livesMode": "Survival mode",
+        "chronoMode": "Chrono mode"
+    },
+
+    "footer": {
+        "sloggan": "The game where each era has its controller",
+        "navigation": "Navigation",
+        "home": "Home",
+        "myAccount": "My account",
+        "contact": "Contact",
+        "legal": "Legal notices",
+        "privacy": "Privacy Policy"
+    },
+
     "home": {
-        "title": "Welcome to PixelTime"
+        "title": "Welcome to PixelTime",
+        "description": "From Pong to Elden Ring… Relive the history of video games and prove that you know everything about the eras!",
+        "guest": "Continue as guest",
+        "more": "Learn more",
+        "originalTheme": "Original theme",
+        "gameModes": "Game modes",
+        "iconicGames": "Iconic games",
+        "howItWorks": "PixelTime, how does it work?",
+        "howItWorksDescription": "Dive into the world of video games and go back in time! Each game gives you a series of cards representing iconic video games. Your goal? Place them in chronological order on a timeline. For each correct answer, you earn 10 points. But be careful: a mistake costs you 5 points and the card is removed. You'll then have to draw a new one. Three game modes are available to vary the challenges: 🕹️ Classic: play without pressure, at your own pace ❤️ With lives: three mistakes, and it's over ⏱️ Timed: each card must be placed in a few seconds! Accumulate points, unlock new levels, and climb the rankings of the best players."
+    },
+
+    "signup": {
+        "title": "Create my account",
+        "password": "Password",
+        "confirmPassword": "Confirm password",
+        "fieldsRequired": "Required fields",
+        "continue": "Continue",
+        "alreadyHaveAccount": "Already have an account?",
+        "login": "Log in"
+    },
+
+    "login": {
+        "title": "Log in",
+        "password": "Password",
+        "continue": "Continue",
+        "noAccount": "Don't have an account yet?",
+        "signup": "Register"
+    },
+
+    "forgotPassword": {
+        "title": "Forgot password?",
+        "resetPassword": "Reset password",
+        "notForgotPassword": "Make a mistake?",
+        "login": "Log in"
+    },
+
+    "newPassword": {
+        "title": "New password",
+        "password": "Password",
+        "confirmPassword": "Confirm password",
+        "resetPassword": "Reset password",
+        "fieldsRequired": "Required fields"
+    },
+
+    "gameChoice": {
+        "title": "Choose your game mode",
+        "description": "Select a game to start playing.",
+        "play": "Play",
+        "cancel": "Cancel",
+        "classicModeDescription": "A pressure-free mode: 15 cards to rearrange in order, with unlimited time and lives. Each correctly placed card is worth +10 points, and each error deducts -5 points.",
+        "livesModeDescription": "You have 3 lives to replace 15 cards. Time is unlimited, but each mistake costs you a life. A correct answer is worth +10 points, a mistake –5 points. Your final score is multiplied by 1.5.",
+        "chronoModeDescription": "15 cards, 5 seconds per card, 5 lives. Each correct answer earns +10 points, each error deducts -5 points and a life. At the end, your score is multiplied by x2. Fast, intense, and strategic!",
+        "trainingWithCatalog": "Practice with the catalog"
+    },
+
+    "game": {
+        "score": "Score",
+        "time": "Time",
+        "lives": "Lives",
+        "leave": "Leave the game",
+        "previous": "Previous",
+        "addCard": "Add the card",
+        "next": "Next"
+    },
+
+    "profile": {
+        "stats": "Statistics",
+        "totalScore": "Total score",
+        "level": "Level",
+        "money": "Money",
+        "badges": "Badges",
+        "levelReach": "Vous avez atteint le niveau {{level}} !"
+    },
+
+    "cardsCatalog": {
+        "title": "Card catalog",
+        "descriptionPC": "Hover over the card to view information",
+        "descriptionMobile": "Touch the card to view information"
+    },
+
+    "leaderboard": {
+        "title": "Leaderboard",
+        "general": "General ranking",
+        "level": "Ranking by level"
+    },
+
+    "page404": {
+        "title": "Error 404",
+        "description": "The page you are looking for appears to have been lost in time.",
+        "backHome": "Back to the good old days"
     }
 }
