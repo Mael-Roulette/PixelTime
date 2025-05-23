@@ -106,7 +106,7 @@ class ApiController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/cards/{id}', name: 'get_card', methods: ['GET'])]
-    public function getCard(int $id): JsonResponse
+    public function getCardById(int $id): JsonResponse
     {
         $card = $this->entityManager->getRepository(Card::class)->find($id);
 
@@ -155,7 +155,7 @@ class ApiController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/levels/{id}', name: 'get_level', methods: ['GET'])]
-    public function getLevel(int $id): JsonResponse
+    public function getLevelById(int $id): JsonResponse
     {
         $level = $this->entityManager->getRepository(Level::class)->find($id);
 

@@ -1,0 +1,241 @@
+@use "../abstracts" as *;
+
+/* -------------------------------------------------- */
+/* ---------- Style du header ---------- */
+/* -------------------------------------------------- */
+
+.header {
+	position: sticky;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 10;
+
+	/* ----- Navbar ----- */
+	&-navbar {
+		display: flex;
+		justify-content: space-between;
+		align-items: stretch;
+		position: relative;
+		background-color: $white;
+
+		&-wrapper {
+			background-color: $white;
+			width: 100%;
+			position: relative;
+			z-index: 5;
+			top: 0;
+			left: 0;
+			box-shadow: 0 2px 5px rgba($color: $black, $alpha: 0.3);
+		}
+
+		&-logo {
+			margin-right: 2rem;
+			display: flex;
+			align-items: center;
+			text-transform: uppercase;
+			color: $blue;
+			font-weight: $fbold;
+		}
+	}
+
+	/* ----- Menu ----- */
+	&-menu {
+		width: calc(100% - 2rem);
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		list-style: none;
+
+		&-wrapper {
+			background-color: $white;
+			width: 100%;
+			height: 100vh;
+			padding: 9rem 0 10rem;
+			position: fixed;
+			z-index: 6;
+			top: 0;
+			left: 100%;
+			transition: $transition;
+			overflow-y: auto;
+
+			&.opened {
+				left: 0;
+			}
+		}
+
+		a {
+			transition: $transition;
+
+			&:hover {
+				opacity: .75;
+			}
+		}
+
+		.menu-item {
+			> a {
+				color: $black;
+				text-transform: uppercase;
+				font-weight: $fbold;
+				font-size: 1.4rem;
+
+				&:hover {
+					color: $blue;
+				}
+			}
+
+			.sub-menu {
+				list-style: none;
+				padding: 1rem 0 0 2rem;
+				margin: 0;
+	
+				> li {
+					+ li {
+						margin-top: 1rem;
+					}
+				}
+		}
+
+		}
+	}
+
+	/* ----- Burger icon ----- */
+	&-toggle {
+		color: $black;
+		background-color: transparent;
+		height: 3rem;
+		width: 3rem;
+		padding: 2.5rem 0;
+		border: none;
+		border-radius: 0;
+		display: block;
+		align-self: center;
+		position: relative;
+		z-index: 7;
+		overflow: hidden;
+		cursor: pointer;
+
+		&-bars {
+			background-color: currentColor;
+			width: 3rem;
+			height: 3px;
+			position: absolute;
+			top: 50%;
+			left: 0;
+			transform: translateY(-50%);
+			transition: $transition;
+			border-radius: 50px;
+
+			&::before,
+			&::after {
+				content: "";
+				background-color: currentColor;
+				width: 3rem;
+				height: 3px;
+				position: absolute;
+				left: 0;
+				transition: $transition;
+				border-radius: 50px;
+			}
+
+			&::before {
+				top: 0;
+				transform: translateY(-1rem);
+			}
+
+			&::after {
+				top: 0;
+				transform: translateY(1rem);
+			}
+		}
+
+		&.opened {
+			.header-toggle-bars {
+				background-color: transparent;
+
+				&::before {
+					transform: rotate(45deg);
+				}
+
+				&::after {
+					transform: rotate(-45deg);
+				}
+			}
+		}
+	}
+}
+
+/* -------------------------------------------------- */
+/* ---------- Responsive ---------- */
+
+@include responsive("lg") {
+	.header {
+		&-navbar {
+			justify-content: center;
+
+			&-logo {
+				display: none;
+			}
+		}
+		
+		&-toggle {
+			display: none;
+		}
+
+		/* ----- Menu ----- */
+		&-menu {
+			width: auto;
+			max-width: none;
+			height: 100%;
+			margin: 0;
+			flex-direction: row;
+			align-items: stretch;
+			justify-content: end;
+			gap: 8rem;
+
+			&-wrapper {
+				width: auto;
+				height: auto;
+				padding: 0;
+				position: static;
+				z-index: unset;
+				overflow: initial;
+			}
+
+			> .menu-item {
+				height: 100%;
+				display: flex;
+				align-items: center;
+				position: relative;
+				padding: 1.5rem 0;
+
+				&:hover {
+					color: $blue;
+
+					.sub-menu {
+						transform: translateY(0);
+					}
+				}
+
+				.sub-menu {
+					border: 1px solid $black;
+					background-color: $white;
+					width: max-content;
+					padding: 1rem 2rem 2rem;
+					position: absolute;
+					z-index: -1;
+					top: 100%;
+					left: -2rem;
+					transition: $transition;
+					transform: translateY(-100%);
+	
+					.menu-item {
+						white-space: nowrap;
+					}
+				}
+			}
+
+		}
+	}
+}

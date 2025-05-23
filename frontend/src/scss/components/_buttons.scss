@@ -1,0 +1,50 @@
+@use "../abstracts" as *;
+
+/* -------------------------------------------------- */
+/* ---------- Style des boutons ---------- */
+/* -------------------------------------------------- */
+
+.button {
+	padding: 1rem 2rem;
+	color: $white;
+	background-color: $black;
+	font-size: 1.6rem;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+	border-radius: 7px;
+
+	&-group {
+		display: flex;
+		gap: 2rem;
+		align-items: center;
+		justify-content: start;
+	}
+
+	&-primary {
+		@extend .button;
+		background-color: $blue;
+		color: $white;
+
+		&:hover {
+			background-color: $white;
+			color: $blue;
+		}
+	}
+
+	&-secondary {
+		@extend .button;
+		border: 1px solid $blue;
+		background-color: $white;
+		color: $blue;
+
+		&:hover {
+			background-color: $blue;
+			color: $white;
+		}
+	}
+}
+
+.link {
+	font-size: 1.6rem;
+	text-decoration: underline;
+}
