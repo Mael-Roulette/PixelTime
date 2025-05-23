@@ -10,99 +10,60 @@
 	top: 0;
 	left: 0;
 	z-index: 10;
+	background-color: $blue;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1.5rem 2rem;
+	box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
 
-	/* ----- Navbar ----- */
-	&-navbar {
+	&-logo {
+		margin-right: 2rem;
 		display: flex;
-		justify-content: space-between;
-		align-items: stretch;
-		position: relative;
-		background-color: $white;
-
-		&-wrapper {
-			background-color: $white;
-			width: 100%;
-			position: relative;
-			z-index: 5;
-			top: 0;
-			left: 0;
-			box-shadow: 0 2px 5px rgba($color: $black, $alpha: 0.3);
-		}
-
-		&-logo {
-			margin-right: 2rem;
-			display: flex;
-			align-items: center;
-			text-transform: uppercase;
-			color: $blue;
-			font-weight: $fbold;
-		}
+		align-items: center;
+		text-transform: uppercase;
+		color: $blue;
+		font-weight: $fbold;
+		height: 4rem;
 	}
 
-	/* ----- Menu ----- */
-	&-menu {
-		width: calc(100% - 2rem);
-		margin: 0 auto;
+	&-nav {
+		position: absolute;
+		top: 0;
+		right: -100%;
+		height: 100vh;
+		width: 100%;
 		display: flex;
-		flex-direction: column;
-		gap: 2rem;
-		list-style: none;
+		padding: 7rem 2rem;
+		background-color: $blue;
+		z-index: 6;
+		transition: $transition;
 
-		&-wrapper {
-			background-color: $white;
+		&.active {
+			right: 0;
+		}
+
+		ul {
+			display: flex;
+			flex-direction: column;
+			gap: 1.5rem;
+			list-style: none;
+			padding: 0;
+			margin: 0;
 			width: 100%;
-			height: 100vh;
-			padding: 9rem 0 10rem;
-			position: fixed;
-			z-index: 6;
-			top: 0;
-			left: 100%;
-			transition: $transition;
-			overflow-y: auto;
 
-			&.opened {
-				left: 0;
-			}
-		}
-
-		a {
-			transition: $transition;
-
-			&:hover {
-				opacity: .75;
-			}
-		}
-
-		.menu-item {
-			> a {
-				color: $black;
-				text-transform: uppercase;
-				font-weight: $fbold;
-				font-size: 1.4rem;
-
-				&:hover {
-					color: $blue;
+			li {
+				a {
+					font-size: 2.4rem;
+					color: $white;
 				}
 			}
-
-			.sub-menu {
-				list-style: none;
-				padding: 1rem 0 0 2rem;
-				margin: 0;
-	
-				> li {
-					+ li {
-						margin-top: 1rem;
-					}
-				}
-		}
-
 		}
 	}
 
 	/* ----- Burger icon ----- */
 	&-toggle {
-		color: $black;
+		color: $white;
 		background-color: transparent;
 		height: 3rem;
 		width: 3rem;
@@ -171,71 +132,31 @@
 
 @include responsive("lg") {
 	.header {
-		&-navbar {
-			justify-content: center;
+		padding: 1.5rem 5rem;
 
-			&-logo {
-				display: none;
+		&-nav {
+			position: relative;
+			height: fit-content;
+			right: 0;
+			padding: 0;
+
+			ul {
+				flex-direction: row;
+				justify-content: end;
+				align-items: center;
+				gap: 4rem;
+				height: 100%;
+
+				li {
+					a {
+						font-size: 1.6rem;
+					}
+				}
 			}
 		}
-		
+
 		&-toggle {
 			display: none;
-		}
-
-		/* ----- Menu ----- */
-		&-menu {
-			width: auto;
-			max-width: none;
-			height: 100%;
-			margin: 0;
-			flex-direction: row;
-			align-items: stretch;
-			justify-content: end;
-			gap: 8rem;
-
-			&-wrapper {
-				width: auto;
-				height: auto;
-				padding: 0;
-				position: static;
-				z-index: unset;
-				overflow: initial;
-			}
-
-			> .menu-item {
-				height: 100%;
-				display: flex;
-				align-items: center;
-				position: relative;
-				padding: 1.5rem 0;
-
-				&:hover {
-					color: $blue;
-
-					.sub-menu {
-						transform: translateY(0);
-					}
-				}
-
-				.sub-menu {
-					border: 1px solid $black;
-					background-color: $white;
-					width: max-content;
-					padding: 1rem 2rem 2rem;
-					position: absolute;
-					z-index: -1;
-					top: 100%;
-					left: -2rem;
-					transition: $transition;
-					transform: translateY(-100%);
-	
-					.menu-item {
-						white-space: nowrap;
-					}
-				}
-			}
-
 		}
 	}
 }

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { api } from "../services/api";
+import Header from "../components/Header";
 
 export default function Home() {
 	const { t } = useTranslation();
@@ -26,6 +27,8 @@ export default function Home() {
 
 	return (
 		<div className='home'>
+			<Header />
+
 			<h1>{t("home.title")}</h1>
 
 			{loading && <p>Loading users...</p>}

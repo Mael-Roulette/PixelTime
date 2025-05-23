@@ -5,6 +5,7 @@ import Login from "./pages/Auth/LogIn";
 import SignIn from "./pages/Auth/SignIn";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import LeaderBoard from "./pages/Game/LeaderBoard";
+import GameChoice from "./pages/Game/GameChoice";
 import GameBoard from "./pages/Game/GameBoard";
 import Catalog from "./pages/Game/Catalog";
 import "./App.css";
@@ -18,6 +19,7 @@ const App = observer(() => {
 				<Route path='/inscription' element={<SignIn />}></Route>
 				<Route path='/motdepasseoublie' element={<ForgotPassword />}></Route>
 				<Route path='/classement' element={<LeaderBoard />}></Route>
+				<Route path="/choix-mode-jeu" element={<GameChoice />}></Route>
 				<Route path='/plateau-jeu' element={<GameBoard />}></Route>
 				<Route path='/catalogue' element={<Catalog />}></Route>
 			</Routes>
