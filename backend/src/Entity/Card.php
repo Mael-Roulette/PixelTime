@@ -14,38 +14,40 @@ class Card
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $title = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $image = null;
 
     #[ORM\Column]
     private ?int $year = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $description = null;
-
     #[ORM\Column]
     private ?int $score = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $hint = null;
+    #[ORM\OneToMany(targetEntity: "CardTranslation", mappedBy: 'card', cascade: ['persist', 'remove'])]
+    private Collection $translations;
+
+    public function __construct()
+    {
+        $this->translations = new ArrayCollection();
+    }
+
+    public function getTranslations(): Collection
+    {
+        return $this->translations;
+    }
+
+    public function getTranslation(string $locale): ?CardTranslation
+    {
+        foreach ($this->translations as $translation) {
+            if ($translation->getLocale() === $locale) {
+                return $translation;
+            }
+        }
+        return null;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
-
-        return $this;
     }
 
     public function getImage(): ?string
@@ -72,18 +74,6 @@ class Card
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
     public function getScore(): ?int
     {
         return $this->score;
@@ -92,18 +82,6 @@ class Card
     public function setScore(int $score): static
     {
         $this->score = $score;
-
-        return $this;
-    }
-
-    public function getHint(): ?string
-    {
-        return $this->hint;
-    }
-
-    public function setHint(string $hint): static
-    {
-        $this->hint = $hint;
 
         return $this;
     }

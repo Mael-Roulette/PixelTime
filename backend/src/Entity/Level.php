@@ -21,15 +21,31 @@ class Level
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
-
     #[ORM\Column]
     private ?int $minScore = null;
+
+    #[ORM\OneToMany(targetEntity: "LevelTranslation", mappedBy: 'level', cascade: ['persist', 'remove'])]
+    private Collection $translations;
+
+    public function getTranslations(): Collection
+    {
+        return $this->translations;
+    }
+
+    public function getTranslation(string $locale): ?LevelTranslation
+    {
+        foreach ($this->translations as $translation) {
+            if ($translation->getLocale() === $locale) {
+                return $translation;
+            }
+        }
+        return null;
+    }
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->translations = new ArrayCollection();
     }
 
     public function addUser(User $user): static
