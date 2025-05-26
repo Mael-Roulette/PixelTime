@@ -8,7 +8,8 @@
         "backHome": "Back to home",
         "classicMode": "Classic mode",
         "livesMode": "Survival mode",
-        "chronoMode": "Chrono mode"
+        "chronoMode": "Chrono mode",
+        "catalog": "Catalog"
     },
 
     "footer": {
