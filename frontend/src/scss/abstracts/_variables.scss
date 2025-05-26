@@ -12,9 +12,36 @@ $fbold: 700;
     font-family: 'CalSans';
     font-style: normal;
     font-weight: 400;
-    src: url(../assets/fonts/CalSans-Regular.ttf);
+    src: url(./assets/fonts/CalSans-Regular.ttf);
 }
 
+@font-face {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    src: url(./assets/fonts/Jost-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 500;
+    src: url(./assets/fonts/Jost-Medium.ttf);
+}
+
+@font-face {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 600;
+    src: url(./assets/fonts/Jost-SemiBold.ttf);
+}
+
+@font-face {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    src: url(./assets/fonts/Jost-Bold.ttf);
+}
 /* -------------------------------------------------- */
 /* ---------- Couleurs ---------- */
 

@@ -1,5 +1,10 @@
-
+import BottomNavBar from "../../components/BottomNavBar";
 
 export default function Catalog() {
-  <h1>Catalogue</h1>
+	return (
+		<>
+			<BottomNavBar />
+			<h1>Catalogue</h1>
+		</>
+	);
 }

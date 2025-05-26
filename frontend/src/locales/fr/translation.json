@@ -8,7 +8,10 @@
         "backHome": "Retour à l'accueil",
         "classicMode": "Mode classique",
         "livesMode": "Mode survie",
-        "chronoMode": "Mode chrono"
+        "chronoMode": "Mode chrono",
+        "catalog": "Catalogue",
+        "profile": "Profil",
+        "gameModes": "Modes"
     },
 
     "footer": {

@@ -1,3 +1,10 @@
+import BottomNavBar from "../../components/BottomNavBar";
+
 export default function GameChoice() {
-  <h1>Choix du jeu</h1>
+	return (
+		<>
+			<BottomNavBar />
+			<h1>Choix du jeu</h1>
+		</>
+	);
 }
