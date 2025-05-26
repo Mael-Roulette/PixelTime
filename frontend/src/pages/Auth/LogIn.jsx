@@ -26,7 +26,7 @@ export default function LogIn() {
         <div className="main-login-form">
           <h1>{t("login.title")}</h1>
           <form>
-            <div>
+            <div className="form-group">
               <label htmlFor="email">
                 Email
                 <input type="email" name="email" />
