@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\Collection;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -39,13 +39,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $money = null;
 
-    #[ORM\Column(type: 'json')]
-    private array $roles = [];
 
     public function __construct()
     {
         $this->level = new ArrayCollection();
-        $this->roles[] = "ROLE_USER";
     }
 
     public function addLevel(Level $level): static
@@ -132,19 +129,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
 
     public function getUserIdentifier(): string
     {
