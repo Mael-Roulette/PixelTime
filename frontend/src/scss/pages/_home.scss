@@ -4,3 +4,33 @@
 /* ---------- Page d'accueil du site ---------- */
 /* -------------------------------------------------- */
 
+.banner {
+  background-color: $blue;
+  color: $white;
+  height: calc(100vh - 8rem);
+
+  &-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    padding: 2.5rem 2rem;
+
+    &-title {
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+    }
+
+    &-description {
+      margin-bottom: 2rem;
+    }
+
+    &-buttons {
+      height: fit-content;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+  }
+}

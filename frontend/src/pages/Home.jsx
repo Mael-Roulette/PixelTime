@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { api } from "../services/api";
 import Header from "../components/Header";
+import { NavLink } from "react-router";
 
 export default function Home() {
 	const { t } = useTranslation();
@@ -26,10 +27,23 @@ export default function Home() {
 	}, []);
 
 	return (
-		<div className='home'>
+		<>
 			<Header />
 
-			<h1>{t("home.title")}</h1>
+			<main className="home">
+				<section className="banner">
+					<div className="banner-content">
+						<h1 className="banner-content-title">{t("home.title")}</h1>
+						<p className="banner-content-description">{t("home.description")}</p>
+						<div className="banner-content-buttons">
+							<NavLink to={"/connexion"} className="button-primary">{t("global.login")}</NavLink>
+							<NavLink to={"/inscription"} className="button-secondary">{t("global.signup")}</NavLink>
+						</div>
+					</div>
+				</section>
+
+			</main>
+
 
 			{loading && <p>Loading users...</p>}
 			{error && <p>Error: {error}</p>}
@@ -44,6 +58,6 @@ export default function Home() {
 					</ul>
 				</div>
 			)}
-		</div>
+		</>
 	);
 }
