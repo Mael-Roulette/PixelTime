@@ -9,7 +9,9 @@
         "classicMode": "Modo classico",
         "livesMode": "Modo supervivencia",
         "chronoMode": "Modo chrono",
-        "catalog": "Catálogo"
+        "catalog": "Catálogo",
+        "profile": "Perfil",
+        "gameModes": "Modos de juego"
     },
 
     "footer": {
