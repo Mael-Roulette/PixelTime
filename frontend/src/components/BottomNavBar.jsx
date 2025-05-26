@@ -1,55 +1,140 @@
 import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router";
 
 const Icons = {
-	GameMode: () => (""),
-	Catalog: () => (""),
-	Play: () => (""),
-	LeaderBoard: () => (""),
-	Profile: () => (""),
+	GameMode: () => (
+		<svg
+			xmlns='http://www.w3.org/2000/svg'
+			width='800px'
+			height='800px'
+			viewBox='0 0 16 16'
+			fill='#FFFDF0'
+		>
+			<path d='M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z' />
+		</svg>
+	),
+	Catalog: () => (
+		<svg
+			xmlns='http://www.w3.org/2000/svg'
+			width='800px'
+			height='800px'
+			viewBox='0 0 24 24'
+		>
+			<path
+				fill='none'
+				stroke='#FFFDF0'
+				strokeWidth='1.8'
+				d='M5.5,18 C4.11928813,18 3,19.1192881 3,20.5 C3,21.8807119 4.11928813,23 5.5,23 L22,23 M3,20.5 L3,3.5 C3,2.11928813 4.11928813,1 5.5,1 L21,1 L21,18.0073514 L5.49217286,18.0073514 M20.5,18 C19.1192881,18 18,19.1192881 18,20.5 C18,21.8807119 19.1192881,23 20.5,23 L20.5,23'
+			/>
+		</svg>
+	),
+	Play: () => (
+		<svg
+			xmlns='http://www.w3.org/2000/svg'
+			fill='#FFFDF0'
+			width='800px'
+			height='800px'
+			viewBox='0 0 1024 1024'
+		>
+			<path d='M743.216 75.552c-25.6-12.016-49.806-23.328-71.838-34.384C614.914 12.88 563.714-.864 514.914-.864c-98.288 0-166.304 56.704-208.96 99.36L99.106 305.568c-110.688 110.8-128.368 223.6-57.265 365.808 11.025 22.08 22.369 46.336 34.369 72.033 64.704 138.384 131.584 281.487 241.056 281.487 3.072 0 6.112-.096 9.216-.336 112.976-8.848 145.023-154.288 173.312-282.592 4.496-20.32 8.751-39.809 13.12-57.28 7.6-30.209 22.56-48.976 63.551-90.064l5.632-5.664 3.472-3.472 9.12-9.088c41.088-41.088 59.856-56.032 90.096-63.664 17.311-4.351 36.752-8.64 57.024-13.088 128.224-28.303 273.6-60.368 282.4-173.52 8.879-114.833-138.465-183.84-280.993-250.576zm215.25 244.783c-6.224 79.776-184.813 103.324-291.102 129.98-47.008 11.872-75.616 36.752-118.784 79.936-3.008 3.007-6.032 6.015-9.088 9.07-3.024 3.025-6.032 6.097-9.057 9.09-43.168 43.215-68 71.807-79.824 118.88-26.672 106.384-50.191 285.168-129.87 291.44a55.54 55.54 0 0 1-4.322.144c-84.544 0-155.68-192.24-218.447-317.664-63.744-127.504-36.433-210.224 45.36-292.096 15.696-15.727 35.215-35.247 59.135-59.182 24.432-24.464 53.487-53.552 87.919-88 23.904-23.936 43.408-43.424 59.12-59.184 50.8-50.848 101.936-80.64 163.92-80.64 37.808 0 79.632 11.056 127.872 35.248 127.456 63.905 323.888 136.48 317.168 222.978zm-479.678 30.94h64v-64h-64v64zm0-96h64v-64h-64v64zm96 0h64v-64h-64v64zm0 96h64v-64h-64v64zM329.893 543.436l24.336-24.336c12-12 12-31.472 0-43.456-12-12-31.44-12-43.44 0l-24.352 24.352-24.352-24.352c-12-12-31.44-12-43.44 0s-12 31.456 0 43.456l24.351 24.352-24.351 24.351c-12 11.985-12 31.44 0 43.44s31.456 12 43.44 0l24.352-24.335 25.056 25.055c12 12 31.44 12 43.44 0s12-31.471 0-43.471z' />
+		</svg>
+	),
+	LeaderBoard: () => (
+		<svg
+			xmlns='http://www.w3.org/2000/svg'
+			fill='#FFFDF0'
+			width='800px'
+			height='800px'
+			viewBox='0 0 24 24'
+		>
+			<path d='M22,7H16.333V4a1,1,0,0,0-1-1H8.667a1,1,0,0,0-1,1v7H2a1,1,0,0,0-1,1v8a1,1,0,0,0,1,1H22a1,1,0,0,0,1-1V8A1,1,0,0,0,22,7ZM7.667,19H3V13H7.667Zm6.666,0H9.667V5h4.666ZM21,19H16.333V9H21Z' />
+		</svg>
+	),
+	Profile: () => (
+		<svg
+			width='22'
+			height='23'
+			viewBox='0 0 22 23'
+			fill='none'
+			xmlns='http://www.w3.org/2000/svg'
+		>
+			<path
+				d='M15 8.5H14.25C14.25 10.2949 12.7949 11.75 11 11.75V12.5V13.25C13.6234 13.25 15.75 11.1234 15.75 8.5H15ZM11 12.5V11.75C9.20507 11.75 7.75 10.2949 7.75 8.5H7H6.25C6.25 11.1234 8.37665 13.25 11 13.25V12.5ZM7 8.5H7.75C7.75 6.70507 9.20507 5.25 11 5.25V4.5V3.75C8.37665 3.75 6.25 5.87665 6.25 8.5H7ZM11 4.5V5.25C12.7949 5.25 14.25 6.70507 14.25 8.5H15H15.75C15.75 5.87665 13.6234 3.75 11 3.75V4.5ZM8 15.5V16.25H14V15.5V14.75H8V15.5ZM1 11.5H1.75C1.75 6.39137 5.89137 2.25 11 2.25V1.5V0.75C5.06294 0.75 0.25 5.56294 0.25 11.5H1ZM11 1.5V2.25C16.1086 2.25 20.25 6.39137 20.25 11.5H21H21.75C21.75 5.56294 16.9371 0.75 11 0.75V1.5ZM21 11.5H20.25C20.25 14.1233 19.159 16.4905 17.4039 18.1748L17.9232 18.7159L18.4425 19.2571C20.4801 17.3016 21.75 14.5485 21.75 11.5H21ZM17.9232 18.7159L17.4039 18.1748C15.7412 19.7705 13.4858 20.75 11 20.75V21.5V22.25C13.8882 22.25 16.5117 21.11 18.4425 19.2571L17.9232 18.7159ZM14 15.5V16.25C15.576 16.25 16.8915 17.3726 17.1876 18.8621L17.9232 18.7159L18.6588 18.5697C18.226 16.3918 16.3055 14.75 14 14.75V15.5ZM11 21.5V20.75C8.51425 20.75 6.25884 19.7705 4.59612 18.1748L4.07681 18.7159L3.55751 19.2571C5.48833 21.11 8.11182 22.25 11 22.25V21.5ZM4.07681 18.7159L4.59612 18.1748C2.84103 16.4905 1.75 14.1233 1.75 11.5H1H0.25C0.25 14.5485 1.51989 17.3016 3.55751 19.2571L4.07681 18.7159ZM8 15.5V14.75C5.69445 14.75 3.77403 16.3918 3.3412 18.5697L4.07681 18.7159L4.81243 18.8621C5.10846 17.3726 6.42396 16.25 8 16.25V15.5Z'
+				fill='#FFFDF0'
+			/>
+		</svg>
+	),
 };
 
-function BottomNavigation({
-	activeItem,
-	onItemClick = () => {},
-	className = "",
-}) {
-  const { t } = useTranslation();
+function BottomNavigation() {
+	const { t } = useTranslation();
 
-  const items = [
-	{ id: "gameMode", label: t("global.gameModes"), icon: "GameMode" },
-	{ id: "catalog", label: t("global.catalog"), icon: "Catalog" },
-	{ id: "play", label: t("global.play"), icon: "Play", isCenter: true },
-	{ id: "leaderboard", label: t("global.leaderboard"), icon: "LeaderBoard" },
-	{ id: "profile", label: t("global.profile"), icon: "Profile" },
-  ];
-	const handleItemClick = (item) => {
-		onItemClick(item);
-	};
+	const items = [
+		{
+			id: "gameMode",
+			label: t("global.gameModes"),
+			icon: "GameMode",
+			to: "/choix-mode-jeu",
+		},
+		{
+			id: "catalog",
+			label: t("global.catalog"),
+			icon: "Catalog",
+			to: "/catalogue",
+		},
+		{
+			id: "play",
+			label: t("global.play"),
+			icon: "Play",
+			isCenter: true,
+			to: "/play",
+		},
+		{
+			id: "leaderboard",
+			label: t("global.leaderboard"),
+			icon: "LeaderBoard",
+			to: "/classement",
+		},
+		{
+			id: "profile",
+			label: t("global.profile"),
+			icon: "Profile",
+			to: "/profil",
+		},
+	];
 
 	return (
-		<nav className={`bottom-navigation ${className}`}>
-			<div className='bottom-navigation__container'>
+		<nav className={`bottom-navigation`}>
+			<NavLink to={"/"} className='bottom-navigation-logo'>
+				<img src='/pixeltime.png' alt='PixelTime' />
+			</NavLink>
+			<div className='bottom-navigation-container'>
 				{items.map((item) => {
 					const IconComponent = Icons[item.icon];
-					const isActive = activeItem === item.id;
 
 					return (
-						<button
+						<NavLink
 							key={item.id}
-							className={`
-                bottom-navigation__item
-                ${isActive ? "bottom-navigation__item--active" : ""}
-                ${item.isCenter ? "bottom-navigation__item--center" : ""}
-              `}
-							onClick={() => handleItemClick(item)}
+							to={item.to}
+							className={({ isActive }) => `
+				bottom-navigation-item
+				${isActive ? "bottom-navigation-item--active" : ""}
+				${item.isCenter ? "bottom-navigation-item--center" : ""}
+				`}
 						>
-							<div className='bottom-navigation__icon'>
+							<div className='bottom-navigation-icon'>
 								{IconComponent && <IconComponent />}
 							</div>
 							{item.label && (
-								<span className='bottom-navigation__label'>{item.label}</span>
+								<span
+									className={`bottom-navigation-label ${
+										item.isCenter ? "screen-reader-text" : ""
+									}`}
+								>
+									{item.label}
+								</span>
 							)}
-						</button>
+						</NavLink>
 					);
 				})}
 			</div>

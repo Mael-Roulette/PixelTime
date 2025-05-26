@@ -158,125 +158,118 @@
 /* ---------- Bottom nav bar ---------- */
 
 .bottom-navigation {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  padding: 16px 20px 20px;
-  background: transparent;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+	background: transparent;
 
-  &__container {
-    max-width: 400px;
-    margin: 0 auto;
-    background: #3b4a6b;
-    border-radius: 32px;
-    padding: 8px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-    position: relative;
-  }
+	&-logo {
+		display: none;
+	}
 
-  &__item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 12px 8px;
-    border-radius: 16px;
-    transition: all 0.3s ease;
-    color: #8a92a5;
-    min-width: 60px;
+	&-nav {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 1000;
+		background: transparent;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 1rem 0;
+	}
 
-    &:hover {
-      background: rgba(255, 255, 255, 0.05);
-      transform: translateY(-2px);
-    }
+	&-container {
+		margin: 0 auto;
+		background: $blue;
+		border-top-left-radius: 2rem;
+		border-top-right-radius: 2rem;
+		padding: 0 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		position: relative;
+	}
 
-    &--active {
-      color: #ffa726;
+	&-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 12px 8px;
+		border-radius: 16px;
+		transition: all 0.3s ease;
+		color: $white;
+		min-width: 60px;
 
-      .bottom-navigation__icon {
-        transform: scale(1.1);
-      }
-    }
+		&:hover {
+			background: rgba(255, 255, 255, 0.05);
+		}
 
-    &--center {
-      background: #ffa726;
-      color: #3b4a6b;
-      border-radius: 50%;
-      width: 56px;
-      height: 56px;
-      padding: 0;
-      margin: 0 8px;
-      position: relative;
-      top: -8px;
-      box-shadow: 0 4px 16px rgba(255, 167, 38, 0.3);
+		&--active {
+			color: $yellow;
 
-      &:hover {
-        background: #ffb74d;
-        transform: translateY(-4px);
-        box-shadow: 0 6px 20px rgba(255, 167, 38, 0.4);
-      }
+			svg {
+				fill: $yellow;
 
-      .bottom-navigation__icon {
-        transform: none;
-      }
+				path {
+					stroke: $yellow;
+				}
+			}
+		}
 
-      &:hover .bottom-navigation__icon {
-        transform: scale(1.1);
-      }
-    }
-  }
+		&--center {
+			background: $yellow;
+			color: $blue;
+			outline: 10px solid $blue;
+			border-radius: 50%;
+			width: 60px;
+			height: 60px;
+			padding: 0;
+			margin: 0;
+			position: relative;
+			top: -30px;
 
-  &__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease;
+			&:hover {
+				background: $yellow;
+				box-shadow: 0 6px 20px rgba(255, 167, 38, 0.4);
+			}
 
-    svg {
-      width: 24px;
-      height: 24px;
+			.bottom-navigation-icon {
+				transform: none;
+			}
+		}
+	}
 
-      .bottom-navigation__item--center & {
-        width: 28px;
-        height: 28px;
-      }
-    }
-  }
+	&-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: transform 0.3s ease;
 
-  &__label {
-    font-size: 12px;
-    font-weight: 500;
-    white-space: nowrap;
-    transition: color 0.3s ease;
+		svg {
+			width: 3rem;
+			height: 3rem;
+		}
+	}
 
-    .bottom-navigation__item--active & {
-      color: #ffa726;
-    }
-  }
-}
+	&-label {
+		font-size: 1.4rem;
+		font-weight: 500;
+		white-space: nowrap;
+		transition: color 0.3s ease;
 
-// Animation d'entrée
-@keyframes slideUp {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.bottom-navigation {
-  animation: slideUp 0.3s ease-out;
+		.bottom-navigation-item--active & {
+			color: $yellow;
+		}
+	}
 }
 
 /* -------------------------------------------------- */
@@ -315,6 +308,55 @@
 
 		&-toggle {
 			display: none;
+		}
+	}
+
+	.bottom-navigation {
+		position: sticky;
+		top: 0;
+		bottom: auto;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 1.5rem 8rem;
+		background-color: $blue;
+
+		&-logo {
+			margin-right: 2rem;
+			display: flex;
+			align-items: center;
+			text-transform: uppercase;
+			color: $blue;
+			font-weight: $fbold;
+
+			img {
+				height: 5rem;
+			}
+		}
+
+		&-nav {
+			position: relative;
+			justify-content: end;
+		}
+
+		&-container {
+			margin: 0;
+		}
+
+		&-item {
+			padding: .5rem 1rem;
+
+			&--center {
+				display: none;
+			}
+		}
+
+		&-icon {
+			display: none;
+		}
+
+		&-label {
+			font-size: 1.6rem;
 		}
 	}
 }
