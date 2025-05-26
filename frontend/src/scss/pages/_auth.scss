@@ -1,0 +1,19 @@
+@use "../abstracts" as *;
+
+/* -------------------------------------------------- */
+/* ---------- Page d'inscription du site ---------- */
+/* -------------------------------------------------- */
+
+.header-login {
+    position: sticky;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	background-color: $blue;
+	padding: 1.5rem 2rem;
+    a {
+        color: $white;
+        text-decoration: underline;
+    }
+}
