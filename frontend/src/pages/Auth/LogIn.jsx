@@ -64,8 +64,11 @@ export default function LogIn() {
             {t("login.noAccount")}
             <a href="/inscription"> {t("login.signup")}</a>
           </p>
-        </div >
-      </main >
+          <p>
+            <a href="/motdepasseoublie"> {t("login.forgotPassword")}</a>
+          </p>
+        </div>
+      </main>
     </>
   )
 }
