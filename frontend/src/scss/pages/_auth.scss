@@ -50,12 +50,24 @@
                 flex-direction: column;
                 gap: 1.5rem;
 
+                &-info {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.5rem;
+                }
+
+                &-password {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.5rem;
+                }
+
                 label {
                     display: flex;
                     flex-direction: column;
                     gap: 0.5rem;
                     width: 100%;
-                    font-size: 1.8rem;
+                    font-size: 1.6rem;
                     font-weight: $fsemibold;
                 }
             }
@@ -81,26 +93,61 @@
     }
 }
 
-
 @include responsive("lg") {
     .main-login {
         display: flex;
         align-items: center;
         justify-content: center;
+        padding: 2rem;
+        overflow-y: auto;
 
         h1 {
-            margin: 0 0 4rem 0;
+            margin: 0 0 2rem 0;
         }
 
         &-form {
             width: fit-content;
             height: fit-content;
+            max-height: calc(100vh - 10rem);
             border: solid 2px $white;
             border-radius: 8px;
-            padding: 3rem;
+            padding: 2rem;
+            overflow-y: auto;
 
             form {
-                padding-bottom: 8rem;
+                height: auto;
+                justify-content: flex-start;
+                padding-bottom: 0;
+                gap: 2rem;
+                width: auto;
+                min-width: 50rem;
+
+                .form-group {
+                    align-items: center;
+                    &-info {
+                        display: flex;
+                        flex-direction: row;
+                        gap: 2rem;
+    
+                    }
+                    label {
+                        flex: 1;
+                        min-width: 20rem;
+                        max-width: 40rem;
+                        text-wrap: nowrap;
+                    }
+                    &-password {
+                        display: flex;
+                        flex-direction: row;
+                        gap: 2rem;
+                    }
+
+                    &-required {
+                        width: 100%;
+                        text-align: left;
+                        padding-left: 4rem;
+                    }
+                }
             }
         }
 
@@ -110,6 +157,4 @@
             align-self: center;
         }
     }
-
-
 }

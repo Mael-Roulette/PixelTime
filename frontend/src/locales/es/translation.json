@@ -51,7 +51,8 @@
         "password": "Contraseña",
         "continue": "Continuar",
         "noAccount": "¿Aún no tienes una cuenta?",
-        "signup": "Registrarse"
+        "signup": "Registrarse",
+        "forgotPassword": "¿Contraseña olvidada?"
     },
 
     "forgotPassword": {

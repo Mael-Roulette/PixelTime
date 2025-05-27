@@ -58,14 +58,17 @@ export default function LogIn() {
                 </div>
               </label>
             </div>
-            <input type="submit" value={t("login.continue")} className=" submit-button button-primary" />
+            <input type="submit" value={t("login.continue")} className="submit-button button-primary" />
           </form>
           <p>
             {t("login.noAccount")}
             <a href="/inscription"> {t("login.signup")}</a>
           </p>
-        </div >
-      </main >
+          <p>
+            <a href="/motdepasseoublie"> {t("login.forgotPassword")}</a>
+          </p>
+        </div>
+      </main>
     </>
   )
 }
