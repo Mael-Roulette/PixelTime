@@ -29,7 +29,7 @@ export default function LogIn() {
             <div className="form-group">
               <label htmlFor="email">
                 Email
-                <input type="email" name="email" />
+                <input type="email" name="email" placeholder="email@email.com" />
               </label>
               <label htmlFor="password">
                 {t("login.password")}
