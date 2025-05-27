@@ -21,6 +21,7 @@ i18n
                 translation: translationES,
             },
         },
+        lng: "fr",
         fallbackLng: "fr",
         debug: false,
         interpolation: {

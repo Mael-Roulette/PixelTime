@@ -20,7 +20,7 @@ const App = observer(() => {
 				<Route path='/motdepasseoublie' element={<ForgotPassword />}></Route>
 				<Route path='/classement' element={<LeaderBoard />}></Route>
 				<Route path="/choix-mode-jeu" element={<GameChoice />}></Route>
-				<Route path='/plateau-jeu' element={<GameBoard />}></Route>
+				<Route path='/plateau-de-jeu' element={<GameBoard />}></Route>
 				<Route path='/catalogue' element={<Catalog />}></Route>
 			</Routes>
 		</BrowserRouter>

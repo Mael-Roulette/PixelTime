@@ -1,0 +1,26 @@
+@use "../abstracts" as *;
+
+/* -------------------------------------------------- */
+/* ---------- Choix du mode de jeu ---------- */
+/* -------------------------------------------------- */
+
+.game-choice {
+  &-container {
+    background-color: $blue;
+    padding: 3rem 2rem 0;
+    padding-bottom: 9rem;
+  }
+
+  &-title {
+    text-align: center;
+    color: $white;
+    margin-bottom: 4rem;
+  }
+
+  &-list {
+    margin-bottom: 4rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
