@@ -1,6 +1,8 @@
 import BottomNavBar from "../../components/BottomNavBar";
+import Footer from "../../components/Footer";
 import CardMode from "../../components/gameUi/CardMode";
 import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router";
 
 export default function GameChoice() {
 	const { t } = useTranslation();
@@ -34,7 +36,13 @@ export default function GameChoice() {
 						image={"/fond-vies.webp"}
 					/>
 				</div>
+
+				<NavLink to='/catalogue' className='game-choice-catalog'>
+					{t("gameChoice.trainingWithCatalog")}
+				</NavLink>
 			</div>
+
+			<Footer />
 		</>
 	);
 }
