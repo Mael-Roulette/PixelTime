@@ -98,7 +98,17 @@
             border: solid 2px $white;
             border-radius: 8px;
             padding: 3rem;
+
+            form {
+                padding-bottom: 8rem;
+            }
         }
+    }
+
+    .button-primary {
+        margin-top: 2rem;
+        width: fit-content;
+        align-self: center;
     }
         
 }
