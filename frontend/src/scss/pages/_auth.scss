@@ -89,9 +89,9 @@
         justify-content: center;
 
         h1 {
-            margin: 0 0 4rem 0; 
+            margin: 0 0 4rem 0;
         }
-        
+
         &-form {
             width: fit-content;
             height: fit-content;
@@ -103,12 +103,13 @@
                 padding-bottom: 8rem;
             }
         }
+
+        .submit-button {
+            margin-top: 2rem;
+            width: fit-content;
+            align-self: center;
+        }
     }
 
-    .button-primary {
-        margin-top: 2rem;
-        width: fit-content;
-        align-self: center;
-    }
-        
+
 }
