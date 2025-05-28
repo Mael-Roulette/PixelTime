@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Auth/LogIn";
 import SignIn from "./pages/Auth/SignIn";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
+import NewPassword from "./pages/Auth/NewPassword";
 import LeaderBoard from "./pages/Game/LeaderBoard";
 import GameChoice from "./pages/Game/GameChoice";
 import GameBoard from "./pages/Game/GameBoard";
@@ -18,6 +19,7 @@ const App = observer(() => {
 				<Route path='/connexion' element={<Login />}></Route>
 				<Route path='/inscription' element={<SignIn />}></Route>
 				<Route path='/motdepasseoublie' element={<ForgotPassword />}></Route>
+				<Route path='/changermotdepasse' element={<NewPassword />}></Route>
 				<Route path='/classement' element={<LeaderBoard />}></Route>
 				<Route path="/choix-mode-jeu" element={<GameChoice />}></Route>
 				<Route path='/plateau-de-jeu' element={<GameBoard />}></Route>
