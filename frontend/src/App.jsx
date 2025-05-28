@@ -8,6 +8,7 @@ import LeaderBoard from "./pages/Game/LeaderBoard";
 import GameChoice from "./pages/Game/GameChoice";
 import GameBoard from "./pages/Game/GameBoard";
 import Catalog from "./pages/Game/Catalog";
+import Profile from "./pages/Game/Profile";
 import "./App.css";
 
 const App = observer(() => {
@@ -22,6 +23,7 @@ const App = observer(() => {
 				<Route path="/choix-mode-jeu" element={<GameChoice />}></Route>
 				<Route path='/plateau-de-jeu' element={<GameBoard />}></Route>
 				<Route path='/catalogue' element={<Catalog />}></Route>
+				<Route path='/profil' element={<Profile />}></Route>
 			</Routes>
 		</BrowserRouter>
 	);

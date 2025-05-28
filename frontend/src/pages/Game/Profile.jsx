@@ -1,5 +1,21 @@
+import BottomNavBar from "../../components/BottomNavBar";
 
+const Profile = () => {
+  return (
+    <>
+			<BottomNavBar />
 
-export default function Profile() {
-  <h1>Profil</h1>
+      <main className="profile">
+        <div className="profile-picture">
+
+        </div>
+
+        <div className="profile-info">
+          <h1>Nom d'utilisateur</h1>
+        </div>
+      </main>
+    </>
+  );
 }
+
+export default Profile;
