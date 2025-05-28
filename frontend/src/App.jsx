@@ -11,6 +11,7 @@ import GameBoard from "./pages/Game/GameBoard";
 import Catalog from "./pages/Game/Catalog";
 import Profile from "./pages/Game/Profile";
 import "./App.css";
+import PrivateRoute from "./components/PrivateRoute";
 
 const App = observer(() => {
 	return (
@@ -22,9 +23,17 @@ const App = observer(() => {
 				<Route path='/forgotpassword' element={<ForgotPassword />}></Route>
 				<Route path='/newpassword' element={<NewPassword />}></Route>
 				<Route path='/leaderboard' element={<LeaderBoard />}></Route>
-				<Route path="/gamechoice" element={<GameChoice />}></Route>
+				<Route path='/gamechoice' element={<GameChoice />}></Route>
 				<Route path='/gameboard' element={<GameBoard />}></Route>
 				<Route path='/catalog' element={<Catalog />}></Route>
+				<Route
+					path='/profile'
+					element={
+						<PrivateRoute>
+							<Profile />
+						</PrivateRoute>
+					}
+				></Route>
 			</Routes>
 		</BrowserRouter>
 	);
