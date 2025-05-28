@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
-export default function LogIn() {
+export default function NewPassword() {
   const { t } = useTranslation();
 
   const [password, setPassword] = useState("");
@@ -24,22 +24,44 @@ export default function LogIn() {
 
       <main className="main-login">
         <div className="main-login-form">
-          <h1>{t("login.title")}</h1>
+          <h1>{t("newPassword.title")}</h1>
           <form>
             <div className="form-group">
-              <label htmlFor="email">
-                Email
-                <input type="email" name="email" placeholder="email@email.com" />
-              </label>
               <label htmlFor="password">
-                {t("login.password")}
+                {t("newPassword.password")}
                 <div style={{ position: 'relative' }}>
                   <input
                     type={type}
                     name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    autoComplete="current-password" className="password-input"
+                    autoComplete="current-password"
+                  />
+                  <span
+                    className="password-toggle"
+                    onClick={handleToggle}
+                    style={{
+                      position: 'absolute',
+                      right: '10px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      cursor: 'pointer',
+                      color: "#293858"
+                    }}
+                  >
+                    {showPassword ? <FiEye size={20} /> : <FiEyeOff size={20} />}
+                  </span>
+                </div>
+              </label>
+              <label htmlFor="password-confirm">
+                {t("newPassword.confirmPassword")}
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type={type}
+                    name="password-confirm"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="current-password"
                   />
                   <span
                     className="password-toggle"
@@ -62,7 +84,7 @@ export default function LogIn() {
           </form>
           <p>
             {t("login.noAccount")}
-            <a href="/signin"> {t("login.signup")}</a>
+            <a href="/login"> {t("login.signup")}</a>
           </p>
           <p>
             <a href="/forgotpassword"> {t("login.forgotPassword")}</a>

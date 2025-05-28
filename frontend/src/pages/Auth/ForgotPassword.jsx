@@ -26,7 +26,7 @@ export default function forgotPassword() {
           </form>
            <p>
             {t("forgotPassword.notForgotPassword")}
-            <a href="/connexion"> {t("forgotPassword.login")}</a>
+            <a href="/login"> {t("forgotPassword.login")}</a>
           </p>
         </div>
       </main>

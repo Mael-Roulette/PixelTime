@@ -4,16 +4,28 @@ import { useState } from "react";
 
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
-export default function SingIn() {
+export default function SignIn() {
   const { t } = useTranslation();
 
   const [password, setPassword] = useState("");
-  const [type, setType] = useState('password');
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  
+  // États séparés pour chaque champ
+  const [typePassword, setTypePassword] = useState('password');
+  const [typePasswordConfirm, setTypePasswordConfirm] = useState('password');
   const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
-  const handleToggle = () => {
+  // Fonction pour le premier champ mot de passe
+  const handleTogglePassword = () => {
     setShowPassword(!showPassword);
-    setType(showPassword ? 'password' : 'text');
+    setTypePassword(showPassword ? 'password' : 'text');
+  }
+  
+  // Fonction pour le champ confirmer mot de passe
+  const handleTogglePasswordConfirm = () => {
+    setShowPasswordConfirm(!showPasswordConfirm);
+    setTypePasswordConfirm(showPasswordConfirm ? 'password' : 'text');
   }
 
   return (
@@ -42,15 +54,15 @@ export default function SingIn() {
                   {t("signup.password")}*
                   <div style={{ position: 'relative' }}>
                     <input
-                      type={type}
+                      type={typePassword}
                       name="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      autoComplete="current-password"
+                      autoComplete="new-password"
                     />
                     <span
                       className="password-toggle"
-                      onClick={handleToggle}
+                      onClick={handleTogglePassword}
                       style={{
                         position: 'absolute',
                         right: '10px',
@@ -68,15 +80,15 @@ export default function SingIn() {
                   {t("signup.confirmPassword")}*
                   <div style={{ position: 'relative' }}>
                     <input
-                      type={type}
+                      type={typePasswordConfirm}
                       name="confirm-password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      autoComplete="current-password"
+                      value={passwordConfirm}
+                      onChange={(e) => setPasswordConfirm(e.target.value)}
+                      autoComplete="new-password"
                     />
                     <span
                       className="password-toggle"
-                      onClick={handleToggle}
+                      onClick={handleTogglePasswordConfirm}
                       style={{
                         position: 'absolute',
                         right: '10px',
@@ -86,7 +98,7 @@ export default function SingIn() {
                         color: "#293858"
                       }}
                     >
-                      {showPassword ? <FiEye size={20} /> : <FiEyeOff size={20} />}
+                      {showPasswordConfirm ? <FiEye size={20} /> : <FiEyeOff size={20} />}
                     </span>
                   </div>
                 </label>
@@ -97,10 +109,10 @@ export default function SingIn() {
           </form>
           <p>
             {t("signup.alreadyHaveAccount")}
-            <a href="/connexion"> {t("signup.login")}</a>
+            <a href="/login"> {t("signup.login")}</a>
           </p>
-        </div >
-      </main >
+        </div>
+      </main>
     </>
   )
 }
