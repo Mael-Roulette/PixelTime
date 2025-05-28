@@ -21,9 +21,6 @@ class CardTranslation
     private ?string $locale = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $title = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
@@ -42,18 +39,6 @@ class CardTranslation
     public function setLocale(string $locale): static
     {
         $this->locale = $locale;
-
-        return $this;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
 
         return $this;
     }

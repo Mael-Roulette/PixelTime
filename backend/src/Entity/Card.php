@@ -14,13 +14,13 @@ class Card
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $title = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $image = null;
 
     #[ORM\Column]
     private ?int $year = null;
-
-    #[ORM\Column]
-    private ?int $score = null;
 
     #[ORM\OneToMany(targetEntity: "CardTranslation", mappedBy: 'card', cascade: ['persist', 'remove'])]
     private Collection $translations;
@@ -50,6 +50,18 @@ class Card
         return $this->id;
     }
 
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): static
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
     public function getImage(): ?string
     {
         return $this->image;
@@ -70,18 +82,6 @@ class Card
     public function setYear(int $year): static
     {
         $this->year = $year;
-
-        return $this;
-    }
-
-    public function getScore(): ?int
-    {
-        return $this->score;
-    }
-
-    public function setScore(int $score): static
-    {
-        $this->score = $score;
 
         return $this;
     }
