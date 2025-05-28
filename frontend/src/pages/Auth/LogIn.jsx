@@ -1,11 +1,12 @@
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useState } from "react";
 
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 export default function LogIn() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [password, setPassword] = useState("");
   const [type, setType] = useState('password');
@@ -16,6 +17,13 @@ export default function LogIn() {
     setType(showPassword ? 'password' : 'text');
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log("Formulaire valide");
+    navigate('/gamechoice');
+  };
+
   return (
     <>
       <header className="header-login">
@@ -25,11 +33,11 @@ export default function LogIn() {
       <main className="main-login">
         <div className="main-login-form">
           <h1>{t("login.title")}</h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="email">
                 Email
-                <input type="email" name="email" placeholder="email@email.com" />
+                <input type="email" name="email" placeholder="email@email.com" required />
               </label>
               <label htmlFor="password">
                 {t("login.password")}
@@ -39,7 +47,12 @@ export default function LogIn() {
                     name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    autoComplete="current-password" className="password-input"
+                    autoComplete="current-password"
+                    className="password-input"
+                    minLength="8"
+                    pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$"
+                    title="Le mot de passe doit contenir au moins 8 caractères avec une majuscule, un chiffre et un caractère spécial (!@#$%^&*)."
+                    required
                   />
                   <span
                     className="password-toggle"
@@ -58,7 +71,9 @@ export default function LogIn() {
                 </div>
               </label>
             </div>
-            <input type="submit" value={t("login.continue")} className="submit-button button-primary" />
+            <button type="submit" className="submit-button button-primary">
+              {t("login.continue")}
+            </button>
           </form>
           <p>
             {t("login.noAccount")}

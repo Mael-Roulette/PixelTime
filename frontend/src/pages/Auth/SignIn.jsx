@@ -1,32 +1,64 @@
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useState } from "react";
 
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 export default function SignIn() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  
-  // États séparés pour chaque champ
   const [typePassword, setTypePassword] = useState('password');
   const [typePasswordConfirm, setTypePasswordConfirm] = useState('password');
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
 
-  // Fonction pour le premier champ mot de passe
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
     setTypePassword(showPassword ? 'password' : 'text');
-  }
-  
-  // Fonction pour le champ confirmer mot de passe
+  };
+
   const handleTogglePasswordConfirm = () => {
     setShowPasswordConfirm(!showPasswordConfirm);
     setTypePasswordConfirm(showPasswordConfirm ? 'password' : 'text');
-  }
+  };
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+
+    if (passwordConfirm && value !== passwordConfirm) {
+      setPasswordError("Les mots de passe ne correspondent pas");
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const handlePasswordConfirmChange = (e) => {
+    const value = e.target.value;
+    setPasswordConfirm(value);
+
+    if (password && value !== password) {
+      setPasswordError("Les mots de passe ne correspondent pas");
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (password !== passwordConfirm) {
+      setPasswordError("Les mots de passe ne correspondent pas");
+      return;
+    }
+
+    console.log("Formulaire valide");
+    navigate('/login');
+  };
 
   return (
     <>
@@ -37,16 +69,16 @@ export default function SignIn() {
       <main className="main-login">
         <div className="main-login-form">
           <h1>{t("signup.title")}</h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <div className="form-group-info">
                 <label htmlFor="pseudo">
                   Pseudo*
-                  <input type="text" name="pseudo" />
+                  <input type="text" name="pseudo" required />
                 </label>
                 <label htmlFor="email">
                   Email*
-                  <input type="email" name="email" placeholder="email@email.com" />
+                  <input type="email" name="email" placeholder="email@email.com" required />
                 </label>
               </div>
               <div className="form-group-password">
@@ -57,8 +89,12 @@ export default function SignIn() {
                       type={typePassword}
                       name="password"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={handlePasswordChange}
                       autoComplete="new-password"
+                      minLength="8"
+                      pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$"
+                      title="Le mot de passe doit contenir au moins 8 caractères avec une majuscule, un chiffre et un caractère spécial (!@#$%^&*)."
+                      required
                     />
                     <span
                       className="password-toggle"
@@ -83,8 +119,10 @@ export default function SignIn() {
                       type={typePasswordConfirm}
                       name="confirm-password"
                       value={passwordConfirm}
-                      onChange={(e) => setPasswordConfirm(e.target.value)}
+                      onChange={handlePasswordConfirmChange}
                       autoComplete="new-password"
+                      minLength="8"
+                      required
                     />
                     <span
                       className="password-toggle"
@@ -103,16 +141,19 @@ export default function SignIn() {
                   </div>
                 </label>
               </div>
+              {passwordError && <p className="error-message" style={{ color: 'red' }}>{passwordError}</p>}
               <p className="form-group-required">*{t("signup.fieldsRequired")}</p>
             </div>
-            <input type="submit" value={t("signup.continue")} className="submit-button button-primary" />
+            <button type="submit" className="submit-button button-primary">
+              {t("signup.continue")}
+            </button>
           </form>
           <p>
             {t("signup.alreadyHaveAccount")}
-            <a href="/login"> {t("signup.login")}</a>
+            <a href="/connexion"> {t("signup.login")}</a>
           </p>
         </div>
       </main>
     </>
-  )
+  );
 }

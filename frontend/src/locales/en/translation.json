@@ -43,7 +43,8 @@
         "fieldsRequired": "Required fields",
         "continue": "Continue",
         "alreadyHaveAccount": "Already have an account?",
-        "login": "Log in"
+        "login": "Log in",
+        "passwordMismatch": "Passwords do not match"
     },
 
     "login": {

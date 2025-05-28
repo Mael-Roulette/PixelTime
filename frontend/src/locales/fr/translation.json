@@ -13,7 +13,6 @@
         "profile": "Profil",
         "gameModes": "Modes"
     },
-
     "footer": {
         "sloggan": "Le jeu où chaque époque a sa manette",
         "navigation": "navigation",
@@ -23,7 +22,6 @@
         "legal": "Mentions légales",
         "privacy": "Politique de confidentialité"
     },
-
     "home": {
         "title": "Bienvenue sur PixelTime",
         "description": "De Pong à Elden Ring… Revivez l’histoire du jeu vidéo et prouvez que vous êtes incollable sur les époques !",
@@ -35,7 +33,6 @@
         "howItWorks": "PixelTime, comment ça marche ?",
         "howItWorksDescription": "Plonge dans l’univers vidéoludique et remonte le temps ! À chaque partie, tu reçois une série de cartes représentant des jeux vidéo cultes. Ton objectif ? Les replacer dans l’ordre chronologique sur une frise du temps. À chaque bonne réponse, tu gagnes 10 points. Mais attention : une erreur te coûte 5 points et la carte est retirée. Tu devras alors en piocher une nouvelle.  Trois modes de jeu sont disponibles pour varier les défis : 🕹️ Classique : joue sans pression, à ton rythme ❤️ Avec vies : trois erreurs, et c’est fini ⏱️ Chrono : chaque carte doit être placée en quelques secondes ! Accumule les points, débloque de nouveaux niveaux, et grimpe dans le classement des meilleurs joueurs."
     },
-
     "signup": {
         "title": "Créer mon compte",
         "password": "Mot de passe",
@@ -43,9 +40,9 @@
         "fieldsRequired": "Champs obligatoires",
         "continue": "Continuer",
         "alreadyHaveAccount": "Vous avez déjà un compte ?",
-        "login": "Se connecter"
+        "login": "Se connecter",
+        "passwordMismatch": "Les mots de passe ne correspondent pas"
     },
-
     "login": {
         "title": "Me connecter",
         "password": "Mot de passe",
@@ -54,14 +51,12 @@
         "signup": "S'inscrire",
         "forgotPassword": "Mot de passe oublié ?"
     },
-
     "forgotPassword": {
         "title": "Mot de passe oublié",
         "resetPassword": "Réinitialiser le mot de passe",
         "notForgotPassword": "Vous vous êtes trompé ?",
         "login": "Se connecter"
     },
-
     "newPassword": {
         "title": "Nouveau mot de passe",
         "password": "Mot de passe",
@@ -69,7 +64,6 @@
         "resetPassword": "Réinitialiser le mot de passe",
         "fieldsRequired": "Champs obligatoires"
     },
-
     "gameChoice": {
         "title": "Choisissez votre mode de jeu",
         "description": "Sélectionnez un jeu pour commencer à jouer.",
@@ -80,7 +74,6 @@
         "chronoModeDescription": "15 cartes, 5 secondes par carte, 5 vies. Chaque bonne réponse donne +10 points, chaque erreur retire –5 points et une vie. À la fin, ton score est multiplié par x2. Rapide, intense et stratégique !",
         "trainingWithCatalog": "Entraînez-vous avec le catalogue"
     },
-
     "game": {
         "score": "Score",
         "time": "Temps",
@@ -90,7 +83,6 @@
         "addCard": "Ajouter la carte",
         "next": "Suivant"
     },
-
     "profile": {
         "stats": "Statistiques",
         "totalScore": "Score total",
@@ -99,19 +91,16 @@
         "badges": "Badges",
         "levelReach": "Vous avez atteint le niveau {{level}} !"
     },
-
     "cardsCatalog": {
         "title": "Catalogue des cartes",
         "descriptionPC": "Survolez la carte pour afficher les informations",
         "descriptionMobile": "Touchez la carte pour afficher les informations"
     },
-
     "leaderboard": {
         "title": "Classement",
         "general": "Classement général",
         "level": "Classement par niveau"
     },
-
     "page404": {
         "title": "Erreur 404",
         "description": "La page que vous cherchez semble avoir été égarée dans le temps.",
