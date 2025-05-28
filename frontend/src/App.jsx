@@ -9,6 +9,7 @@ import LeaderBoard from "./pages/Game/LeaderBoard";
 import GameChoice from "./pages/Game/GameChoice";
 import GameBoard from "./pages/Game/GameBoard";
 import Catalog from "./pages/Game/Catalog";
+import Profile from "./pages/Game/Profile";
 import "./App.css";
 
 const App = observer(() => {
