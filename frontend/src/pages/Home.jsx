@@ -37,8 +37,8 @@ export default function Home() {
 						<h1 className="banner-content-title">{t("home.title")}</h1>
 						<p className="banner-content-description">{t("home.description")}</p>
 						<div className="banner-content-buttons">
-							<NavLink to={"/connexion"} className="button-primary">{t("global.login")}</NavLink>
-							<NavLink to={"/inscription"} className="button-secondary">{t("global.signup")}</NavLink>
+							<NavLink to={"/login"} className="button-primary">{t("global.login")}</NavLink>
+							<NavLink to={"/signin"} className="button-secondary">{t("global.signup")}</NavLink>
 						</div>
 					</div>
 				</section>

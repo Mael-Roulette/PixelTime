@@ -24,11 +24,11 @@ export default function NewPassword() {
 
       <main className="main-login">
         <div className="main-login-form">
-          <h1>{t("newPassword.passwordConfirm")}</h1>
+          <h1>{t("newPassword.title")}</h1>
           <form>
             <div className="form-group">
               <label htmlFor="password">
-                {t("newPassword.title")}
+                {t("newPassword.password")}
                 <div style={{ position: 'relative' }}>
                   <input
                     type={type}
@@ -54,7 +54,7 @@ export default function NewPassword() {
                 </div>
               </label>
               <label htmlFor="password-confirm">
-                {t("newPassword.passwordConfirm")}
+                {t("newPassword.confirmPassword")}
                 <div style={{ position: 'relative' }}>
                   <input
                     type={type}
@@ -84,10 +84,10 @@ export default function NewPassword() {
           </form>
           <p>
             {t("login.noAccount")}
-            <a href="/inscription"> {t("login.signup")}</a>
+            <a href="/login"> {t("login.signup")}</a>
           </p>
           <p>
-            <a href="/motdepasseoublie"> {t("login.forgotPassword")}</a>
+            <a href="/forgotpassword"> {t("login.forgotPassword")}</a>
           </p>
         </div>
       </main>

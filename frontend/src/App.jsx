@@ -16,14 +16,14 @@ const App = observer(() => {
 		<BrowserRouter>
 			<Routes>
 				<Route path='/' element={<Home />}></Route>
-				<Route path='/connexion' element={<Login />}></Route>
-				<Route path='/inscription' element={<SignIn />}></Route>
-				<Route path='/motdepasseoublie' element={<ForgotPassword />}></Route>
-				<Route path='/changermotdepasse' element={<NewPassword />}></Route>
-				<Route path='/classement' element={<LeaderBoard />}></Route>
-				<Route path="/choix-mode-jeu" element={<GameChoice />}></Route>
-				<Route path='/plateau-de-jeu' element={<GameBoard />}></Route>
-				<Route path='/catalogue' element={<Catalog />}></Route>
+				<Route path='/login' element={<Login />}></Route>
+				<Route path='/signin' element={<SignIn />}></Route>
+				<Route path='/forgotpassword' element={<ForgotPassword />}></Route>
+				<Route path='/newpassword' element={<NewPassword />}></Route>
+				<Route path='/leaderboard' element={<LeaderBoard />}></Route>
+				<Route path="/gamechoice" element={<GameChoice />}></Route>
+				<Route path='/gameboard' element={<GameBoard />}></Route>
+				<Route path='/catalog' element={<Catalog />}></Route>
 			</Routes>
 		</BrowserRouter>
 	);

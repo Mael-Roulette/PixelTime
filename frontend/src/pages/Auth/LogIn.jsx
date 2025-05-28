@@ -39,7 +39,7 @@ export default function LogIn() {
                     name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    autoComplete="current-password"
+                    autoComplete="current-password" className="password-input"
                   />
                   <span
                     className="password-toggle"
@@ -62,10 +62,10 @@ export default function LogIn() {
           </form>
           <p>
             {t("login.noAccount")}
-            <a href="/inscription"> {t("login.signup")}</a>
+            <a href="/signin"> {t("login.signup")}</a>
           </p>
           <p>
-            <a href="/motdepasseoublie"> {t("login.forgotPassword")}</a>
+            <a href="/forgotpassword"> {t("login.forgotPassword")}</a>
           </p>
         </div>
       </main>

@@ -6,8 +6,8 @@ const Footer = () => {
 
 	const navItems = [
 		{ name: t("footer.home"), path: "/" },
-		{ name: t("global.login"), path: "/connexion" },
-		{ name: t("global.leaderboard"), path: "/classement" },
+		{ name: t("global.login"), path: "/login" },
+		{ name: t("global.leaderboard"), path: "/leaderboard" },
 	];
 
 	const contactItems = [

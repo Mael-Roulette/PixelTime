@@ -6,9 +6,9 @@ export default function Header() {
 	const { t, i18n } = useTranslation();
 
 	const navItems = [
-		{ to: "/choix-mode-jeu", label: t("global.play") },
-		{ to: "/classement", label: t("global.leaderboard") },
-		{ to: "/connexion", label: t("global.login") },
+		{ to: "/gamechoice", label: t("global.play") },
+		{ to: "/leaderboard", label: t("global.leaderboard") },
+		{ to: "/login", label: t("global.login") },
 	];
 
 	const [isNavVisible, setIsNavVisible] = useState(false);
