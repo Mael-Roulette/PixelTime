@@ -37,7 +37,7 @@ export default function GameChoice() {
 					/>
 				</div>
 
-				<NavLink to='/catalogue' className='game-choice-catalog'>
+				<NavLink to='/catalog' className='game-choice-catalog'>
 					{t("gameChoice.trainingWithCatalog")}
 				</NavLink>
 			</div>

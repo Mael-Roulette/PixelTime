@@ -74,13 +74,13 @@ function BottomNavigation() {
 			id: "gameMode",
 			label: t("global.gameModes"),
 			icon: "GameMode",
-			to: "/choix-mode-jeu",
+			to: "/gamechoice",
 		},
 		{
 			id: "catalog",
 			label: t("global.catalog"),
 			icon: "Catalog",
-			to: "/catalogue",
+			to: "/catalog",
 		},
 		{
 			id: "play",
@@ -93,7 +93,7 @@ function BottomNavigation() {
 			id: "leaderboard",
 			label: t("global.leaderboard"),
 			icon: "LeaderBoard",
-			to: "/classement",
+			to: "/leaderboard",
 		},
 		{
 			id: "profile",

@@ -150,7 +150,7 @@ export default function SignIn() {
           </form>
           <p>
             {t("signup.alreadyHaveAccount")}
-            <a href="/connexion"> {t("signup.login")}</a>
+            <a href="/login"> {t("signup.login")}</a>
           </p>
         </div>
       </main>
