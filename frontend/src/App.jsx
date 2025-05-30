@@ -10,8 +10,10 @@ import GameChoice from "./pages/Game/GameChoice";
 import GameBoard from "./pages/Game/GameBoard";
 import Catalog from "./pages/Game/Catalog";
 import Profile from "./pages/Game/Profile";
+import AdminHome from "./pages/Admin/AdminHome";
 import "./App.css";
-import PrivateRoute from "./components/PrivateRoute";
+import UserRoute from "./components/UserRoute";
+import AdminRoute from "./components/AdminRoute";
 
 const App = observer(() => {
 	return (
@@ -26,14 +28,25 @@ const App = observer(() => {
 				<Route path='/gamechoice' element={<GameChoice />}></Route>
 				<Route path='/gameboard' element={<GameBoard />}></Route>
 				<Route path='/catalog' element={<Catalog />}></Route>
+				{/* Route pour les users */}
 				<Route
 					path='/profile'
 					element={
-						<PrivateRoute>
+						<UserRoute>
 							<Profile />
-						</PrivateRoute>
+						</UserRoute>
 					}
 				></Route>
+
+				{/* Route pour les admins */}
+				<Route
+					path='/admin'
+					element={
+						<AdminRoute>
+							<AdminHome />
+						</AdminRoute>
+					}
+				></Route>	
 			</Routes>
 		</BrowserRouter>
 	);

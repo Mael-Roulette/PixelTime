@@ -6,12 +6,14 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements PasswordAuthenticatedUserInterface
+#[UniqueEntity(fields: ['email'], message: 'Cet email est déjà utilisé')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -25,9 +27,13 @@ class User implements PasswordAuthenticatedUserInterface
     private ?string $profilePicture = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le pseudo est requis')]
+    #[Assert\Length(min: 3, max: 50, minMessage: 'Le pseudo doit faire au moins 3 caractères', maxMessage: 'Le pseudo ne peut pas dépasser 50 caractères')]
     private ?string $pseudo = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: 'L\'email est requis')]
+    #[Assert\Email(message: 'L\'email n\'est pas valide')]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
@@ -39,17 +45,41 @@ class User implements PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $money = null;
 
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $lastLoginAt = null;
 
     public function __construct()
     {
-        $this->level = new ArrayCollection();
+        $this->levels = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->roles = ['ROLE_USER'];
     }
 
     public function addLevel(Level $level): static
     {
-        $this->levels->add($level);
+        if (!$this->levels->contains($level)) {
+            $this->levels->add($level);
+        }
 
         return $this;
+    }
+
+    public function removeLevel(Level $level): static
+    {
+        $this->levels->removeElement($level);
+
+        return $this;
+    }
+
+    public function getLevels(): Collection
+    {
+        return $this->levels;
     }
 
     public function getId(): ?int
@@ -129,13 +159,51 @@ class User implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getRoles(): array
+    {
+        return array_unique($this->roles);
+    }
 
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getLastLoginAt(): ?\DateTimeImmutable
+    {
+        return $this->lastLoginAt;
+    }
+
+    public function setLastLoginAt(?\DateTimeImmutable $lastLoginAt): static
+    {
+        $this->lastLoginAt = $lastLoginAt;
+
+        return $this;
+    }
+
+    // Méthodes requises par UserInterface
     public function getUserIdentifier(): string
     {
-        return $this->email;
+        return (string) $this->email;
     }
 
     public function eraseCredentials(): void
     {
+        // si on n'a pas besoin de stocker de données sensibles, cette méthode peut rester vide
+        // Sinon elle permet de nettoyer les données sensibles
     }
 }

@@ -4,114 +4,211 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 
 #[Route('/api', name: 'api_')]
 class AuthController extends AbstractController
 {
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private UserPasswordHasherInterface $passwordHasher,
+        private ValidatorInterface $validator,
+        private JWTTokenManagerInterface $jwtManager
+    ) {
+    }
+
     #[Route('/register', name: 'register', methods: ['POST'])]
-    public function register(
-        Request $request,
-        UserPasswordHasherInterface $hasher,
-        ValidatorInterface $validator,
-        EntityManagerInterface $em
-    ): JsonResponse {
-        $data = json_decode($request->getContent(), true);
-
-        if (empty($data['email']) || empty($data['password']) || empty($data['pseudo'])) {
-            return new JsonResponse(['error' => 'Email, mot de passe et pseudo requis'], 400);
-        }
-
-        $existingUser = $em->getRepository(User::class)->findOneBy(['email' => $data['email']]);
-        if ($existingUser) {
-            return new JsonResponse(['error' => 'Cet email est déjà utilisé'], 409);
-        }
-
-        // Créer le nouvel utilisateur
-        $user = new User();
-        $user->setPseudo($data['pseudo']);
-        $user->setEmail($data['email']);
-
-        // Hasher le mot de passe
-        $hashedPassword = $hasher->hashPassword($user, $data['password']);
-        $user->setPassword($hashedPassword);
-
-        // Validation avec les contraintes Symfony
-        $errors = $validator->validate($user);
-        if (count($errors) > 0) {
-            $errorMessages = [];
-            foreach ($errors as $error) {
-                $errorMessages[] = $error->getMessage();
+    public function register(Request $request): JsonResponse
+    {
+        try {
+            $data = json_decode($request->getContent(), true);
+            if (empty($data['email']) || empty($data['password']) || empty($data['pseudo'])) {
+                return new JsonResponse([
+                    'error' => 'Email, mot de passe et pseudo sont requis'
+                ], Response::HTTP_BAD_REQUEST);
             }
-            return new JsonResponse(['errors' => $errorMessages], 400);
-        }
 
-        // Sauvegarder en base
-        $em->persist($user);
-        $em->flush();
+            if (strlen($data['password']) < 8) {
+                return new JsonResponse([
+                    'error' => 'Le mot de passe doit contenir au moins 8 caractères'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            // Vérifier si l'email existe déjà
+            $existingUser = $this->entityManager->getRepository(User::class)
+                ->findOneBy(['email' => $data['email']]);
+
+            if ($existingUser) {
+                return new JsonResponse([
+                    'error' => 'Cet email est déjà utilisé'
+                ], Response::HTTP_CONFLICT);
+            }
+
+            // Créer le nouvel utilisateur
+            $user = new User();
+            $user->setPseudo($data['pseudo']);
+            $user->setEmail($data['email']);
+            $user->setScore(0);
+            $user->setMoney(0);
+
+            // Hasher le mot de passe
+            $hashedPassword = $this->passwordHasher->hashPassword($user, $data['password']);
+            $user->setPassword($hashedPassword);
+
+            $errors = $this->validator->validate($user);
+            if (count($errors) > 0) {
+                $errorMessages = [];
+                foreach ($errors as $error) {
+                    $errorMessages[] = $error->getMessage();
+                }
+                return new JsonResponse([
+                    'errors' => $errorMessages
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+
+            // Générer un token JWT pour l'utilisateur créé
+            $token = $this->jwtManager->create($user);
+
+            return new JsonResponse([
+                'message' => 'Utilisateur créé avec succès',
+                'token' => $token,
+                'user' => [
+                    'id' => $user->getId(),
+                    'email' => $user->getEmail(),
+                    'pseudo' => $user->getPseudo(),
+                    'score' => $user->getScore(),
+                    'money' => $user->getMoney()
+                ]
+            ], Response::HTTP_CREATED);
+
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'error' => 'Une erreur est survenue lors de l\'inscription'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[Route('/login', name: 'manual_login', methods: ['POST'])]
+    public function login(Request $request): JsonResponse
+    {
+        try {
+            $data = json_decode($request->getContent(), true);
+
+            // Validater des données
+            if (empty($data['email']) || empty($data['password'])) {
+                return new JsonResponse([
+                    'error' => 'Email et mot de passe requis'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            // Trouver l'utilisateur
+            $user = $this->entityManager->getRepository(User::class)
+                ->findOneBy(['email' => $data['email']]);
+
+            if (!$user || !$this->passwordHasher->isPasswordValid($user, $data['password'])) {
+                return new JsonResponse([
+                    'error' => 'Identifiants invalides'
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+
+            // Mettre à jour la dernière connexion
+            $user->setLastLoginAt(new \DateTimeImmutable());
+            $this->entityManager->flush();
+
+            // Générer le token JWT
+            $token = $this->jwtManager->create($user);
+
+            return new JsonResponse([
+                'token' => $token,
+                'user' => [
+                    'id' => $user->getId(),
+                    'email' => $user->getEmail(),
+                    'pseudo' => $user->getPseudo(),
+                    'score' => $user->getScore(),
+                    'money' => $user->getMoney(),
+                    'roles' => $user->getRoles()
+                ]
+            ]);
+
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'error' => 'Une erreur est survenue lors de la connexion'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[Route('/user', name: 'current_user', methods: ['GET'])]
+    public function getCurrentUser(#[CurrentUser] ?User $user): JsonResponse
+    {
+        if (!$user) {
+            return new JsonResponse([
+                'error' => 'Utilisateur non authentifié'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
 
         return new JsonResponse([
-            'message' => 'Utilisateur créé avec succès',
             'user' => [
                 'id' => $user->getId(),
                 'email' => $user->getEmail(),
                 'pseudo' => $user->getPseudo(),
-            ]
-        ], 201);
-    }
-
-    #[Route('/login', name: 'login', methods: ['POST'])]
-    public function login(
-        Request $request,
-        UserPasswordHasherInterface $hasher,
-        EntityManagerInterface $em
-    ): JsonResponse {
-        $data = json_decode($request->getContent(), true);
-
-        // Validation des données
-        if (empty($data['email']) || empty($data['password'])) {
-            return new JsonResponse(['error' => 'Email et mot de passe requis'], 400);
-        }
-
-        // Trouver l'utilisateur
-        $user = $em->getRepository(User::class)->findOneBy(['email' => $data['email']]);
-
-        if (!$user || !$hasher->isPasswordValid($user, $data['password'])) {
-            return new JsonResponse(['error' => 'Identifiants invalides'], 401);
-        }
-
-        return new JsonResponse([
-            'user' => [
-                'id' => $user->getId(),
-                'email' => $user->getEmail(),
-                'pseudo' => $user->getPseudo()
+                'score' => $user->getScore(),
+                'level' => $user->getLevels(),
+                'money' => $user->getMoney(),
+                'profilePicture' => $user->getProfilePicture(),
+                'roles' => $user->getRoles(),
+                'createdAt' => $user->getCreatedAt()?->format('Y-m-d H:i:s'),
+                'lastLoginAt' => $user->getLastLoginAt()?->format('Y-m-d H:i:s')
             ]
         ]);
     }
 
-    #[Route('/user', name: 'current_user', methods: ['GET'])]
-    public function getCurrentUser(): JsonResponse
+    #[Route('/user/role', name: 'get_role', methods: ['GET'])]
+    public function getRole(#[CurrentUser] ?User $user): JsonResponse
     {
-        // Récupérer l'utilisateur connecté
-        $user = $this->getUser();
-
         if (!$user) {
-            return new JsonResponse(['error' => 'Utilisateur non connecté'], 401);
+            return new JsonResponse([
+                'error' => 'Utilisateur non authentifié'
+            ], Response::HTTP_UNAUTHORIZED);
         }
 
+        $roles = $user->getRoles();
+        $isAdmin = in_array('ROLE_ADMIN', $roles);
+
         return new JsonResponse([
-            'user' => [
-                'id' => $user->getId(),
-                'email' => $user->getEmail(),
-                'firstName' => $user->getFirstName(),
-                'lastName' => $user->getLastName(),
-                'roles' => $user->getRoles()
-            ]
+            'roles' => $roles,
+            'isAdmin' => $isAdmin,
+            'role' => $isAdmin ? 'admin' : 'user'
         ]);
     }
+
+    #[Route('/refresh-token', name: 'refresh_token', methods: ['POST'])]
+    public function refreshToken(#[CurrentUser] ?User $user): JsonResponse
+    {
+        if (!$user) {
+            return new JsonResponse([
+                'error' => 'Token invalide'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        // Générer un nouveau token
+        $token = $this->jwtManager->create($user);
+
+        return new JsonResponse([
+            'token' => $token
+        ]);
+    }
+
+
 }
