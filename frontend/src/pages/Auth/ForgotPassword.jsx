@@ -1,20 +1,24 @@
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
 import { useState } from "react";
+import authService from "../../../services/authService";
 
 export default function forgotPassword() {
 	const { t } = useTranslation();
 
 	const [email, setEmail] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		await fetch("/forgot-password", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ email }),
-		});
-		alert("Si un compte existe, un email a été envoyé");
+
+		setIsLoading(true);
+
+		try {
+			await authService.forgotPassword(email);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -35,13 +39,15 @@ export default function forgotPassword() {
 									name='email'
 									placeholder='email@email.com'
 									onChange={(e) => setEmail(e.target.value)}
+									disabled={isLoading}
 								/>
 							</label>
 						</div>
 						<input
 							type='submit'
-							value={t("forgotPassword.resetPassword")}
+							value={isLoading ? t("forgotPassword.loading") : t("forgotPassword.resetPassword")}
 							className='submit-button button-primary'
+							disabled={isLoading}
 						/>
 					</form>
 					<p>

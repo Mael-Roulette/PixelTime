@@ -1,13 +1,13 @@
 class AuthService {
   constructor () {
     this.TOKEN_KEY = 'jwt_token';
-    this.baseURL = 'http://localhost:8000/api';
+    this.baseURL = 'http://localhost:8000';
   }
 
   // Méthode de connexion
   async login ( email, password ) {
     try {
-      const response = await fetch( `${ this.baseURL }/login`, {
+      const response = await fetch( `${ this.baseURL }/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify( { email, password } )
@@ -30,7 +30,7 @@ class AuthService {
   // Méthode d'inscription
   async register ( userData ) {
     try {
-      const response = await fetch( `${ this.baseURL }/register`, {
+      const response = await fetch( `${ this.baseURL }/api/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify( userData )
@@ -49,6 +49,27 @@ class AuthService {
     }
     catch ( error ) {
       console.error( 'Erreur d\'inscription:', error );
+      throw error;
+    }
+  }
+
+  async forgotPassword ( email ) {
+    try {
+      const response = await fetch( `${ this.baseURL }/forgot-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify( { email } ),
+      } );
+
+      const data = await response.json();
+
+      if ( !response.ok ) {
+        throw new Error( data.error || 'Erreur lors de la demande de réinitialisation' );
+      }
+    
+      alert( data.message );
+    } catch ( error ) {
+      console.error( 'Erreur de réinitialisation de mot de passe:', error );
       throw error;
     }
   }
