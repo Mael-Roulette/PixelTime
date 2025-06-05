@@ -39,6 +39,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $passwordToken = null;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $passwordExpiresAt = null;
+
     #[ORM\Column(nullable: true)]
     private ?int $score = null;
 
@@ -132,6 +138,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->password = $password;
 
+        return $this;
+    }
+
+
+
+    public function getPasswordToken(): ?string
+    {
+        return $this->passwordToken;
+    }
+
+    public function setPasswordToken(?string $passwordToken): static
+    {
+        $this->passwordToken = $passwordToken;
+        return $this;
+    }
+
+    public function getPasswordExpiresAt(): ?\DateTimeImmutable
+    {
+        return $this->passwordExpiresAt;
+    }
+
+    public function setPasswordExpiresAt(?\DateTimeImmutable $passwordExpiresAt): static
+    {
+        $this->passwordExpiresAt = $passwordExpiresAt;
         return $this;
     }
 
