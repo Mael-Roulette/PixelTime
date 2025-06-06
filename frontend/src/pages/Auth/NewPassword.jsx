@@ -1,11 +1,13 @@
 import { useTranslation } from "react-i18next";
 import { NavLink, useSearchParams } from "react-router";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
-export default function NewPassword() {
+function NewPassword() {
 	const { t } = useTranslation();
+	const navigate = useNavigate();
 
 	const [password, setPassword] = useState("");
 	const [confirm, setConfirm] = useState("");
@@ -14,6 +16,11 @@ export default function NewPassword() {
 
 	const [params] = useSearchParams();
 	const token = params.get("token");
+
+	if (!token) {
+		navigate("/login");
+		return null;
+	}
 
 	const handleToggle = () => {
 		setShowPassword(!showPassword);
@@ -27,7 +34,7 @@ export default function NewPassword() {
 			return;
 		}
 
-		const res = await fetch(`/reset-password/${token}`, {
+		const res = await fetch(`http://localhost:8000/reset-password/${token}`, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ password }),
@@ -131,3 +138,5 @@ export default function NewPassword() {
 		</>
 	);
 }
+
+export default NewPassword;

@@ -1,21 +1,37 @@
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
-import { useState } from "react";
-import authService from "../../../services/authService";
+import React, { useState } from "react";
 
-export default function forgotPassword() {
+function ForgotPassword() {
 	const { t } = useTranslation();
 
 	const [email, setEmail] = useState("");
+	const [message, setMessage] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
 		setIsLoading(true);
 
 		try {
-			await authService.forgotPassword(email);
+			const response = await fetch("http://localhost:8000/forgot-password", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ email }),
+			});
+
+			const data = await response.json();
+
+			if (response.ok) {
+				setMessage(data.message);
+			} else {
+				setMessage(data.error || "Une erreur est survenue");
+			}
+		} catch (error) {
+			console.error("Erreur:", error);
+			setMessage("Erreur de connexion au serveur");
 		} finally {
 			setIsLoading(false);
 		}
@@ -45,11 +61,16 @@ export default function forgotPassword() {
 						</div>
 						<input
 							type='submit'
-							value={isLoading ? t("forgotPassword.loading") : t("forgotPassword.resetPassword")}
+							value={
+								isLoading
+									? t("forgotPassword.loading")
+									: t("forgotPassword.resetPassword")
+							}
 							className='submit-button button-primary'
 							disabled={isLoading}
 						/>
 					</form>
+					{message && <p>{message}</p>}
 					<p>
 						{t("forgotPassword.notForgotPassword")}
 						<a href='/login'> {t("forgotPassword.login")}</a>
@@ -59,3 +80,5 @@ export default function forgotPassword() {
 		</>
 	);
 }
+
+export default ForgotPassword;

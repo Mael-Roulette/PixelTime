@@ -53,27 +53,6 @@ class AuthService {
     }
   }
 
-  async forgotPassword ( email ) {
-    try {
-      const response = await fetch( `${ this.baseURL }/forgot-password`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify( { email } ),
-      } );
-
-      const data = await response.json();
-
-      if ( !response.ok ) {
-        throw new Error( data.error || 'Erreur lors de la demande de réinitialisation' );
-      }
-    
-      alert( data.message );
-    } catch ( error ) {
-      console.error( 'Erreur de réinitialisation de mot de passe:', error );
-      throw error;
-    }
-  }
-
   // Méthode de déconnexion
   logout () {
     localStorage.removeItem( this.TOKEN_KEY );
