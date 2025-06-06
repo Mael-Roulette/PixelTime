@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/api', name: 'api_')]
 class AuthController extends AbstractController
@@ -175,6 +176,7 @@ class AuthController extends AbstractController
     }
 
     #[Route('/user/role', name: 'get_role', methods: ['GET'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function getRole(#[CurrentUser] ?User $user): JsonResponse
     {
         if (!$user) {
@@ -209,6 +211,4 @@ class AuthController extends AbstractController
             'token' => $token
         ]);
     }
-
-
 }

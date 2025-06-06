@@ -1,6 +1,7 @@
 class AuthService {
   constructor () {
     this.TOKEN_KEY = 'jwt_token';
+    this.USER_KEY = 'user_data';
     this.baseURL = 'http://localhost:8000';
   }
 
@@ -17,6 +18,7 @@ class AuthService {
 
       if ( response.ok ) {
         localStorage.setItem( this.TOKEN_KEY, data.token );
+        localStorage.setItem( this.USER_KEY, JSON.stringify( data.user ) );
         return data;
       } else {
         throw new Error( data.error || 'Erreur lors de la connexion' );
@@ -39,9 +41,6 @@ class AuthService {
       const data = await response.json();
 
       if ( response.ok ) {
-        // Stocker automatiquement le token après inscription
-        localStorage.setItem( this.TOKEN_KEY, data.token );
-        localStorage.setItem( this.USER_KEY, JSON.stringify( data.user ) );
         return data;
       } else {
         throw new Error( data.error || data.errors || 'Erreur lors de l\'inscription' );
@@ -56,6 +55,7 @@ class AuthService {
   // Méthode de déconnexion
   logout () {
     localStorage.removeItem( this.TOKEN_KEY );
+    localStorage.removeItem( this.USER_KEY );
   }
 
   // Méthode pour vérifier si l'utilisateur est connecté
@@ -69,15 +69,14 @@ class AuthService {
     if ( !token ) return false;
 
     try {
-      const response = await fetch( `${ this.baseURL }/user/role`, {
+      const response = await fetch( `${ this.baseURL }/api/user/role`, {
         method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${ token }`
-        }
+        headers: { 'Content-Type': 'application/json' },
       } );
 
       if ( response.ok ) {
         const data = await response.json();
+        console.log(data)
         return data.isAdmin === true || data.role === 'admin';
       }
       return false;
