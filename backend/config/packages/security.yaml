@@ -13,7 +13,7 @@ security:
     app_user_provider:
       entity:
         class: App\Entity\User
-        property: email
+        property: id
 
   firewalls:
     dev:
@@ -47,7 +47,6 @@ security:
     - { path: ^/api/login, roles: PUBLIC_ACCESS }
     - { path: ^/api/register, roles: PUBLIC_ACCESS }
     - { path: ^/api/login_check, roles: PUBLIC_ACCESS }
-    - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
   security:

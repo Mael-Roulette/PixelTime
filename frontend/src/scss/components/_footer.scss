@@ -11,7 +11,7 @@
 		flex-direction: column;
 		gap: 2rem 15rem;
 		color: $white;
-		padding: 1.5rem 2rem 10rem;
+		padding: 1.5rem 2rem;
 		border-top: 2px solid $white;
 
 		&-social {
@@ -62,8 +62,9 @@
 	}
 
 	&-legal {
-		color: $white;
+		background-color: $white;
 		width: 100%;
+		padding-bottom: 10rem;
 
 		ul {
 			display: flex;
@@ -112,6 +113,8 @@
 		}
 
 		&-legal {
+			padding-bottom: 0;
+
 			ul {
 				flex-direction: row;
 				justify-content: space-around;

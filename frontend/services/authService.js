@@ -2,13 +2,13 @@ class AuthService {
   constructor () {
     this.TOKEN_KEY = 'jwt_token';
     this.USER_KEY = 'user_data';
-    this.baseURL = 'http://localhost:8000';
+    this.baseURL = 'http://localhost:8000/api';
   }
 
   // Méthode de connexion
   async login ( email, password ) {
     try {
-      const response = await fetch( `${ this.baseURL }/api/login`, {
+      const response = await fetch( `${ this.baseURL }/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify( { email, password } )
@@ -19,6 +19,7 @@ class AuthService {
       if ( response.ok ) {
         localStorage.setItem( this.TOKEN_KEY, data.token );
         localStorage.setItem( this.USER_KEY, JSON.stringify( data.user ) );
+
         return data;
       } else {
         throw new Error( data.error || 'Erreur lors de la connexion' );
@@ -32,7 +33,7 @@ class AuthService {
   // Méthode d'inscription
   async register ( userData ) {
     try {
-      const response = await fetch( `${ this.baseURL }/api/register`, {
+      const response = await fetch( `${ this.baseURL }/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify( userData )
@@ -69,14 +70,14 @@ class AuthService {
     if ( !token ) return false;
 
     try {
-      const response = await fetch( `${ this.baseURL }/api/user/role`, {
+      const response = await fetch( `${ this.baseURL }/user/role`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       } );
 
       if ( response.ok ) {
         const data = await response.json();
-        console.log(data)
+        console.log( data )
         return data.isAdmin === true || data.role === 'admin';
       }
       return false;
@@ -91,24 +92,30 @@ class AuthService {
     return localStorage.getItem( this.TOKEN_KEY );
   }
 
-  // Méthode pour vérifier le token JWT
-  async verifyToken () {
-    const token = this.getToken();
-    if ( !token ) return false;
-
+  // Permet de récupére l'utilisateur actuel
+  async getUser () {
     try {
-      const response = await fetch( `${ this.baseURL }/verify-token`, {
-        method: 'POST',
+      const token = localStorage.getItem( this.TOKEN_KEY );
+
+      const response = await fetch( `${ this.baseURL }/user`, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${ token }`
         }
       } );
 
-      return response.ok;
-    } catch ( error ) {
-      console.error( 'Erreur de vérification du token:', error );
-      return false;
+      const data = await response.json();
+
+      if ( response.ok ) {
+        return data;
+      } else {
+        throw new Error( data.error || data.errors || 'Erreur lors de la récupération de l\'utilisateur' );
+      }
+    }
+    catch ( error ) {
+      console.error( 'Erreur de récupération :', error );
+      throw error;
     }
   }
 }

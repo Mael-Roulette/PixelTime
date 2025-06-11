@@ -164,6 +164,7 @@
 	right: 0;
 	z-index: 1000;
 	background: transparent;
+	box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.3);
 
 	&-logo {
 		display: none;
@@ -226,6 +227,7 @@
 		}
 
 		&--center {
+			box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.3);
 			background: $yellow;
 			color: $blue;
 			outline: 10px solid $blue;
@@ -345,7 +347,7 @@
 		}
 
 		&-item {
-			padding: .5rem 1rem;
+			padding: 0.5rem 1rem;
 
 			&--center {
 				display: none;
