@@ -1,12 +1,16 @@
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
+import authService from "../../services/authService";
 
 const Footer = () => {
 	const { t } = useTranslation();
+	const isAuthenticated = authService.isAuthenticated();
 
 	const navItems = [
 		{ name: t("footer.home"), path: "/" },
-		{ name: t("global.login"), path: "/login" },
+		isAuthenticated
+			? { name: t("global.profile"), path: "/profile" }
+			: { name: t("global.login"), path: "/login" },
 		{ name: t("global.leaderboard"), path: "/leaderboard" },
 	];
 

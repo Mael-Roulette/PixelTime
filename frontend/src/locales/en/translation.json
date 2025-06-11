@@ -11,7 +11,8 @@
         "chronoMode": "Chrono mode",
         "catalog": "Catalog",
         "profile": "Profile",
-        "gameModes": "Modes"
+        "gameModes": "Modes",
+        "loading": "Loading..."
     },
 
     "footer": {
@@ -44,7 +45,17 @@
         "continue": "Continue",
         "alreadyHaveAccount": "Already have an account?",
         "login": "Log in",
-        "passwordMismatch": "Passwords do not match"
+        "passwordMismatch": "Passwords do not match",
+        "errors" : {
+            "pseudoRequired": "Username is required",
+            "emailRequired": "Email is required",
+            "emailInvalid": "Email is invalid",
+            "passwordRequired": "Password is required",
+            "passwordTooShort": "Password must be at least 6 characters long",
+            "passwordFormat": "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+            "confirmPasswordRequired": "Confirm password is required",
+            "registrationFailed": "Registration failed, please try again."
+        }
     },
 
     "login": {
@@ -53,7 +64,13 @@
         "continue": "Continue",
         "noAccount": "Don't have an account yet?",
         "signup": "Register",
-        "forgotPassword": "Forgot password ?"
+        "forgotPassword": "Forgot password ?",
+        "errors" : {
+            "emailRequired": "Email is mandatory",
+            "emailInvalid": "Email is invalid",
+            "passwordRequired": "Password is mandatory",
+            "loginFailed": "Login failed, please check your credentials."
+        }
     },
 
     "forgotPassword": {
@@ -96,6 +113,7 @@
         "stats": "Statistics",
         "totalScore": "Total score",
         "level": "Level",
+        "defaultLevel": "Beginner",
         "money": "Money",
         "badges": "Badges",
         "levelReach": "Vous avez atteint le niveau {{level}} !"

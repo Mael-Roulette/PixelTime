@@ -278,7 +278,7 @@ export default function SignIn() {
 							className='submit-button button-primary'
 							disabled={isLoading}
 						>
-							{t("signup.continue")}
+              {isLoading ? t('global.loading') : t("signup.continue")}
 						</button>
 					</form>
 

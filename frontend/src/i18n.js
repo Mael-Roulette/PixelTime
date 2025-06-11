@@ -21,7 +21,7 @@ i18n
                 translation: translationES,
             },
         },
-        lng: "fr",
+        lng: localStorage.getItem('i18nextLng') || "fr",
         fallbackLng: "fr",
         debug: false,
         interpolation: {

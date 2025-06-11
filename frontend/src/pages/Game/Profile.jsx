@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import authService from "../../../services/authService";
 import BottomNavBar from "../../components/BottomNavBar";
 import Footer from "../../components/Footer";
+import { useTranslation } from "react-i18next";
 
 const Profile = () => {
+	const { t } = useTranslation();
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -32,8 +34,8 @@ const Profile = () => {
 
 	if (loading)
 		return (
-			<div className="loading">
-				<p>Chargement...</p>
+			<div className='loading'>
+				<p>{ t("global.loading") }</p>
 			</div>
 		);
 
@@ -62,24 +64,24 @@ const Profile = () => {
 					</div>
 
 					<div className='profile-content-stats'>
-						<h2>Statistiques</h2>
+						<h2>{ t("profile.stats") }</h2>
 						<ul>
 							<li>
-								<h3 className='stat-title'>🏅 Score</h3>
+								<h3 className='stat-title'>🏅 { t("profile.totalScore") }</h3>
 								<p className='stat-value'>{user.score}</p>
 							</li>
 							<li>
-								<h3 className='stat-title'>🏆 Niveau</h3>
+								<h3 className='stat-title'>🏆 { t("profile.level") }</h3>
 								{user.level && Object.keys(user.level).length > 0 ? (
 									<p className='stat-value'>
 										{Object.values(user.level).pop()}
 									</p>
 								) : (
-									<p className='stat-value'>Débutant</p>
+									<p className='stat-value'>{ t("profile.defaultLevel") }</p>
 								)}
 							</li>
 							<li>
-								<h3 className='stat-title'>🪙 Argent</h3>
+								<h3 className='stat-title'>🪙 { t("profile.money") }</h3>
 								<p className='stat-value'>{user.money}</p>
 							</li>
 						</ul>

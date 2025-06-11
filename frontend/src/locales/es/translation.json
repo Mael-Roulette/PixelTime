@@ -11,7 +11,8 @@
         "chronoMode": "Modo chrono",
         "catalog": "Catálogo",
         "profile": "Perfil",
-        "gameModes": "Modos"
+        "gameModes": "Modos",
+        "loading": "Cargando..."
     },
 
     "footer": {
@@ -44,7 +45,17 @@
         "continue": "Continuar",
         "alreadyHaveAccount": "¿Ya tienes una cuenta?",
         "login": "Acceso",
-        "passwordMismatch": "Las contraseñas no coinciden"
+        "passwordMismatch": "Las contraseñas no coinciden",
+        "errors" : {
+            "pseudoRequired": "El nombre de usuario es obligatorio",
+            "emailRequired": "El correo electrónico es obligatorio",
+            "emailInvalid": "El correo electrónico no es válido",
+            "passwordRequired": "La contraseña es obligatoria",
+            "passwordTooShort": "La contraseña debe contener al menos 6 caracteres",
+            "passwordFormat": "La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial",
+            "confirmPasswordRequired": "La confirmación de la contraseña es obligatoria",
+            "registrationFailed": "Error en el registro, por favor inténtalo de nuevo."
+        }
     },
 
     "login": {
@@ -53,7 +64,13 @@
         "continue": "Continuar",
         "noAccount": "¿Aún no tienes una cuenta?",
         "signup": "Registrarse",
-        "forgotPassword": "¿Contraseña olvidada?"
+        "forgotPassword": "¿Contraseña olvidada?",
+        "errors" : {
+            "emailRequired": "El correo electrónico es obligatorio",
+            "emailInvalid": "El correo electrónico no es válido",
+            "passwordRequired": "La contraseña es obligatoria",
+            "loginFailed": "Error de inicio de sesión, verifique sus credenciales."
+        }
     },
 
     "forgotPassword": {
@@ -96,6 +113,7 @@
         "stats": "Estadísticas",
         "totalScore": "Puntuación total",
         "level": "Nivel",
+        "defaultLevel": "Principiante",
         "money": "Dinero",
         "badges": "Insignias",
         "levelReach": "Has alcanzado el nivel {{level}} !"

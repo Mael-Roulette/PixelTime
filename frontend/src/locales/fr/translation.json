@@ -11,7 +11,8 @@
         "chronoMode": "Mode chrono",
         "catalog": "Catalogue",
         "profile": "Profil",
-        "gameModes": "Modes"
+        "gameModes": "Modes",
+        "loading": "Chargement..."
     },
     "footer": {
         "sloggan": "Le jeu où chaque époque a sa manette",
@@ -41,7 +42,17 @@
         "continue": "Continuer",
         "alreadyHaveAccount": "Vous avez déjà un compte ?",
         "login": "Se connecter",
-        "passwordMismatch": "Les mots de passe ne correspondent pas"
+        "passwordMismatch": "Les mots de passe ne correspondent pas",
+        "errors" : {
+            "pseudoRequired": "Le pseudo est obligatoire",
+            "emailRequired": "L'email est obligatoire",
+            "emailInvalid": "L'email n'est pas valide",
+            "passwordRequired": "Le mot de passe est obligatoire",
+            "passwordTooShort": "Le mot de passe doit contenir au moins 6 caractères",
+            "passwordFormat": "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial",
+            "confirmPasswordRequired": "La confirmation du mot de passe est obligatoire",
+            "registrationFailed": "Échec de l'inscription, veuillez réessayer."
+        }
     },
     "login": {
         "title": "Me connecter",
@@ -49,7 +60,13 @@
         "continue": "Continuer",
         "noAccount": "Vous n'avez pas encore de compte ?",
         "signup": "S'inscrire",
-        "forgotPassword": "Mot de passe oublié ?"
+        "forgotPassword": "Mot de passe oublié ?",
+        "errors" : {
+            "emailRequired": "L'email est obligatoire",
+            "emailInvalid": "L'email n'est pas valide",
+            "passwordRequired": "Le mot de passe est obligatoire",
+            "loginFailed": "Échec de la connexion, veuillez vérifier vos identifiants."
+        }
     },
     "forgotPassword": {
         "title": "Mot de passe oublié",
@@ -87,6 +104,7 @@
         "stats": "Statistiques",
         "totalScore": "Score total",
         "level": "Niveau",
+        "defaultLevel": "Débutant",
         "money": "Argent",
         "badges": "Badges",
         "levelReach": "Vous avez atteint le niveau {{level}} !"

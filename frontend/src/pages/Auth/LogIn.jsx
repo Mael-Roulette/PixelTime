@@ -160,7 +160,7 @@ export default function LogIn() {
               className='submit-button button-primary'
               disabled={isLoading}
             >
-              {isLoading ? t('login.loading') : t("login.continue")}
+              {isLoading ? t('global.loading') : t("login.continue")}
             </button>
           </form>
 

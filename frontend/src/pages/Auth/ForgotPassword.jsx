@@ -63,7 +63,7 @@ function ForgotPassword() {
 							type='submit'
 							value={
 								isLoading
-									? t("forgotPassword.loading")
+									? t("global.loading")
 									: t("forgotPassword.resetPassword")
 							}
 							className='submit-button button-primary'
