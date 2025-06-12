@@ -28,7 +28,7 @@ const AdminRoute = ({ children }) => {
 	}, []);
 
 	if (isLoading) {
-		return <div className='loading'>Vérification des permissions...</div>;
+		return <div className='loading'><p>Vérification des permissions...</p></div>;
 	}
 
 	if (!authService.isAuthenticated()) {

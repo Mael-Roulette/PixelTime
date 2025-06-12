@@ -1,0 +1,14 @@
+@use "../abstracts" as *;
+
+/* -------------------------------------------------- */
+/* ---------- Page du catalogue ---------- */
+/* -------------------------------------------------- */
+
+.catalog {
+  margin-top: 2rem;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

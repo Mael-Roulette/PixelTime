@@ -72,12 +72,14 @@ class AuthService {
     try {
       const response = await fetch( `${ this.baseURL }/user/role`, {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${ token }`
+        },
       } );
 
       if ( response.ok ) {
         const data = await response.json();
-        console.log( data )
         return data.isAdmin === true || data.role === 'admin';
       }
       return false;

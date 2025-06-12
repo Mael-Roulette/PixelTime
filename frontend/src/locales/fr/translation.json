@@ -2,6 +2,7 @@
     "global": {
         "login": "Connexion",
         "logout": "Déconnexion",
+        "logoutText": "Êtes vous sur de vouloir vous déconnecter ? Votre progression ne sera pas sauvegarder.",
         "signup": "Inscription",
         "play": "Jouer",
         "leaderboard": "Classement",
@@ -12,7 +13,9 @@
         "catalog": "Catalogue",
         "profile": "Profil",
         "gameModes": "Modes",
-        "loading": "Chargement..."
+        "loading": "Chargement...",
+        "verification": "Vérification en cours...",
+        "cancel": "Annuler"
     },
     "footer": {
         "sloggan": "Le jeu où chaque époque a sa manette",

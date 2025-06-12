@@ -2,6 +2,7 @@
     "global": {
         "login": "Conexión",
         "logout": "Desconexión",
+        "logoutText": "¿Estás seguro de que quieres desconectarte? Tu progreso no se guardará.",
         "signup": "Registro",
         "play": "Jugar",
         "leaderboard": "Clasificación",
@@ -12,7 +13,9 @@
         "catalog": "Catálogo",
         "profile": "Perfil",
         "gameModes": "Modos",
-        "loading": "Cargando..."
+        "loading": "Cargando...",
+        "verification": "Verificación en curso...",
+        "cancel": "Cancelar"
     },
 
     "footer": {

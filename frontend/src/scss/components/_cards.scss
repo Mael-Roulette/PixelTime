@@ -82,6 +82,10 @@
   }
 }
 
+.card {
+  
+}
+
 @include responsive("lg") {
   .card-mode {
     height: 45rem;

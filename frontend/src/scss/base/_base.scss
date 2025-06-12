@@ -13,6 +13,10 @@ body {
 	background-color: $blue;
 	color: $white;
 	overflow-x: hidden;
+
+	&.no-scroll {
+		overflow: hidden;
+	}
 }
 
 #site-content {
