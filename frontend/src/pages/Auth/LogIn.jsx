@@ -89,12 +89,6 @@ export default function LogIn() {
         <div className='main-login-form'>
           <h1>{t("login.title")}</h1>
 
-          {successMessage && (
-            <div className="success-message">
-              {successMessage}
-            </div>
-          )}
-
           {errors.general && (
             <div className="error-message general-error">
               {errors.general}

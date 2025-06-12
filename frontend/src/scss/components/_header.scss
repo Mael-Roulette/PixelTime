@@ -164,7 +164,6 @@
 	right: 0;
 	z-index: 10;
 	background: transparent;
-	box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.3);
 
 	&-logo {
 		display: none;
@@ -184,6 +183,7 @@
 	}
 
 	&-container {
+		box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.3);
 		margin: 0 auto;
 		background: $blue;
 		border-top-left-radius: 2rem;
@@ -344,6 +344,7 @@
 
 		&-container {
 			margin: 0;
+			box-shadow: none;
 		}
 
 		&-item {

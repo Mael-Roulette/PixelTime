@@ -33,6 +33,7 @@ class UserController extends AbstractController
                 'id' => $user->getId(),
                 'pseudo' => $user->getPseudo(),
                 'email' => $user->getEmail(),
+                'role' => $user->getRoles(),
                 'score' => $user->getScore(),
                 'level' => $user->getLevels(),
                 'money' => $user->getMoney(),

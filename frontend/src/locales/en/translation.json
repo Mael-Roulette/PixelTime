@@ -138,5 +138,17 @@
 		"title": "Error 404",
 		"description": "The page you are looking for appears to have been lost in time.",
 		"backHome": "Back to the good old days"
+	},
+
+	"admin": {
+		"homeTitle": "Administration area",
+		"user": {
+			"title": "List of users",
+			"seeAll": "See all users"
+		},
+		"card": {
+			"title": "List of cards",
+            "seeAll" : "See all cards"
+		}
 	}
 }
