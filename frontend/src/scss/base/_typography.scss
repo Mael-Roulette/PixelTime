@@ -8,25 +8,25 @@ h1, h2, h3 {
 }
 
 h1 {
-    font-size: 4rem;
-    line-height: 4.5rem;
+    font-size: 3rem;
+    line-height: 3.2rem;
 }
 
 h2 {
-    font-size: 3rem;
-    line-height: 3.5rem;
+    font-size: 2rem;
+    line-height: 2.2rem;
 }
 
 h3 {
-    font-size: 2rem;
-    line-height: 2.5rem;
+    font-size: 1.8rem;
+    line-height: 2rem;
 }
 
 /* -------------------------------------------------- */
 /* ---------- Paragraphe ---------- */
 
 p,
-a, 
+a,
 span,
 strong,
 label {
@@ -40,17 +40,17 @@ label {
 
 @include responsive( 'md' ) {
     h1 {
-        font-size: 3.5rem;
-        line-height: 4rem;
+        font-size: 4rem;
+        line-height: 4.2rem;
     }
 
     h2 {
-        font-size: 2.5rem;
-        line-height: 3rem;
+        font-size: 3rem;
+        line-height: 3.2rem;
     }
 
     h3 {
-        font-size: 1.5rem;
-        line-height: 2rem;
+        font-size: 2.5rem;
+        line-height: 2.8rem;
     }
 }

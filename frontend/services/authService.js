@@ -96,9 +96,10 @@ class AuthService {
 
   // Permet de récupére l'utilisateur actuel
   async getUser () {
-    try {
-      const token = localStorage.getItem( this.TOKEN_KEY );
+    const token = this.getToken();
+    if ( !token ) return false;
 
+    try {
       const response = await fetch( `${ this.baseURL }/user`, {
         method: 'GET',
         headers: {

@@ -56,9 +56,9 @@ const Footer = () => {
 					<ul>
 						{contactItems.map((item, index) => (
 							<li key={index}>
-								<a href={item.site} target='_blank'>
+								<NavLink to={item.site} target='_blank'>
 									{item.name}
-								</a>
+								</NavLink>
 							</li>
 						))}
 					</ul>

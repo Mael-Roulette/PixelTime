@@ -1,0 +1,96 @@
+@use "../abstracts" as *;
+
+/* -------------------------------------------------- */
+/* ---------- Home page admin ---------- */
+/* -------------------------------------------------- */
+
+/* -------------------------------------------------- */
+/* ---------- Home page admin ---------- */
+.admin-home {
+	padding: 0 2rem;
+	margin-top: 3rem;
+
+	&-informations {
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto;
+		width: 100%;
+		gap: 2rem;
+		margin: 2rem auto;
+	}
+}
+
+/* -------------------------------------------------- */
+/* ---------- Liste des utilisateurs admin ---------- */
+.admin-users {
+	padding: 0 2rem;
+	margin-top: 3rem;
+
+	&-title {
+		margin-bottom: 2rem;
+	}
+}
+
+/* -------------------------------------------------- */
+/* ---------- Liste des utilisateurs ---------- */
+.user-container,
+.card-container {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	padding: 2rem;
+	border-radius: 8px;
+	border: 1px solid $white;
+	min-width: 0;
+
+	&-list {
+		padding: 0;
+		list-style: none;
+
+		&-item {
+			padding: 1rem 1rem 1rem 0.5rem;
+			display: flex;
+			align-items: center;
+			justify-content: start;
+			gap: 1.5rem;
+
+			&:not(:last-child) {
+				border-bottom: 2px solid rgba($color: $white, $alpha: 0.5);
+			}
+
+			&:hover {
+				background-color: rgba($color: $white, $alpha: 0.3);
+			}
+
+			& .photo {
+				border-radius: 50px;
+				border: 2px solid $blue;
+				object-fit: cover;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 4rem;
+				height: 4rem;
+				background-color: $yellow;
+
+				p {
+					color: $blue;
+					font-size: 1.8rem;
+					font-weight: $fsemibold;
+				}
+			}
+
+			& .info {
+				&-pseudo {
+					font-size: 1.8rem;
+					font-family: $font-primary;
+				}
+
+				&-mail {
+					font-size: 1.4rem;
+					opacity: 0.75;
+				}
+			}
+		}
+	}
+}

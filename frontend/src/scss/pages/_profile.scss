@@ -117,7 +117,7 @@
 				display: flex;
 			}
 
-			.popup-content {
+			& .popup-content {
 				background-color: $blue;
 				border-radius: 8px;
 				border: 1px solid $yellow;

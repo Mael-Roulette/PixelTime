@@ -11,6 +11,7 @@ import GameBoard from "./pages/Game/GameBoard";
 import Catalog from "./pages/Game/Catalog";
 import Profile from "./pages/Game/Profile";
 import AdminHome from "./pages/Admin/AdminHome";
+import AdminUsers from "./pages/Admin/AdminUsers";
 import "./App.css";
 import UserRoute from "./components/UserRoute";
 import AdminRoute from "./components/AdminRoute";
@@ -46,7 +47,15 @@ const App = observer(() => {
 							<AdminHome />
 						</AdminRoute>
 					}
-				></Route>	
+				></Route>
+				<Route
+					path='/admin/users'
+					element={
+						<AdminRoute>
+							<AdminUsers />
+						</AdminRoute>
+					}
+				></Route>
 			</Routes>
 		</BrowserRouter>
 	);

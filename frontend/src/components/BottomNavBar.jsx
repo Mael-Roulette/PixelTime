@@ -66,7 +66,7 @@ const Icons = {
 	),
 };
 
-function BottomNavigation() {
+function BottomNavBar() {
 	const { t } = useTranslation();
 
 	const items = [
@@ -142,4 +142,4 @@ function BottomNavigation() {
 	);
 }
 
-export default BottomNavigation;
+export default BottomNavBar;

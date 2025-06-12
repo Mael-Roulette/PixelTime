@@ -15,8 +15,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/api/users')]
-#[IsGranted('ROLE_USER')]
+#[Route('/users')]
 class UserController extends AbstractController
 {
     public function __construct(

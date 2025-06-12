@@ -128,10 +128,10 @@ function NewPassword() {
 					</form>
 					<p>
 						{t("login.noAccount")}
-						<a href='/login'> {t("login.signup")}</a>
+						<NavLink href='/login'> {t("login.signup")}</NavLink>
 					</p>
 					<p>
-						<a href='/forgotpassword'> {t("login.forgotPassword")}</a>
+						<NavLink href='/forgotpassword'> {t("login.forgotPassword")}</NavLink>
 					</p>
 				</div>
 			</main>
