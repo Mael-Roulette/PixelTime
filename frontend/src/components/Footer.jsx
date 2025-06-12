@@ -3,7 +3,7 @@ import { NavLink } from "react-router";
 import authService from "../../services/authService";
 
 const Footer = () => {
-	const { t } = useTranslation();
+	const { t, i18n } = useTranslation();
 	const isAuthenticated = authService.isAuthenticated();
 
 	const navItems = [
@@ -24,6 +24,11 @@ const Footer = () => {
 		{ name: t("footer.legal"), path: "/mentions-legales" },
 		{ name: t("footer.privacy"), path: "/politique-de-confidentialite" },
 	];
+
+	const changeLanguage = (lng) => {
+		i18n.changeLanguage(lng);
+		localStorage.setItem("language", lng);
+	};
 
 	return (
 		<footer className='footer'>
@@ -62,6 +67,18 @@ const Footer = () => {
 							</li>
 						))}
 					</ul>
+				</div>
+
+				<div className='header-lang-switcher'>
+					<select
+						value={i18n.language}
+						onChange={(e) => changeLanguage(e.target.value)}
+						className='header-lang-select'
+					>
+						<option value='fr'>FR</option>
+						<option value='en'>EN</option>
+						<option value='es'>ES</option>
+					</select>
 				</div>
 			</div>
 

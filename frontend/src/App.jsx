@@ -12,6 +12,7 @@ import Catalog from "./pages/Game/Catalog";
 import Profile from "./pages/Game/Profile";
 import AdminHome from "./pages/Admin/AdminHome";
 import AdminUsers from "./pages/Admin/AdminUsers";
+import AdminCards from "./pages/Admin/AdminCards";
 import "./App.css";
 import UserRoute from "./components/UserRoute";
 import AdminRoute from "./components/AdminRoute";
@@ -53,6 +54,14 @@ const App = observer(() => {
 					element={
 						<AdminRoute>
 							<AdminUsers />
+						</AdminRoute>
+					}
+				></Route>
+				<Route
+					path='/admin/cards'
+					element={
+						<AdminRoute>
+							<AdminCards />
 						</AdminRoute>
 					}
 				></Route>

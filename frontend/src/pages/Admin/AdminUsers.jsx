@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import BottomNavBar from "../../components/BottomNavBar";
 import adminService from "../../../services/adminService";
+import Footer from "../../components/Footer";
 
 const AdminUsers = () => {
 	const [users, setUsers] = useState([]);
@@ -53,6 +54,8 @@ const AdminUsers = () => {
 					})}
 				</ul>
 			</main>
+
+      <Footer />
 		</>
 	);
 };

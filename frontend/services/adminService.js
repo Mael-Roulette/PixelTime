@@ -33,6 +33,31 @@ class AdminService {
       return false;
     }
   }
+
+  async getCards () {
+    const token = this.getToken();
+    if ( !token ) return false;
+
+    try {
+      const response = await fetch( `${ this.baseURL }/cards`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${ token }`
+        }
+      } );
+
+      if ( response.ok ) {
+        const data = await response.json();
+        return data;
+      }
+
+      return false;
+    } catch ( error ) {
+      console.error( 'Erreur lors de la récupération des cartes :', error );
+      return false;
+    }
+  }
 }
 
 const adminService = new AdminService();
