@@ -214,4 +214,13 @@
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
+
+	.admin-users,
+	.admin-cards {
+		padding: 0 8rem;
+
+		&-title {
+			margin-bottom: 3rem;
+		}
+	}
 }

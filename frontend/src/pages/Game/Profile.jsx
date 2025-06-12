@@ -3,7 +3,7 @@ import authService from "../../../services/authService";
 import BottomNavBar from "../../components/BottomNavBar";
 import Footer from "../../components/Footer";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 
 const Profile = () => {
 	const { t } = useTranslation();
@@ -118,7 +118,13 @@ const Profile = () => {
 					</div>
 				</div>
 
-				<div className='profile-logout'>
+				<div className='profile-link'>
+					{user.roles && user.roles.includes("ROLE_ADMIN") && (
+						<NavLink to='/admin' className='button-tertiary'>
+							Accèder à l'espace d'administration
+						</NavLink>
+					)}
+
 					<button className='button-tertiary' onClick={displayLogoutPopup}>
 						{t("global.logout")}
 					</button>
@@ -130,9 +136,7 @@ const Profile = () => {
 						onClick={handlePopupBackgroundClick}
 					>
 						<div className='popup-content'>
-							<p>
-								{t("global.logoutText")}
-							</p>
+							<p>{t("global.logoutText")}</p>
 							<div className='popup-content-buttons'>
 								<button
 									className='button-secondary'
