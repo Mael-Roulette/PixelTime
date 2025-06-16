@@ -15,7 +15,8 @@
 		"gameModes": "Modos",
 		"loading": "Cargando...",
 		"verification": "Verificación en curso...",
-		"cancel": "Cancelar"
+		"cancel": "Cancelar",
+        "close": "Cerrar"
 	},
 
 	"footer": {
