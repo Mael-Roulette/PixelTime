@@ -1,26 +1,27 @@
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router";
+import { useSearchParams, useNavigate } from "react-router";
+import HUD from "../../components/gameUi/HUD";
+import { useEffect } from "react";
 
 
 export default function GameBoard() {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const mode = searchParams.get('type');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!mode) {
+      navigate("/gamechoice");
+    }
+  }, [mode, navigate]);
+
+  console.log("GameBoard mode:", mode);
 
   return (
     <>
       <div className="game">
-        <div className="game-info-container">
-          <NavLink to='/gamechoice' className='game-info-back'>
-            {t("game.leave")}
-          </NavLink>
-          <div className="game-info-center">
-            <h1 className="game-info-center-score">{t("game.score")} : </h1>
-            <p className="game-info-center-mode">{t("global.classicMode")}</p>
-            {/* mettre une fonction qui affiche le nom du mode selon celui choisi */}
-          </div>
-          <div className="game-info-clue">
-            <p className="game-info-clue-text">?</p>
-          </div>
-        </div>
+        <HUD score={0} mode={mode} description={t("game.description")} />
 
         <div className="game-board-container">
         </div>
