@@ -2,13 +2,21 @@ import { useEffect, useState } from "react";
 import BottomNavBar from "../../components/BottomNavBar";
 import adminService from "../../../services/adminService";
 import Footer from "../../components/Footer";
-import { Navigate, NavLink, Outlet, useNavigate } from "react-router";
+import {
+	Navigate,
+	NavLink,
+	Outlet,
+	useLocation,
+	useNavigate,
+} from "react-router";
 import Card from "../../components/gameUi/Card";
 
 const AdminCards = () => {
 	const [cards, setCards] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const navigate = useNavigate();
+	const location = useLocation();
+	const isOnMainRoute = location.pathname === "/admin/cards";
 
 	const fetchCards = async () => {
 		try {
@@ -72,7 +80,10 @@ const AdminCards = () => {
 					)}
 				</section>
 
-				<aside className='admin-cards-add' aria-label="Ajout d'une carte">
+				<aside
+					className={`admin-cards-add ${isOnMainRoute ? "hidden" : ""}`}
+					aria-label="Ajout d'une carte"
+				>
 					<Outlet context={{ onCardAdded: handleCardAdded }} />
 				</aside>
 			</main>
