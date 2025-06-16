@@ -21,7 +21,7 @@ const CardMode = ({ title, description, type, image }) => {
 			</div>
 
 			<NavLink
-				to={`/plateau-de-jeu?type=${type}`}
+				to={`/gameboard?type=${type}`}
 				className='card-mode-link button-primary'
 			>
 				Jouer

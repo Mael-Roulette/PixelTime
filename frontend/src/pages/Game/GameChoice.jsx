@@ -18,7 +18,7 @@ export default function GameChoice() {
 					<CardMode
 						title={t("global.classicMode")}
 						description={t("gameChoice.classicModeDescription")}
-						type={"classique"}
+						type={"classic"}
 						image={"/fond-classique.webp"}
 					/>
 
@@ -32,7 +32,7 @@ export default function GameChoice() {
 					<CardMode
 						title={t("global.livesMode")}
 						description={t("gameChoice.livesModeDescription")}
-						type={"survie"}
+						type={"lives"}
 						image={"/fond-vies.webp"}
 					/>
 				</div>
