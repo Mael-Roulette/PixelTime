@@ -79,17 +79,12 @@ class CardController extends AbstractController
             $card->setTitle($data['title']);
 
             foreach ($data['translations'] as $translationData) {
-                if (!isset($translationData['locale']) || !isset($translationData['title'])) {
-                    return $this->json(['error' => 'Données de traduction invalides'], Response::HTTP_BAD_REQUEST);
-                }
-
                 $translation = new CardTranslation();
                 $translation->setLocale($translationData['locale']);
-                $translation->setDescription($translationData['description'] ?? '');
-                $translation->setHint($translationData['hint'] ?? '');
-                $translation->setCard($card);
+                $translation->setDescription($translationData['description']);
+                $translation->setHint($translationData['hint']);
 
-                $entityManager->persist($translation);
+                $card->addTranslation($translation);
             }
 
             $entityManager->persist($card);

@@ -47,6 +47,25 @@ class Card
         return null;
     }
 
+    public function addTranslation(CardTranslation $translation): static
+    {
+        if (!$this->translations->contains($translation)) {
+            $this->translations->add($translation);
+            $translation->setCard($this);
+        }
+        return $this;
+    }
+
+    public function removeTranslation(CardTranslation $translation): static
+    {
+        if ($this->translations->removeElement($translation)) {
+            if ($translation->getCard() === $this) {
+                $translation->setCard(null);
+            }
+        }
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

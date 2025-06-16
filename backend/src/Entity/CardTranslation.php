@@ -31,6 +31,17 @@ class CardTranslation
         return $this->id;
     }
 
+    public function getCard(): ?Card
+    {
+        return $this->card;
+    }
+
+    public function setCard(?Card $card): static
+    {
+        $this->card = $card;
+        return $this;
+    }
+
     public function getLocale(): ?string
     {
         return $this->locale;

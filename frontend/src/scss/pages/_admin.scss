@@ -4,33 +4,94 @@
 /* ---------- Home page admin ---------- */
 /* -------------------------------------------------- */
 
-/* -------------------------------------------------- */
-/* ---------- Home page admin ---------- */
-.admin-home {
-	padding: 0 2rem;
-	margin-top: 3rem;
-	min-height: 100vh;
-
-	&-informations {
-		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: auto;
-		width: 100%;
-		gap: 2rem;
-		margin: 2rem auto;
+.admin {
+	&-back {
+		display: inline-block;
+		color: $white;
+		text-decoration: underline;
+		font-weight: $flight;
+		font-size: 1.8rem;
+		margin-bottom: 1.5rem;
 	}
-}
 
-/* -------------------------------------------------- */
-/* ---------- Liste des utilisateurs et des cartes admin ---------- */
-.admin-users,
-.admin-cards {
-	padding: 0 2rem;
-	margin-top: 3rem;
-	min-height: 100vh;
+	/* -------------------------------------------------- */
+	/* ---------- Home page admin ---------- */
+	&-home {
+		padding: 0 2rem;
+		margin-top: 3rem;
+		min-height: 100vh;
 
-	&-title {
-		margin-bottom: 2rem;
+		&-informations {
+			display: grid;
+			grid-template-columns: 1fr;
+			grid-template-rows: auto;
+			width: 100%;
+			gap: 2rem;
+			margin: 2rem auto;
+		}
+	}
+
+	&-cards {
+		display: flex;
+		flex-direction: column;
+		gap: 4rem;
+
+		&-header {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 2rem;
+		}
+
+		&-add {
+			border-top: 1px solid $yellow;
+
+			&-title {
+				text-align: center;
+				margin: 1rem 0;
+			}
+
+			&-form {
+				display: flex;
+				flex-direction: column;
+				gap: 2rem;
+
+				.add-form-container {
+					display: flex;
+					flex-direction: column;
+					gap: .8rem;
+
+					input,
+					textarea {
+						&::placeholder {
+							color: rgba($color: $white, $alpha: 0.5);
+						}
+					}
+				}
+
+				&-buttons {
+					margin-bottom: 1.5rem;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					gap: 2rem;
+				}
+			}
+		}
+	}
+
+	/* -------------------------------------------------- */
+	/* ---------- Liste des utilisateurs et des cartes admin ---------- */
+	&-users,
+	&-cards {
+		padding: 0 2rem;
+		margin-top: 3rem;
+		min-height: 100vh;
+
+		&-title {
+			margin-bottom: 2rem;
+		}
 	}
 }
 
@@ -207,20 +268,29 @@
 }
 
 @include responsive("lg") {
-	.admin-home {
-		padding: 0 8rem;
+	.admin {
+		&-home {
+			padding: 0 8rem;
 
-		&-informations {
-			grid-template-columns: repeat(2, 1fr);
+			&-informations {
+				grid-template-columns: repeat(2, 1fr);
+			}
 		}
-	}
 
-	.admin-users,
-	.admin-cards {
-		padding: 0 8rem;
+		&-users {
+			padding: 0 8rem;
+		}
 
-		&-title {
-			margin-bottom: 3rem;
+		&-cards {
+			padding: 0 8rem;
+
+			&-header {
+				flex-direction: row;
+			}
+
+			&-title {
+				margin-bottom: 3rem;
+			}
 		}
 	}
 }

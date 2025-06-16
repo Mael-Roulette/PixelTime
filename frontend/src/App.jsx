@@ -16,6 +16,7 @@ import AdminCards from "./pages/Admin/AdminCards";
 import "./App.css";
 import UserRoute from "./components/UserRoute";
 import AdminRoute from "./components/AdminRoute";
+import AddCard from "./pages/Admin/AddCard";
 
 const App = observer(() => {
 	return (
@@ -64,7 +65,9 @@ const App = observer(() => {
 							<AdminCards />
 						</AdminRoute>
 					}
-				></Route>
+				>
+					<Route path='add' element={<AddCard />}></Route>
+				</Route>
 			</Routes>
 		</BrowserRouter>
 	);

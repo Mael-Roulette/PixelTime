@@ -4,6 +4,7 @@ import adminService from "../../../services/adminService";
 import Footer from "../../components/Footer";
 import { MdDeleteForever } from "react-icons/md";
 import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router";
 
 const AdminUsers = () => {
 	const { t } = useTranslation();
@@ -81,6 +82,9 @@ const AdminUsers = () => {
 			<BottomNavBar />
 
 			<main className='admin-users'>
+				<NavLink to='/admin' className='admin-back'>
+					Retour
+				</NavLink>
 				<h1 className='admin-users-title'>Liste des utilisateurs</h1>
 
 				<ul className='user-container-list'>
