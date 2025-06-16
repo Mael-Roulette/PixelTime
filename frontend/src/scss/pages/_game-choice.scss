@@ -7,6 +7,7 @@
 .game-choice {
   &-container {
     background-color: $blue;
+    padding-top: 2rem;
     padding-bottom: 9rem;
     display: flex;
     flex-direction: column;
@@ -33,7 +34,7 @@
     background-color: transparent;
     color: $white;
     text-decoration: underline;
-    
+
   }
 }
 

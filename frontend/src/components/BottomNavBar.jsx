@@ -66,7 +66,7 @@ const Icons = {
 	),
 };
 
-function BottomNavigation() {
+function BottomNavBar() {
 	const { t } = useTranslation();
 
 	const items = [
@@ -99,7 +99,7 @@ function BottomNavigation() {
 			id: "profile",
 			label: t("global.profile"),
 			icon: "Profile",
-			to: "/profil",
+			to: "/profile",
 		},
 	];
 
@@ -142,4 +142,4 @@ function BottomNavigation() {
 	);
 }
 
-export default BottomNavigation;
+export default BottomNavBar;

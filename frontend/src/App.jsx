@@ -10,7 +10,12 @@ import GameChoice from "./pages/Game/GameChoice";
 import GameBoard from "./pages/Game/GameBoard";
 import Catalog from "./pages/Game/Catalog";
 import Profile from "./pages/Game/Profile";
+import AdminHome from "./pages/Admin/AdminHome";
+import AdminUsers from "./pages/Admin/AdminUsers";
+import AdminCards from "./pages/Admin/AdminCards";
 import "./App.css";
+import UserRoute from "./components/UserRoute";
+import AdminRoute from "./components/AdminRoute";
 
 const App = observer(() => {
 	return (
@@ -22,9 +27,44 @@ const App = observer(() => {
 				<Route path='/forgotpassword' element={<ForgotPassword />}></Route>
 				<Route path='/newpassword' element={<NewPassword />}></Route>
 				<Route path='/leaderboard' element={<LeaderBoard />}></Route>
-				<Route path="/gamechoice" element={<GameChoice />}></Route>
+				<Route path='/gamechoice' element={<GameChoice />}></Route>
 				<Route path='/gameboard' element={<GameBoard />}></Route>
 				<Route path='/catalog' element={<Catalog />}></Route>
+				{/* Route pour les users */}
+				<Route
+					path='/profile'
+					element={
+						<UserRoute>
+							<Profile />
+						</UserRoute>
+					}
+				></Route>
+
+				{/* Route pour les admins */}
+				<Route
+					path='/admin'
+					element={
+						<AdminRoute>
+							<AdminHome />
+						</AdminRoute>
+					}
+				></Route>
+				<Route
+					path='/admin/users'
+					element={
+						<AdminRoute>
+							<AdminUsers />
+						</AdminRoute>
+					}
+				></Route>
+				<Route
+					path='/admin/cards'
+					element={
+						<AdminRoute>
+							<AdminCards />
+						</AdminRoute>
+					}
+				></Route>
 			</Routes>
 		</BrowserRouter>
 	);

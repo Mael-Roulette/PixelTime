@@ -1,0 +1,174 @@
+@use "../abstracts" as *;
+
+/* -------------------------------------------------- */
+/* ---------- Page de profil ---------- */
+/* -------------------------------------------------- */
+
+.profile {
+	background-color: $blue;
+	color: $white;
+	min-height: 100vh;
+
+	&-picture {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 3rem 0;
+		background-color: $yellow;
+
+		&-image {
+			border-radius: 50px;
+			border: 2px solid $blue;
+			object-fit: cover;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 9rem;
+			height: 9rem;
+			background-color: $blue;
+
+			p {
+				color: $yellow;
+				font-size: 5rem;
+			}
+		}
+	}
+
+	&-content {
+		margin-top: 2.5rem;
+		padding: 0 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+
+		&-informations {
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+
+			h1 {
+				font-size: 2.2rem;
+				line-height: 2.4rem;
+				font-family: $font-secondary;
+				font-weight: $fsemibold;
+				margin: 0;
+			}
+		}
+
+		h2 {
+			font-size: 2rem;
+			line-height: 2.2rem;
+			font-family: $font-secondary;
+			font-weight: $fsemibold;
+			margin: 0;
+			margin-bottom: 1rem;
+		}
+
+		&-stats {
+			ul {
+				list-style: none;
+				padding: 0;
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 2rem 1rem;
+
+				li {
+					border: 1px solid $white;
+					border-radius: 8px;
+					padding: 1rem 0;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					gap: 0.5rem;
+
+					h3 {
+						font-size: 1.6rem;
+						line-height: 1.8rem;
+						font-family: $font-secondary;
+						font-weight: $fsemibold;
+						margin: 0;
+					}
+				}
+			}
+		}
+	}
+
+	&-link {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+		margin-top: 2rem;
+	}
+
+	&-logout-popup {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 100vh;
+		width: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		justify-content: center;
+		align-items: center;
+		z-index: 15;
+
+		&.visible {
+			display: flex;
+		}
+
+		& .popup-content {
+			background-color: $blue;
+			border-radius: 8px;
+			border: 1px solid $yellow;
+			padding: 2rem;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-self: center;
+			gap: 2.5rem;
+
+			&-buttons {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 2rem;
+			}
+		}
+	}
+}
+
+@include responsive("lg") {
+	.profile {
+		margin: 5rem auto 0;
+		max-width: 90rem;
+
+		&-picture {
+			border-radius: 20px;
+		}
+
+		&-content {
+			&-informations {
+				h1 {
+					font-size: 3rem;
+					line-height: 3.2rem;
+				}
+			}
+
+			h2 {
+				font-size: 2.5rem;
+				line-height: 2.8rem;
+				margin-bottom: 1.5rem;
+			}
+
+			&-stats {
+				ul {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+		}
+	}
+}

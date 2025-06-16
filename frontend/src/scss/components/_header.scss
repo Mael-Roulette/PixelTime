@@ -162,7 +162,7 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
-	z-index: 1000;
+	z-index: 10;
 	background: transparent;
 
 	&-logo {
@@ -183,6 +183,7 @@
 	}
 
 	&-container {
+		box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.3);
 		margin: 0 auto;
 		background: $blue;
 		border-top-left-radius: 2rem;
@@ -226,6 +227,7 @@
 		}
 
 		&--center {
+			box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.3);
 			background: $yellow;
 			color: $blue;
 			outline: 10px solid $blue;
@@ -320,7 +322,7 @@
 		align-items: center;
 		padding: 1.5rem 8rem;
 		background-color: $blue;
-		box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+		box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
 
 		&-logo {
 			margin-right: 2rem;
@@ -342,10 +344,11 @@
 
 		&-container {
 			margin: 0;
+			box-shadow: none;
 		}
 
 		&-item {
-			padding: .5rem 1rem;
+			padding: 0.5rem 1rem;
 
 			&--center {
 				display: none;

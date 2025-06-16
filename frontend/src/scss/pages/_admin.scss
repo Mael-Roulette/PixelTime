@@ -1,0 +1,226 @@
+@use "../abstracts" as *;
+
+/* -------------------------------------------------- */
+/* ---------- Home page admin ---------- */
+/* -------------------------------------------------- */
+
+/* -------------------------------------------------- */
+/* ---------- Home page admin ---------- */
+.admin-home {
+	padding: 0 2rem;
+	margin-top: 3rem;
+	min-height: 100vh;
+
+	&-informations {
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto;
+		width: 100%;
+		gap: 2rem;
+		margin: 2rem auto;
+	}
+}
+
+/* -------------------------------------------------- */
+/* ---------- Liste des utilisateurs et des cartes admin ---------- */
+.admin-users,
+.admin-cards {
+	padding: 0 2rem;
+	margin-top: 3rem;
+	min-height: 100vh;
+
+	&-title {
+		margin-bottom: 2rem;
+	}
+}
+
+/* -------------------------------------------------- */
+/* ---------- Liste des utilisateurs ---------- */
+.user-container {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	padding: 1.5rem 1rem;
+	border-radius: 8px;
+	border: 1px solid $white;
+	min-width: 0;
+
+	&-list {
+		padding: 0;
+		list-style: none;
+		height: 100%;
+
+		&-item {
+			padding: 1rem 0.5rem;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			&:not(:last-child) {
+				border-bottom: 2px solid rgba($color: $white, $alpha: 0.5);
+			}
+
+			&-content {
+				display: flex;
+				align-items: center;
+				justify-content: start;
+				gap: 1.5rem;
+			}
+
+			.photo {
+				border-radius: 50px;
+				border: 2px solid $blue;
+				object-fit: cover;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 4rem;
+				height: 4rem;
+				background-color: $yellow;
+
+				p {
+					color: $blue;
+					font-size: 1.8rem;
+					font-weight: $fsemibold;
+				}
+			}
+
+			.info {
+				&-pseudo {
+					font-size: 1.8rem;
+					font-family: $font-primary;
+				}
+
+				&-mail {
+					font-size: 1.4rem;
+					opacity: 0.75;
+				}
+			}
+
+			.delete {
+				&-button {
+					display: flex;
+					align-items: center;
+					gap: 0.5rem;
+					justify-content: center;
+					padding: 0.5rem 1rem;
+					font-size: 1.6rem;
+					background-color: $white;
+					color: $red;
+					border: 2px solid $red;
+					border-radius: 8px;
+					transition: $transition;
+					cursor: pointer;
+
+					&:hover {
+						background-color: $red;
+						color: $white;
+					}
+				}
+			}
+		}
+	}
+
+	&-seemore {
+		width: 100%;
+		text-align: right;
+	}
+}
+
+.delete-popup {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	justify-content: center;
+	align-items: center;
+	z-index: 15;
+
+	&.visible {
+		display: flex;
+	}
+
+	& .popup-content {
+		background-color: $blue;
+		border-radius: 8px;
+		border: 1px solid $yellow;
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-self: center;
+		gap: 2.5rem;
+
+		&-buttons {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 2rem;
+		}
+	}
+}
+
+/* -------------------------------------------------- */
+/* ---------- Liste des cartes ---------- */
+.card-container {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	padding: 1.5rem 1rem;
+	border-radius: 8px;
+	border: 1px solid $white;
+	min-width: 0;
+
+	&-list {
+		padding: 0;
+		list-style: none;
+		height: 100%;
+
+		&-item {
+			padding: 1rem 0.5rem;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			&:not(:last-child) {
+				border-bottom: 2px solid rgba($color: $white, $alpha: 0.5);
+			}
+
+			.title {
+				font-size: 1.8rem;
+				font-weight: $fsemibold;
+			}
+
+			.date {
+				opacity: 0.75;
+			}
+		}
+	}
+
+	&-seemore {
+		width: 100%;
+		text-align: right;
+	}
+}
+
+@include responsive("lg") {
+	.admin-home {
+		padding: 0 8rem;
+
+		&-informations {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	.admin-users,
+	.admin-cards {
+		padding: 0 8rem;
+
+		&-title {
+			margin-bottom: 3rem;
+		}
+	}
+}

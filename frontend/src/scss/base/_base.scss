@@ -10,9 +10,13 @@
 }
 
 body {
-	background-color: $white;
-	color: $black;
+	background-color: $blue;
+	color: $white;
 	overflow-x: hidden;
+
+	&.no-scroll {
+		overflow: hidden;
+	}
 }
 
 #site-content {
@@ -70,5 +74,19 @@ a {
 
 	span {
 		color: $blue;
+	}
+}
+
+.loading {
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	p {
+		font-size: 2rem;
+		line-height: 2.2rem;
+		font-weight: $fsemibold;
 	}
 }

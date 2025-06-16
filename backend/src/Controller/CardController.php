@@ -144,7 +144,7 @@ class CardController extends AbstractController
                     if (isset($translationData['description'])) {
                         $translation->setDescription($translationData['description']);
                     }
-                    
+
                     if (isset($translationData['hint'])) {
                         $translation->setHint($translationData['hint']);
                     }

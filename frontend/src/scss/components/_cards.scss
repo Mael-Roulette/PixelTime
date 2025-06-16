@@ -63,7 +63,7 @@
     }
 
     p {
-      max-width: 20rem;
+      max-width: 18rem;
     }
 
     &.active {
@@ -80,6 +80,10 @@
       height: 100%;
     }
   }
+}
+
+.card {
+  
 }
 
 @include responsive("lg") {

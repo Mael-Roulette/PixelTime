@@ -7,61 +7,180 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route('/users')]
 class UserController extends AbstractController
 {
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private UserPasswordHasherInterface $passwordHasher,
+        private ValidatorInterface $validator
+    ) {}
+
     #[Route('', name: 'user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): JsonResponse
     {
         $users = $userRepository->findAll();
-        return $this->json($users);
+
+        $userData = array_map(function($user) {
+            return [
+                'id' => $user->getId(),
+                'pseudo' => $user->getPseudo(),
+                'email' => $user->getEmail(),
+                'role' => $user->getRoles(),
+                'score' => $user->getScore(),
+                'level' => $user->getLevels(),
+                'money' => $user->getMoney(),
+                'profilePicture' => $user->getProfilePicture(),
+                'createdAt' => $user->getCreatedAt()?->format('Y-m-d H:i:s')
+            ];
+        }, $users);
+
+        return new JsonResponse($userData);
     }
 
-    #[Route('/{id}', name: 'user_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'user_show', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function show(User $user): JsonResponse
     {
-        return $this->json($user);
+        return new JsonResponse([
+            'id' => $user->getId(),
+            'pseudo' => $user->getPseudo(),
+            'email' => $user->getEmail(),
+            'score' => $user->getScore(),
+            'money' => $user->getMoney(),
+            'profilePicture' => $user->getProfilePicture(),
+            'createdAt' => $user->getCreatedAt()?->format('Y-m-d H:i:s'),
+            'lastLoginAt' => $user->getLastLoginAt()?->format('Y-m-d H:i:s')
+        ]);
     }
 
-    #[Route('', name: 'user_create', methods: ['POST'])]
-    public function create(Request $request, EntityManagerInterface $entity_manager): JsonResponse
+    #[Route('/profile', name: 'user_update_profile', methods: ['PUT'])]
+    public function updateProfile(Request $request, #[CurrentUser] User $user): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-        $user = new User();
-        $user->setPseudo($data['pseudo']);
-        $user->setEmail($data['email']);
-        $user->setPassword($data['password']);
-        $user->setScore(0);
-        $user->setMoney(0);
+        try {
+            $data = json_decode($request->getContent(), true);
 
-        $entity_manager->persist($user);
-        $entity_manager->flush();
+            // Mise à jour des champs autorisés
+            if (isset($data['pseudo'])) {
+                $user->setPseudo($data['pseudo']);
+            }
 
-        return $this->json($user, 201);
+            if (isset($data['email'])) {
+                // Vérifier que l'email n'est pas déjà utilisé par un autre utilisateur
+                $existingUser = $this->entityManager->getRepository(User::class)
+                    ->findOneBy(['email' => $data['email']]);
+
+                if ($existingUser && $existingUser->getId() !== $user->getId()) {
+                    return new JsonResponse([
+                        'error' => 'Cet email est déjà utilisé'
+                    ], Response::HTTP_CONFLICT);
+                }
+
+                $user->setEmail($data['email']);
+            }
+
+            if (isset($data['profilePicture'])) {
+                $user->setProfilePicture($data['profilePicture']);
+            }
+
+            // Validation
+            $errors = $this->validator->validate($user);
+            if (count($errors) > 0) {
+                $errorMessages = [];
+                foreach ($errors as $error) {
+                    $errorMessages[] = $error->getMessage();
+                }
+                return new JsonResponse([
+                    'errors' => $errorMessages
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            $this->entityManager->flush();
+
+            return new JsonResponse([
+                'message' => 'Profil mis à jour avec succès',
+                'user' => [
+                    'id' => $user->getId(),
+                    'pseudo' => $user->getPseudo(),
+                    'email' => $user->getEmail(),
+                    'score' => $user->getScore(),
+                    'money' => $user->getMoney(),
+                    'profilePicture' => $user->getProfilePicture()
+                ]
+            ]);
+
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'error' => 'Une erreur est survenue lors de la mise à jour'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
-    #[Route('/{id}', name: 'user_update', methods: ['PUT'])]
-    public function update(Request $request, User $user, EntityManagerInterface $entity_manager): JsonResponse
+    #[Route('/change-password', name: 'user_change_password', methods: ['PUT'])]
+    public function changePassword(Request $request, #[CurrentUser] User $user): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-        $user->setPseudo($data['pseudo'] ?? $user->getPseudo());
-        $user->setEmail($data['email'] ?? $user->getEmail());
-        $user->setPassword($data['password'] ?? $user->getPassword());
+        try {
+            $data = json_decode($request->getContent(), true);
 
-        $entity_manager->flush();
+            if (empty($data['currentPassword']) || empty($data['newPassword'])) {
+                return new JsonResponse([
+                    'error' => 'Mot de passe actuel et nouveau mot de passe requis'
+                ], Response::HTTP_BAD_REQUEST);
+            }
 
-        return $this->json($user, 200);
+            // Vérifier le mot de passe actuel
+            if (!$this->passwordHasher->isPasswordValid($user, $data['currentPassword'])) {
+                return new JsonResponse([
+                    'error' => 'Mot de passe actuel incorrect'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            // Validation du nouveau mot de passe
+            if (strlen($data['newPassword']) < 8) {
+                return new JsonResponse([
+                    'error' => 'Le nouveau mot de passe doit contenir au moins 8 caractères'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            // Hasher et sauvegarder le nouveau mot de passe
+            $hashedPassword = $this->passwordHasher->hashPassword($user, $data['newPassword']);
+            $user->setPassword($hashedPassword);
+
+            $this->entityManager->flush();
+
+            return new JsonResponse([
+                'message' => 'Mot de passe modifié avec succès'
+            ]);
+
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'error' => 'Une erreur est survenue lors du changement de mot de passe'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
-    #[Route('/{id}', name: 'user_delete', methods: ['DELETE'])]
-    public function delete(User $user, EntityManagerInterface $entity_manager): JsonResponse
+    #[Route('/{id}', name: 'user_delete', methods: ['DELETE'], requirements: ['id' => '\d+'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function delete(User $user): JsonResponse
     {
-        $entity_manager->remove($user);
-        $entity_manager->flush();
+        try {
+            $this->entityManager->remove($user);
+            $this->entityManager->flush();
 
-        return $this->json(null, 204);
+            return new JsonResponse([
+                'message' => 'Utilisateur supprimé avec succès'
+            ], Response::HTTP_NO_CONTENT);
+
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'error' => 'Une erreur est survenue lors de la suppression'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

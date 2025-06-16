@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
+import authService from "../../services/authService";
 
 export default function Header() {
 	const { t, i18n } = useTranslation();
+	const isAuthenticated = authService.isAuthenticated();
 
 	const navItems = [
 		{ to: "/gamechoice", label: t("global.play") },
 		{ to: "/leaderboard", label: t("global.leaderboard") },
-		{ to: "/login", label: t("global.login") },
+		isAuthenticated
+			? { to: "/profile", label: t("global.profile") }
+			: { to: "/login", label: t("global.login") },
 	];
 
 	const [isNavVisible, setIsNavVisible] = useState(false);
@@ -19,6 +23,7 @@ export default function Header() {
 
 	const changeLanguage = (lng) => {
 		i18n.changeLanguage(lng);
+		localStorage.setItem('language', lng);
 	};
 
 	return (
