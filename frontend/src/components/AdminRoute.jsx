@@ -1,8 +1,9 @@
-import { Navigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import authService from "../../services/authService";
 
 const AdminRoute = ({ children }) => {
+	const navigate = useNavigate();
 	const [isAdmin, setIsAdmin] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -19,24 +20,29 @@ const AdminRoute = ({ children }) => {
 			} catch (error) {
 				console.error("Erreur lors de la vérification du statut admin:", error);
 				setIsAdmin(false);
+				navigate("/gamechoice");
 			} finally {
 				setIsLoading(false);
 			}
 		};
 
 		checkAdminStatus();
-	}, []);
+	}, [navigate]);
 
 	if (isLoading) {
-		return <div className='loading'><p>Vérification des permissions...</p></div>;
+		return (
+			<div className='loading'>
+				<p>Vérification des permissions...</p>
+			</div>
+		);
 	}
 
 	if (!authService.isAuthenticated()) {
-		return <Navigate to='/login' replace />;
+		navigate("/login");
 	}
 
 	if (!isAdmin) {
-		return <Navigate to='/gamechoice' replace />;
+		navigate("/gamechoice");
 	}
 
 	return children;

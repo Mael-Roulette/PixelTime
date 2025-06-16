@@ -1,8 +1,9 @@
-import { Navigate } from "react-router";
+import { useNavigate } from "react-router";
 import authService from "../../services/authService";
 
 const UserRoute = ({ children }) => {
-	return authService.isAuthenticated() ? children : <Navigate to='/login' />;
+	const navigate = useNavigate();
+	return authService.isAuthenticated() ? children : navigate('/login');
 };
 
 export default UserRoute;
