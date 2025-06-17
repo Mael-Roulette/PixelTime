@@ -12,63 +12,83 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/levels')]
+#[Route('/api/levels')]
 class LevelController extends AbstractController
 {
-    #[Route('', name: 'level_index', methods: ['GET'])]
+    #[Route('', name: 'api_level_index', methods: ['GET'])]
     public function index(LevelRepository $levelRepository, Request $request): JsonResponse
     {
-        $locale = $request->query->get('lang', 'fr');
+        try {
+            $locale = $request->query->get('lang', 'fr');
 
-        $levels = $levelRepository->createQueryBuilder('l')
-            ->leftJoin('l.translations', 't')
-            ->addSelect('t')
-            ->orderBy('l.minScore', 'ASC')
-            ->getQuery()
-            ->getResult();
+            $levels = $levelRepository->createQueryBuilder('l')
+                ->leftJoin('l.translations', 't')
+                ->addSelect('t')
+                ->orderBy('l.minScore', 'ASC')
+                ->getQuery()
+                ->getResult();
 
-        $result = [];
-        foreach ($levels as $level) {
-            $translation = $level->getTranslation($locale);
+            $result = [];
+            foreach ($levels as $level) {
+                $translation = $level->getTranslation($locale);
 
-            $result[] = [
-                'id' => $level->getId(),
-                'minScore' => $level->getMinScore(),
-                'image' => $level->getImage(),
-                'name' => $translation ? $translation->getName() : 'Nom non disponible'
-            ];
+                $result[] = [
+                    'id' => $level->getId(),
+                    'minScore' => $level->getMinScore(),
+                    'image' => $level->getImage(),
+                    'name' => $translation ? $translation->getName() : "Niveau {$level->getId()}",
+                    'locale' => $locale
+                ];
+            }
+
+            return $this->json($result);
+
+        } catch (\Exception $e) {
+            return $this->json([
+                'error' => 'Erreur lors de la récupération des niveaux: ' . $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
-        return $this->json($result);
     }
 
-    #[Route('/{id}', name: 'level_show', methods: ['GET'])]
-    public function show(Level $level, Request $request): JsonResponse
+    #[Route('/{id}', name: 'api_level_show', methods: ['GET'])]
+    public function show(int $id, LevelRepository $levelRepository, Request $request): JsonResponse
     {
-        $locale = $request->query->get('lang', 'fr');
-        $translation = $level->getTranslation($locale);
+        try {
+            $level = $levelRepository->find($id);
 
-        if (!$translation) {
-            return $this->json([
-                'error' => 'Traduction non trouvée pour la langue: ' . $locale
-            ], Response::HTTP_NOT_FOUND);
-        }
+            if (!$level) {
+                return $this->json([
+                    'error' => 'Niveau non trouvé'
+                ], Response::HTTP_NOT_FOUND);
+            }
 
-        return $this->json([
-            'id' => $level->getId(),
-            'minScore' => $level->getMinScore(),
-            'image' => $level->getImage(),
-            'name' => $translation->getName(),
-            'translations' => array_map(function ($t) {
-                return [
+            $locale = $request->query->get('lang', 'fr');
+            $translation = $level->getTranslation($locale);
+
+            $allTranslations = [];
+            foreach ($level->getTranslations() as $t) {
+                $allTranslations[] = [
                     'locale' => $t->getLocale(),
                     'name' => $t->getName()
                 ];
-            }, $level->getTranslations()->toArray())
-        ]);
+            }
+
+            return $this->json([
+                'id' => $level->getId(),
+                'minScore' => $level->getMinScore(),
+                'image' => $level->getImage(),
+                'name' => $translation ? $translation->getName() : "Niveau {$level->getId()}",
+                'translations' => $allTranslations
+            ]);
+
+        } catch (\Exception $e) {
+            return $this->json([
+                'error' => 'Erreur lors de la récupération du niveau: ' . $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
-    #[Route('', name: 'level_create', methods: ['POST'])]
+    #[Route('', name: 'api_level_create', methods: ['POST'])]
     public function create(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         try {
@@ -78,29 +98,48 @@ class LevelController extends AbstractController
                 return $this->json(['error' => 'Données JSON invalides'], Response::HTTP_BAD_REQUEST);
             }
 
-            if (!isset($data['minScore']) || !isset($data['image']) || !isset($data['translations'])) {
-                return $this->json(['error' => 'Champs requis manquants (minScore, image, translations)'], Response::HTTP_BAD_REQUEST);
+            // Validation des champs requis
+            $requiredFields = ['minScore', 'translations'];
+            foreach ($requiredFields as $field) {
+                if (!isset($data[$field])) {
+                    return $this->json([
+                        'error' => "Le champ '{$field}' est requis"
+                    ], Response::HTTP_BAD_REQUEST);
+                }
             }
 
+            // Validation du score minimum
             if (!is_numeric($data['minScore']) || $data['minScore'] < 0) {
-                return $this->json(['error' => 'Le score minimum doit être un nombre positif'], Response::HTTP_BAD_REQUEST);
+                return $this->json([
+                    'error' => 'Le score minimum doit être un nombre positif'
+                ], Response::HTTP_BAD_REQUEST);
             }
 
-            $existingLevel = $entityManager->getRepository(Level::class)
-                ->findOneBy(['minScore' => $data['minScore']]);
-
+            // Vérifier l'unicité du score minimum
+            $existingLevel = $levelRepository->findOneBy(['minScore' => $data['minScore']]);
             if ($existingLevel) {
-                return $this->json(['error' => 'Un niveau avec ce score minimum existe déjà'], Response::HTTP_CONFLICT);
+                return $this->json([
+                    'error' => 'Un niveau avec ce score minimum existe déjà'
+                ], Response::HTTP_CONFLICT);
+            }
+
+            // Validation des traductions
+            if (!is_array($data['translations']) || empty($data['translations'])) {
+                return $this->json([
+                    'error' => 'Au moins une traduction est requise'
+                ], Response::HTTP_BAD_REQUEST);
             }
 
             $level = new Level();
-            $level->setMinScore($data['minScore']);
-            $level->setImage($data['image']);
+            $level->setMinScore((int)$data['minScore']);
+            $level->setImage($data['image'] ?? null);
 
-            // Traitement des traductions
+            // Ajout des traductions
             foreach ($data['translations'] as $translationData) {
                 if (!isset($translationData['locale']) || !isset($translationData['name'])) {
-                    return $this->json(['error' => 'Données de traduction invalides (locale et name requis)'], Response::HTTP_BAD_REQUEST);
+                    return $this->json([
+                        'error' => 'Chaque traduction doit avoir un locale et un name'
+                    ], Response::HTTP_BAD_REQUEST);
                 }
 
                 $translation = new LevelTranslation();
@@ -116,7 +155,12 @@ class LevelController extends AbstractController
 
             return $this->json([
                 'id' => $level->getId(),
-                'message' => 'Niveau créé avec succès'
+                'message' => 'Niveau créé avec succès',
+                'data' => [
+                    'id' => $level->getId(),
+                    'minScore' => $level->getMinScore(),
+                    'image' => $level->getImage()
+                ]
             ], Response::HTTP_CREATED);
 
         } catch (\Exception $e) {
@@ -126,23 +170,34 @@ class LevelController extends AbstractController
         }
     }
 
-    #[Route('/{id}', name: 'level_update', methods: ['PUT'])]
-    public function update(Request $request, Level $level, EntityManagerInterface $entityManager): JsonResponse
+    #[Route('/{id}', name: 'api_level_update', methods: ['PUT'])]
+    public function update(int $id, Request $request, LevelRepository $levelRepository, EntityManagerInterface $entityManager): JsonResponse
     {
         try {
+            $level = $levelRepository->find($id);
+
+            if (!$level) {
+                return $this->json([
+                    'error' => 'Niveau non trouvé'
+                ], Response::HTTP_NOT_FOUND);
+            }
+
             $data = json_decode($request->getContent(), true);
 
             if (!$data) {
                 return $this->json(['error' => 'Données JSON invalides'], Response::HTTP_BAD_REQUEST);
             }
 
+            // Mise à jour du score minimum
             if (isset($data['minScore'])) {
                 if (!is_numeric($data['minScore']) || $data['minScore'] < 0) {
-                    return $this->json(['error' => 'Le score minimum doit être un nombre positif'], Response::HTTP_BAD_REQUEST);
+                    return $this->json([
+                        'error' => 'Le score minimum doit être un nombre positif'
+                    ], Response::HTTP_BAD_REQUEST);
                 }
 
-                $existingLevel = $entityManager->getRepository(Level::class)
-                    ->createQueryBuilder('l')
+                // Vérifier l'unicité (excluant le niveau actuel)
+                $existingLevel = $levelRepository->createQueryBuilder('l')
                     ->where('l.minScore = :minScore AND l.id != :id')
                     ->setParameter('minScore', $data['minScore'])
                     ->setParameter('id', $level->getId())
@@ -150,17 +205,21 @@ class LevelController extends AbstractController
                     ->getOneOrNullResult();
 
                 if ($existingLevel) {
-                    return $this->json(['error' => 'Un autre niveau avec ce score minimum existe déjà'], Response::HTTP_CONFLICT);
+                    return $this->json([
+                        'error' => 'Un autre niveau avec ce score minimum existe déjà'
+                    ], Response::HTTP_CONFLICT);
                 }
 
-                $level->setMinScore($data['minScore']);
+                $level->setMinScore((int)$data['minScore']);
             }
 
+            // Mise à jour de l'image
             if (isset($data['image'])) {
                 $level->setImage($data['image']);
             }
 
-            if (isset($data['translations'])) {
+            // Mise à jour des traductions
+            if (isset($data['translations']) && is_array($data['translations'])) {
                 foreach ($data['translations'] as $translationData) {
                     if (!isset($translationData['locale'])) {
                         continue;
@@ -168,6 +227,7 @@ class LevelController extends AbstractController
 
                     $translation = $level->getTranslation($translationData['locale']);
                     if (!$translation) {
+                        // Créer une nouvelle traduction
                         $translation = new LevelTranslation();
                         $translation->setLocale($translationData['locale']);
                         $translation->setLevel($level);
@@ -194,10 +254,18 @@ class LevelController extends AbstractController
         }
     }
 
-    #[Route('/{id}', name: 'level_delete', methods: ['DELETE'])]
-    public function delete(Level $level, EntityManagerInterface $entityManager): JsonResponse
+    #[Route('/{id}', name: 'api_level_delete', methods: ['DELETE'])]
+    public function delete(int $id, LevelRepository $levelRepository, EntityManagerInterface $entityManager): JsonResponse
     {
         try {
+            $level = $levelRepository->find($id);
+
+            if (!$level) {
+                return $this->json([
+                    'error' => 'Niveau non trouvé'
+                ], Response::HTTP_NOT_FOUND);
+            }
+
             $entityManager->remove($level);
             $entityManager->flush();
 
@@ -212,30 +280,117 @@ class LevelController extends AbstractController
         }
     }
 
-    #[Route('/by-score/{score}', name: 'level_by_score', methods: ['GET'])]
+    #[Route('/by-score/{score}', name: 'api_level_by_score', methods: ['GET'])]
     public function getLevelByScore(int $score, LevelRepository $levelRepository, Request $request): JsonResponse
     {
-        $locale = $request->query->get('lang', 'fr');
+        try {
+            $locale = $request->query->get('lang', 'fr');
 
-        $level = $levelRepository->createQueryBuilder('l')
-            ->where('l.minScore <= :score')
-            ->orderBy('l.minScore', 'DESC')
-            ->setParameter('score', $score)
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
+            $level = $levelRepository->createQueryBuilder('l')
+                ->leftJoin('l.translations', 't')
+                ->addSelect('t')
+                ->where('l.minScore <= :score')
+                ->orderBy('l.minScore', 'DESC')
+                ->setParameter('score', $score)
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
 
-        if (!$level) {
-            return $this->json(['error' => 'Aucun niveau trouvé pour ce score'], Response::HTTP_NOT_FOUND);
+            if (!$level) {
+                return $this->json([
+                    'error' => 'Aucun niveau trouvé pour ce score'
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            $translation = $level->getTranslation($locale);
+
+            return $this->json([
+                'id' => $level->getId(),
+                'minScore' => $level->getMinScore(),
+                'image' => $level->getImage(),
+                'name' => $translation ? $translation->getName() : "Niveau {$level->getId()}",
+                'userScore' => $score
+            ]);
+
+        } catch (\Exception $e) {
+            return $this->json([
+                'error' => 'Erreur lors de la récupération du niveau: ' . $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
 
-        $translation = $level->getTranslation($locale);
+    #[Route('/user-level', name: 'api_user_current_level', methods: ['GET'])]
+    public function getCurrentUserLevel(LevelRepository $levelRepository, Request $request): JsonResponse
+    {
+        try {
+            /** @var \App\Entity\User $user */
+            $user = $this->getUser();
 
-        return $this->json([
-            'id' => $level->getId(),
-            'minScore' => $level->getMinScore(),
-            'image' => $level->getImage(),
-            'name' => $translation ? $translation->getName() : 'Nom non disponible'
-        ]);
+            if (!$user) {
+                return $this->json([
+                    'error' => 'Utilisateur non authentifié'
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+
+            $locale = $request->query->get('lang', 'fr');
+            $userScore = $user->getScore() ?? 0;
+
+            $level = $levelRepository->createQueryBuilder('l')
+                ->leftJoin('l.translations', 't')
+                ->addSelect('t')
+                ->where('l.minScore <= :score')
+                ->orderBy('l.minScore', 'DESC')
+                ->setParameter('score', $userScore)
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
+
+            if (!$level) {
+                return $this->json([
+                    'message' => 'Aucun niveau atteint',
+                    'userScore' => $userScore
+                ]);
+            }
+
+            $translation = $level->getTranslation($locale);
+
+            // Trouver le prochain niveau
+            $nextLevel = $levelRepository->createQueryBuilder('l')
+                ->where('l.minScore > :score')
+                ->orderBy('l.minScore', 'ASC')
+                ->setParameter('score', $userScore)
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
+
+            $result = [
+                'currentLevel' => [
+                    'id' => $level->getId(),
+                    'minScore' => $level->getMinScore(),
+                    'image' => $level->getImage(),
+                    'name' => $translation ? $translation->getName() : "Niveau {$level->getId()}"
+                ],
+                'userScore' => $userScore,
+                'nextLevel' => null
+            ];
+
+            if ($nextLevel) {
+                $nextTranslation = $nextLevel->getTranslation($locale);
+                $result['nextLevel'] = [
+                    'id' => $nextLevel->getId(),
+                    'minScore' => $nextLevel->getMinScore(),
+                    'image' => $nextLevel->getImage(),
+                    'name' => $nextTranslation ? $nextTranslation->getName() : "Niveau {$nextLevel->getId()}",
+                    'pointsNeeded' => $nextLevel->getMinScore() - $userScore
+                ];
+            }
+
+            return $this->json($result);
+
+        } catch (\Exception $e) {
+            return $this->json([
+                'error' => 'Erreur lors de la récupération du niveau utilisateur: ' . $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

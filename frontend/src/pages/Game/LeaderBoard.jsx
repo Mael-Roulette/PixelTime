@@ -1,47 +1,107 @@
-import BottomNavBar from "../../components/BottomNavBar"
-import Footer from "../../components/Footer"
+import BottomNavBar from "../../components/BottomNavBar";
+import Footer from "../../components/Footer";
+import { observer } from "mobx-react-lite";
+import { useAppStore } from "../../stores/useStore";
+import { useEffect, useState } from "react";
 
-const LeaderBoard = () => {
-  return (
-    <>
-      <BottomNavBar />
+const LeaderBoard = observer(() => {
+	const appStore = useAppStore();
+	const [selectedLevel, setSelectedLevel] = useState("");
 
-      <main className="leaderboard">
-        <h1>Classement</h1>
+	useEffect(() => {
+		appStore.fetchLevels();
+		appStore.fetchLeaderboard();
+	}, [appStore]);
 
-        <section className="leaderboard-content">
-          <table className="leaderboard-table">
-            <thead>
-              <tr>
-                <th>Rang</th>
-                <th>Photo</th>
-                <th>Pseudo</th>
-                <th>Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Array.from({ length: 10 }, (_, index) => (
-                <tr key={index + 1}>
-                  <td>{index + 1}</td>
-                  <td>
-                    <img
-                      src={`/path/to/profile${index + 1}.jpg`}
-                      alt={`Profil ${index + 1}`}
-                      className="profile-image"
-                    />
-                  </td>
-                  <td>Joueur{index + 1}</td>
-                  <td>1000</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
-      </main>
+	// Recharger le leaderboard quand le niveau change
+	useEffect(() => {
+		if (selectedLevel) {
+			appStore.fetchLeaderboard(selectedLevel);
+		} else {
+			appStore.fetchLeaderboard();
+		}
+	}, [selectedLevel, appStore]);
 
-      <Footer />
-    </>
-  )
-}
+	const handleLevelChange = (e) => {
+		setSelectedLevel(e.target.value);
+	};
 
-export default LeaderBoard
+	if (appStore.loading) {
+		return (
+			<>
+				<BottomNavBar />
+				<main className='leaderboard'>
+					<div className="loading">
+						<p>Chargement du classement...</p>
+					</div>
+				</main>
+				<Footer />
+			</>
+		);
+	}
+
+	return (
+		<>
+			<BottomNavBar />
+
+			<main className='leaderboard'>
+				<h1 className='leaderboard-title'>Classement</h1>
+
+				<section className='leaderboard-content'>
+					<select value={selectedLevel} onChange={handleLevelChange}>
+						{appStore.levels.map((level) => (
+							<option key={level.id} value={level.id}>
+								{level.name || `Niveau ${level.id}`}
+							</option>
+						))}
+					</select>
+
+					<table className='leaderboard-content-table'>
+						<thead>
+							<tr>
+								<th>Rang</th>
+								<th>Joueur</th>
+								<th>Score</th>
+							</tr>
+						</thead>
+						<tbody>
+							{appStore.leaderboard && appStore.leaderboard.length > 0 ? (
+								appStore.leaderboard.map((entry, index) => (
+									<tr key={entry.id || index}>
+										<td>{index + 1}</td>
+										<td>
+											{entry.user?.profile_image && (
+												<img
+													src={entry.user.profile_image}
+													alt={entry.user.username}
+													className='profile-image'
+												/>
+											)}
+											{entry.user?.username ||
+												entry.username ||
+												"Joueur anonyme"}
+										</td>
+										<td>{entry.score || 0}</td>
+									</tr>
+								))
+							) : (
+								<tr>
+									<td
+										colSpan='3'
+										style={{ textAlign: "center", padding: "2rem" }}
+									>
+										Aucun score disponible pour ce niveau
+									</td>
+								</tr>
+							)}
+						</tbody>
+					</table>
+				</section>
+			</main>
+
+			<Footer />
+		</>
+	);
+});
+
+export default LeaderBoard;

@@ -1,51 +1,65 @@
-import { NavLink, useNavigate } from "react-router";
-import { useState, useEffect } from "react";
-import authService from "../../services/authService";
+import React, { useEffect, useState } from 'react';
+import { Navigate, useLocation } from 'react-router';
+import authService from '../../services/authService';
 
 const AdminRoute = ({ children }) => {
-	const navigate = useNavigate();
-	const [isAdmin, setIsAdmin] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
 
-	useEffect(() => {
-		const checkAdminStatus = async () => {
-			if (!authService.isAuthenticated()) {
-				setIsLoading(false);
-				return;
-			}
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const authenticated = authService.isAuthenticated();
 
-			try {
-				const adminStatus = await authService.isAdmin();
-				setIsAdmin(adminStatus);
-			} catch (error) {
-				console.error("Erreur lors de la vérification du statut admin:", error);
-				setIsAdmin(false);
-				navigate("/gamechoice");
-			} finally {
-				setIsLoading(false);
-			}
-		};
+        if (authenticated) {
+          // Vérifier si le token est encore valide
+          const tokenValid = await authService.getUser();
+          setIsAuthenticated(tokenValid);
 
-		checkAdminStatus();
-	}, [navigate]);
+          if (tokenValid) {
+            const adminStatus = authService.isAdmin();
+            setIsAdmin(adminStatus);
+          }
+        } else {
+          setIsAuthenticated(false);
+          setIsAdmin(false);
+        }
+      } catch (error) {
+        console.error('Erreur de vérification d\'authentification:', error);
+        setIsAuthenticated(false);
+        setIsAdmin(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-	if (isLoading) {
-		return (
-			<div className='loading'>
-				<p>Vérification des permissions...</p>
-			</div>
-		);
-	}
+    checkAuth();
+  }, []);
 
-	if (!authService.isAuthenticated()) {
-		navigate("/login");
-	}
+  if (isLoading) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
+      }}>
+        <p>Vérification des droits d'administration...</p>
+      </div>
+    );
+  }
 
-	if (!isAdmin) {
-		navigate("/gamechoice");
-	}
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
 
-	return children;
+  if (isAuthenticated && !isAdmin) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
 };
 
 export default AdminRoute;
