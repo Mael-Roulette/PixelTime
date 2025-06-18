@@ -42,6 +42,10 @@ const AdminCards = () => {
 		fetchCards();
 	};
 
+	if (loading){
+		return <p className="loading">Chargement des cartes...</p>
+	}
+
 	return (
 		<>
 			<BottomNavBar />

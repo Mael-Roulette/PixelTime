@@ -106,7 +106,7 @@ const AddCard = () => {
 						value={formData.year}
 						onChange={handleInputChange}
 						required
-						min={1000}
+						min={1950}
 						max={currentYear}
 						placeholder='1974'
 						disabled={isLoading}
@@ -129,7 +129,7 @@ const AddCard = () => {
 				</div>
 
 				<div className='add-form-container'>
-					<label>Description française</label>
+					<label>Description en Français</label>
 					<textarea
 						name='frenchDescription'
 						value={formData.frenchDescription}
@@ -143,7 +143,7 @@ const AddCard = () => {
 				</div>
 
 				<div className='add-form-container'>
-					<label>Description anglaise</label>
+					<label>Description en Anglais</label>
 					<textarea
 						name='englishDescription'
 						value={formData.englishDescription}
@@ -157,7 +157,7 @@ const AddCard = () => {
 				</div>
 
 				<div className='add-form-container'>
-					<label>Description espagnole</label>
+					<label>Description en Espagnol</label>
 					<textarea
 						name='spanishDescription'
 						value={formData.spanishDescription}
@@ -171,7 +171,7 @@ const AddCard = () => {
 				</div>
 
 				<div className='add-form-container'>
-					<label>Indice français</label>
+					<label>Indice en Français</label>
 					<textarea
 						name='frenchHint'
 						value={formData.frenchHint}
@@ -185,7 +185,7 @@ const AddCard = () => {
 				</div>
 
 				<div className='add-form-container'>
-					<label>Indice anglais</label>
+					<label>Indice en Anglais</label>
 					<textarea
 						name='englishHint'
 						value={formData.englishHint}
@@ -199,7 +199,7 @@ const AddCard = () => {
 				</div>
 
 				<div className='add-form-container'>
-					<label>Indice espagnol</label>
+					<label>Indice en Espagnol</label>
 					<textarea
 						name='spanishHint'
 						value={formData.spanishHint}

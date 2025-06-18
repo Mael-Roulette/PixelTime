@@ -123,11 +123,30 @@
     border-radius: 0 0 4px 4px;
     margin: 0;
   }
+
+  &-container {
+    &-list {
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      &-item {
+        width: fit-content;
+      }
+    }
+  }
 }
 
 @include responsive("lg") {
   .card-mode {
     height: 45rem;
     width: 30rem;
+  }
+
+  .card {
+    &-container {
+      &-list {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import GameMode from './GameModeStore';
-import authService from '../services/authService';
+import authService from '../../services/authService';
 
 export default class GameStore {
   // État du jeu
