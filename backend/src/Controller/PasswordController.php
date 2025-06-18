@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class PasswordController extends AbstractController
 {
-    #[Route('/forgot-password', methods: ['POST'])]
+    #[Route('/api/forgot-password', methods: ['POST'])]
     public function forgotPassword(Request $request, UserRepository $repo, MailerInterface $mailer, EntityManagerInterface $em)
     {
         try {

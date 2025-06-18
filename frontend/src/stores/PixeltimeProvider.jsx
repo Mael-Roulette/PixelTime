@@ -1,12 +1,9 @@
-import GameStore from "./GameModeStore";
-import LeaderboardStore from "./LeaderboardStore";
+import GameModeStore from "./GameModeStore";
 import { PixeltimeContext } from "./pixeltimeContext";
 
-const leaderboardStore = new LeaderboardStore();
-const gameStore = new GameStore();
+const gameStore = new GameModeStore();
 
 const pixeltimeStore = {
-	leaderboardStore,
 	gameStore,
 };
 

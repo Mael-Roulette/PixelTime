@@ -1,26 +1,14 @@
+import { getToken, getLanguage } from "../utils/function";
+
+const API_URL =  import.meta.env.API_BASE_URL || 'http://localhost:8000/api';
+
 class AdminService {
-  constructor () {
-    this.TOKEN_KEY = 'jwt_token';
-    this.LANGUAGE_KEY = 'language';
-    this.baseURL = 'http://localhost:8000';
-  }
-
-  // Méthode pour obtenir le token JWT
-  getToken () {
-    return localStorage.getItem( this.TOKEN_KEY );
-  }
-
-  // Méthode pour obtenir la langue
-  getLanguage () {
-    return localStorage.getItem( this.LANGUAGE_KEY ) || 'fr'; // 'fr' par défaut
-  }
-
   // Permet de récupérer un tableau avec tous les utilisateurs
   async getUsers () {
-    const token = this.getToken();
+    const token = getToken();
 
     try {
-      const response = await fetch( `${ this.baseURL }/users`, {
+      const response = await fetch( `${ API_URL }/users`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -39,11 +27,11 @@ class AdminService {
 
   // Permet de récupérer un tableau avec toutes les cartes selon la langue de l'administrateur
   async getCards () {
-    const token = this.getToken();
-    const language = this.getLanguage();
+    const token = getToken();
+    const language = getLanguage();
 
     try {
-      const response = await fetch( `${ this.baseURL }/cards?lang=${ language }`, {
+      const response = await fetch( `${ API_URL }/cards?lang=${ language }`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -62,10 +50,10 @@ class AdminService {
 
   // Permet de supprimer un utilisateur
   async deleteUser ( userId ) {
-    const token = this.getToken();
+    const token = getToken();
 
     try {
-      const response = await fetch( `${ this.baseURL }/users/${ userId }`, {
+      const response = await fetch( `${ API_URL }/users/${ userId }`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -87,10 +75,10 @@ class AdminService {
 
   // Permet d'ajouter une carte
   async createCard ( cardData ) {
-    const token = this.getToken();
+    const token = getToken();
 
     try {
-      const response = await fetch( `${ this.baseURL }/cards`, {
+      const response = await fetch( `${ API_URL }/cards`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

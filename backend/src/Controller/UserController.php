@@ -14,7 +14,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
-#[Route('/users')]
+#[Route('/api/users')]
 class UserController extends AbstractController
 {
     public function __construct(
