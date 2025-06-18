@@ -4,12 +4,12 @@ import { PixeltimeContext } from "./pixeltimeContext";
 export const usePixeltimeStore = () => {
   const pixeltimeStore = use( PixeltimeContext );
   if ( !pixeltimeStore ) {
-    throw new Error( "useExponiaStore must be used within an ExponiaProvider" );
+    throw new Error( "usePixeltimeStore must be used within an pixeltimeProvider" );
   }
   return pixeltimeStore;
 }
 
-export const useAppStore = () => {
+export const useLeaderboardStore = () => {
   const pixeltimeStore = usePixeltimeStore();
-  return pixeltimeStore.appStore;
+  return pixeltimeStore.leaderboardStore;
 }

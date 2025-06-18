@@ -92,4 +92,6 @@ export default class GameMode {
 
     this._multiplicator = value;
   }
+
+  
 }

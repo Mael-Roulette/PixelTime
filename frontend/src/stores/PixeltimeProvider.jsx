@@ -1,10 +1,10 @@
-import AppStore from "./appStore";
+import LeaderboardStore from "./LeaderboardStore";
 import { PixeltimeContext } from "./pixeltimeContext";
 
-const appStore = new AppStore();
+const leaderboardStore = new LeaderboardStore();
 
 const pixeltimeStore = {
-	appStore,
+	leaderboardStore,
 };
 
 export const PixeltimeProvider = ({ children }) => {
