@@ -65,10 +65,10 @@ const AdminCards = () => {
 					{cards.length === 0 ? (
 						<p>Aucune carte</p>
 					) : (
-						<ul className='card-container-list'>
+						<ul className='admin-cards-list'>
 							{cards.map((card) => {
 								return (
-									<li key={card.id} className='card-container-list-item'>
+									<li key={card.id} className='admin-cards-list-item'>
 										<Card
 											card={card}
 										/>

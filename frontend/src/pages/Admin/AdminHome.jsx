@@ -171,16 +171,16 @@ const AdminHome = () => {
 						</NavLink>
 					</div>
 
-					<div className='card-container'>
+					<div className='admin-home-card-container'>
 						<h2>{t("admin.card.title")}</h2>
 
 						{cards.length === 0 ? (
 							<p>Aucune carte</p>
 						) : (
-							<ul className='card-container-list'>
+							<ul className='admin-home-card-list'>
 								{cards.slice(-5).map((card) => {
 									return (
-										<li key={card.id} className='card-container-list-item'>
+										<li key={card.id} className='admin-home-card-list-item'>
 											<p className='title'>{card.title}</p>
 											<p className='date'>{card.year}</p>
 										</li>
@@ -191,7 +191,7 @@ const AdminHome = () => {
 
 						<NavLink
 							to='/admin/cards'
-							className='button-tertiary card-container-seemore'
+							className='button-tertiary admin-home-card-seemore'
 						>
 							{t("admin.card.seeAll")}
 						</NavLink>

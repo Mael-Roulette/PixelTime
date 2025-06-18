@@ -1,4 +1,4 @@
-import { getToken } from "../utils/function";
+import { getToken, TOKEN_KEY, USER_KEY } from "../utils/function";
 
 const API_URL =  import.meta.env.API_BASE_URL || 'http://localhost:8000/api';
 
@@ -15,8 +15,10 @@ class AuthService {
       const data = await response.json();
 
       if ( response.ok ) {
-        localStorage.setItem( this.TOKEN_KEY, data.token );
-        localStorage.setItem( this.USER_KEY, JSON.stringify( data.user ) );
+        localStorage.setItem( TOKEN_KEY, data.token );
+        localStorage.setItem( USER_KEY, JSON.stringify( data.user ) );
+
+        console.log( "login" )
 
         return data;
       } else {
@@ -137,7 +139,7 @@ class AuthService {
 
       if ( response.ok ) {
         const data = await response.json();
-        localStorage.setItem( this.TOKEN_KEY, data.token );
+        localStorage.setItem( TOKEN_KEY, data.token );
         return true;
       } else {
         this.logout();

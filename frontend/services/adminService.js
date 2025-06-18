@@ -1,8 +1,13 @@
 import { getToken, getLanguage } from "../utils/function";
+import { makeAutoObservable } from 'mobx';
 
 const API_URL =  import.meta.env.API_BASE_URL || 'http://localhost:8000/api';
 
 class AdminService {
+  constructor() {
+    makeAutoObservable( this );
+  }
+  
   // Permet de récupérer un tableau avec tous les utilisateurs
   async getUsers () {
     const token = getToken();

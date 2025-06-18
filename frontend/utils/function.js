@@ -1,5 +1,6 @@
 const TOKEN_KEY = 'jwt_token';
 const LANGUAGE_KEY = 'language';
+const USER_KEY = 'user';
 
 // Méthode pour obtenir le token JWT
 function getToken () {
@@ -11,4 +12,4 @@ function getLanguage () {
   return localStorage.getItem( LANGUAGE_KEY ) || 'fr';
 }
 
-export { getLanguage, getToken };
+export { getLanguage, getToken, TOKEN_KEY, LANGUAGE_KEY, USER_KEY };
