@@ -20,6 +20,11 @@
 
         &-back {
             color: $yellow;
+            width: fit-content;
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
 
         &-center {
@@ -35,7 +40,7 @@
             }
         }
 
-        &-clue {
+        &-description {
             background-color: $yellow;
             border-radius: 50rem;
             width: 3.5rem;
@@ -45,6 +50,7 @@
             justify-content: center;
             justify-self: end;
             border: none;
+            cursor: pointer;
 
             &-text {
                 color: $blue;
@@ -55,7 +61,7 @@
     }
 }
 
-.clue-popup {
+.description-popup {
     display: none;
     position: fixed;
     top: 0;
@@ -93,7 +99,7 @@
 }
 
 @include responsive("lg") {
-    .clue-popup {
+    .description-popup {
         & .popup-content {
             max-width: 60%;
         }

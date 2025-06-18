@@ -9,11 +9,6 @@ export const usePixeltimeStore = () => {
   return pixeltimeStore;
 }
 
-export const useLeaderboardStore = () => {
-  const pixeltimeStore = usePixeltimeStore();
-  return pixeltimeStore.leaderboardStore;
-}
-
 export const useGameStore = () => {
   const pixeltimeStore = usePixeltimeStore();
   return pixeltimeStore.gameStore;

@@ -4,11 +4,11 @@ import { useState } from "react";
 
 const HUD = ({ score = 0, mode, description }) => {
     const { t } = useTranslation();
-    const [isClueVisible, setIsClueVisible] = useState(false);
+    const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
 
-    const toggleClue = () => {
-        setIsClueVisible(!isClueVisible);
-        if (!isClueVisible) {
+    const toggleDescription = () => {
+        setIsDescriptionVisible(!isDescriptionVisible);
+        if (!isDescriptionVisible) {
             document.body.classList.add("no-scroll");
         } else {
             document.body.classList.remove("no-scroll");
@@ -18,14 +18,14 @@ const HUD = ({ score = 0, mode, description }) => {
     // Fermer le popup en cliquant sur le fond
     const handlePopupBackgroundClick = (e) => {
         if (e.target === e.currentTarget) {
-            setIsClueVisible(false);
+            setIsDescriptionVisible(false);
             document.body.classList.remove("no-scroll");
         }
     };
 
     // Fermer le popup avec le bouton fermer
-    const handleCloseClue = () => {
-        setIsClueVisible(false);
+    const handleCloseDescription = () => {
+        setIsDescriptionVisible(false);
         document.body.classList.remove("no-scroll");
     };
 
@@ -46,13 +46,13 @@ const HUD = ({ score = 0, mode, description }) => {
                     <p className="game-info-center-mode">{t("global.livesMode")}</p>
                 )}
             </div>
-            
-            <button className="game-info-clue" onClick={toggleClue}>
-                <p className="game-info-clue-text">?</p>
+
+            <button className="game-info-description" onClick={toggleDescription}>
+                <p className="game-info-description-text">?</p>
             </button>
 
             <div
-                className={`clue-popup${isClueVisible ? " visible" : ""}`}
+                className={`description-popup${isDescriptionVisible ? " visible" : ""}`}
                 onClick={handlePopupBackgroundClick}
             >
                 <div className='popup-content'>
@@ -65,7 +65,7 @@ const HUD = ({ score = 0, mode, description }) => {
                     {mode === "lives" && (
                         <p>{t("gameChoice.livesModeDescription")}</p>
                     )}
-                    <button className='button-secondary' onClick={handleCloseClue}>
+                    <button className='button-secondary' onClick={handleCloseDescription}>
                         {t("global.close")}
                     </button>
                 </div>

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/cards')]
+#[Route('/api/cards')]
 class CardController extends AbstractController
 {
     #[Route('', name: 'card_index', methods: ['GET'])]
@@ -162,5 +162,30 @@ class CardController extends AbstractController
         $entityManager->flush();
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    #[Route('/random/{limite}', name: 'card_limit', methods: ['GET'])]
+    public function limit(CardRepository $cardRepository, Request $request, int $limite): JsonResponse
+    {
+        $locale = $request->query->get('lang', 'fr');
+
+        $randomCards = $cardRepository->findBy([], null, $limite);
+        shuffle($randomCards);
+
+        $result = [];
+        foreach ($randomCards as $card) {
+            $translation = $card->getTranslation($locale);
+
+            $result[] = [
+                'id' => $card->getId(),
+                'year' => $card->getYear(),
+                'image' => $card->getImage(),
+                'title' => $card->getTitle(),
+                'description' => $translation ? $translation->getDescription() : '',
+                'hint' => $translation ? $translation->getHint() : ''
+            ];
+        }
+
+        return $this->json($result);
     }
 }

@@ -1,14 +1,12 @@
-class AuthService {
-  constructor () {
-    this.TOKEN_KEY = 'jwt_token';
-    this.USER_KEY = 'user_data';
-    this.baseURL = 'http://localhost:8000/api';
-  }
+import { getToken } from "../utils/function";
 
+const API_URL =  import.meta.env.API_BASE_URL || 'http://localhost:8000/api';
+
+class AuthService {
   // Méthode de connexion
   async login ( email, password ) {
     try {
-      const response = await fetch( `${ this.baseURL }/login`, {
+      const response = await fetch( `${ API_URL }/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify( { email, password } )
@@ -33,7 +31,7 @@ class AuthService {
   // Méthode d'inscription
   async register ( userData ) {
     try {
-      const response = await fetch( `${ this.baseURL }/register`, {
+      const response = await fetch( `${ API_URL }/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify( userData )
@@ -55,22 +53,22 @@ class AuthService {
 
   // Méthode de déconnexion
   logout () {
-    localStorage.removeItem( this.TOKEN_KEY );
-    localStorage.removeItem( this.USER_KEY );
+    localStorage.removeItem( 'jwt_token' );
+    localStorage.removeItem( 'language' );
   }
 
   // Méthode pour vérifier si l'utilisateur est connecté
   isAuthenticated () {
-    return !!localStorage.getItem( this.TOKEN_KEY );
+    return !!localStorage.getItem( 'jwt_token' );
   }
 
   // Méthode pour vérifier si l'utilisateur est admin
   async isAdmin () {
-    const token = this.getToken();
+    const token = getToken();
     if ( !token ) return false;
 
     try {
-      const response = await fetch( `${ this.baseURL }/user/role`, {
+      const response = await fetch( `${ API_URL }/user/role`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -89,18 +87,13 @@ class AuthService {
     }
   }
 
-  // Méthode pour obtenir le token JWT
-  getToken () {
-    return localStorage.getItem( this.TOKEN_KEY );
-  }
-
   // Permet de récupére l'utilisateur actuel
   async getUser () {
-    const token = this.getToken();
+    const token = getToken();
     if ( !token ) return false;
 
     try {
-      const response = await fetch( `${ this.baseURL }/user`, {
+      const response = await fetch( `${ API_URL }/user`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -130,11 +123,11 @@ class AuthService {
 
   // Rafraîchir le token
   async refreshToken () {
-    const token = this.getToken();
+    const token = getToken();
     if ( !token ) return false;
 
     try {
-      const response = await fetch( `${ this.baseURL }/refresh-token`, {
+      const response = await fetch( `${ API_URL }/refresh-token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
