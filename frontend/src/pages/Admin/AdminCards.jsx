@@ -55,15 +55,11 @@ const AdminCards = () => {
 						<p>Aucune carte</p>
 					) : (
 						<ul className='card-container-list'>
-							{cards.slice(-5).map((card) => {
+							{cards.map((card) => {
 								return (
 									<li key={card.id} className='card-container-list-item'>
 										<Card
-											title={card.title}
-											image={card.image}
-											year={card.year}
-											description={card.description}
-											hint={card.hint}
+											card={card}
 										/>
 									</li>
 								);

@@ -83,8 +83,46 @@
 }
 
 .card {
-  border: 1px solid $white;
+  border: 4px solid $white;
   border-radius: 8px;
+  width: 150px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+
+  &-front {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+  }
+
+  &-year {
+    background-color: $white;
+    color: $blue;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+    border-radius: 4px 4px 0 0;
+    margin: 0;
+  }
+
+  &-title {
+    background-color: $white;
+    color: $blue;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: regular;
+    border-radius: 0 0 4px 4px;
+    margin: 0;
+  }
 }
 
 @include responsive("lg") {

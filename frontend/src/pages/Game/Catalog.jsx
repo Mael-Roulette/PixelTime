@@ -32,6 +32,7 @@ export default function Catalog() {
 				</p>
 
 				<ul className="catalog-list">
+					
 					<li className="catalog-list-item">
 						<Card />
 					</li>
