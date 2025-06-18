@@ -19,7 +19,6 @@ export default class LeaderboardStore {
       }
 
       const levelsList = await response.json();
-      console.log(levelsList)
 
       runInAction( () => {
         this._levels = levelsList;

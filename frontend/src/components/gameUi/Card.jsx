@@ -1,12 +1,12 @@
-const Card = ({ title, image, year, description, hint }) => {
+const Card = ({ card }) => {
 	return (
-		<div className='card' style={{backgroundImage: `url(/cards/${image})`}}>
+		<div className='card' style={{backgroundImage: `url(/cards/${card.image})`}}>
 			<div className='card-front'>
 				<div className='card-image'>
-					<img src={image} alt={title} />
+					<img src={card.image} alt={card.title} />
 				</div>
-				<p className='card-year'>{year}</p>
-				<p className='card-title'>{title}</p>
+				<p className='card-year'>{card.year}</p>
+				<p className='card-title'>{card.title}</p>
 			</div>
 
 			<div className='card-back'>

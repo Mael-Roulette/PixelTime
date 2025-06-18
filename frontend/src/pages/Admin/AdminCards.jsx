@@ -23,7 +23,6 @@ const AdminCards = () => {
 			setLoading(true);
 			const response = await adminService.getCards();
 			setCards(response);
-			console.log(response);
 		} catch (error) {
 			console.error(error);
 		} finally {

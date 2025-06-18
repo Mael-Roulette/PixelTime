@@ -218,24 +218,28 @@ export default class GameStore {
 
   // Sauvegarder le score
   async saveScore () {
-    const token = authService.getToken();
+    try {
+      const token = authService.getToken();
 
-    const response = await fetch( 'http://localhost:8000/api/scores', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${ token }`
-      },
-      body: JSON.stringify( {
-        score: this.score,
-        gameMode: this.gameMode.name,
-        cardsPlayed: this.gameResults.length,
-        accuracy: this.calculateAccuracy()
-      } )
-    } );
+      const response = await fetch( 'http://localhost:8000/api/scores', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${ token }`
+        },
+        body: JSON.stringify( {
+          score: this.score,
+          gameMode: this.gameMode.name,
+          cardsPlayed: this.gameResults.length,
+          accuracy: this.calculateAccuracy()
+        } )
+      } );
 
-    if ( !response.ok ) {
-      throw new Error( 'Erreur lors de la sauvegarde' );
+      if ( !response.ok ) {
+        throw new Error( 'Erreur lors de la sauvegarde' );
+      }
+    } catch ( error ) {
+      throw error;
     }
   }
 

@@ -19,7 +19,6 @@ const Profile = () => {
 				setLoading(true);
 				const response = await authService.getUser();
 				const userData = response.user;
-				console.log(userData);
 				setUser(userData);
 			} catch (error) {
 				console.error(error);
