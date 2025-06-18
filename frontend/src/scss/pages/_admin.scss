@@ -45,22 +45,35 @@
 		}
 
 		&-add {
-			border-top: 1px solid $yellow;
+			transition: all 0.3s ease;
+
+			&.hidden {
+				width: 0;
+				overflow: hidden;
+				flex: 0;
+			}
 
 			&-title {
+				border-top: 1px solid $yellow;
 				text-align: center;
-				margin: 1rem 0;
+				margin-bottom: 1rem;
+				padding-top: 1rem;
 			}
 
 			&-form {
 				display: flex;
+				align-items: center;
+				justify-content: center;
 				flex-direction: column;
 				gap: 2rem;
 
 				.add-form-container {
 					display: flex;
 					flex-direction: column;
-					gap: .8rem;
+					justify-content: center;
+					align-items: center;
+					gap: 0.8rem;
+					width: 100%;
 
 					input,
 					textarea {
@@ -282,7 +295,12 @@
 		}
 
 		&-cards {
+			flex-direction: row;
 			padding: 0 8rem;
+
+			&-content {
+				flex: 2;
+			}
 
 			&-header {
 				flex-direction: row;
@@ -290,6 +308,25 @@
 
 			&-title {
 				margin-bottom: 3rem;
+			}
+
+			&-add {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+
+				&-form {
+					width: 100%;
+
+					.add-form-container {
+						input,
+						textarea {
+							width: 100%;
+						}
+					}
+				}
 			}
 		}
 	}

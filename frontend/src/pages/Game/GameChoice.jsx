@@ -11,7 +11,7 @@ export default function GameChoice() {
 		<>
 			<BottomNavBar />
 
-			<div className='game-choice-container'>
+			<section className='game-choice-container'>
 				<h1 className='game-choice-title'>{t("gameChoice.title")}</h1>
 
 				<div className='game-choice-list'>
@@ -40,7 +40,7 @@ export default function GameChoice() {
 				<NavLink to='/catalog' className='game-choice-catalog'>
 					{t("gameChoice.trainingWithCatalog")}
 				</NavLink>
-			</div>
+			</section>
 
 			<Footer />
 		</>

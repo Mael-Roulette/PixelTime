@@ -19,18 +19,19 @@ const Profile = () => {
 				setLoading(true);
 				const response = await authService.getUser();
 				const userData = response.user;
-				console.log(userData);
 				setUser(userData);
 			} catch (error) {
 				console.error(error);
 				setError(error.message);
+				authService.logout();
+				navigate('/login');
 			} finally {
 				setLoading(false);
 			}
 		};
 
 		fetchUser();
-	}, []);
+	}, [navigate]);
 
 	if (loading) {
 		return (

@@ -19,7 +19,6 @@ const AdminUsers = () => {
 				setLoading(true);
 				const response = await adminService.getUsers();
 				setUsers(response);
-				console.log(response);
 			} catch (error) {
 				console.error(error);
 			} finally {
@@ -63,7 +62,6 @@ const AdminUsers = () => {
 				const result = await adminService.deleteUser(userToDelete);
 				if (result.success) {
 					setUsers(users.filter((user) => user.id !== userToDelete));
-					console.log("Utilisateur supprimé avec succès");
 				} else {
 					console.error("Erreur lors de la suppression:", result.error);
 				}

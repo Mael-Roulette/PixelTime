@@ -108,6 +108,12 @@ class AuthService {
         }
       } );
 
+      // On refresh le token s'il est expiré
+      if ( response.status === 401 ) {
+        return await this.refreshToken();
+      }
+
+
       const data = await response.json();
 
       if ( response.ok ) {
@@ -119,6 +125,35 @@ class AuthService {
     catch ( error ) {
       console.error( 'Erreur de récupération :', error );
       throw error;
+    }
+  }
+
+  // Rafraîchir le token
+  async refreshToken () {
+    const token = this.getToken();
+    if ( !token ) return false;
+
+    try {
+      const response = await fetch( `${ this.baseURL }/refresh-token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${ token }`
+        }
+      } );
+
+      if ( response.ok ) {
+        const data = await response.json();
+        localStorage.setItem( this.TOKEN_KEY, data.token );
+        return true;
+      } else {
+        this.logout();
+        return false;
+      }
+    } catch ( error ) {
+      console.error( 'Erreur lors du refresh du token:', error );
+      this.logout();
+      return false;
     }
   }
 }
