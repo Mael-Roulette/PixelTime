@@ -5,12 +5,19 @@
 /* -------------------------------------------------- */
 
 .game {
-	--grid-size: 60px;
+	--grid-size: 45px;
 	--grid-color: #8d898b3a;
 	--grid-angle: 45deg;
 
 	background-color: $blue;
-	background-image: linear-gradient(to bottom, $blue 20%, rgba($blue, 0.8) 60%, transparent),
+	background-image: linear-gradient(
+			to bottom,
+				$blue 5%,
+				rgba($blue, 0.8) 15%,
+				rgba($blue, 0.5) 50%,
+				rgba($blue, 0.8) 85%,
+				$blue
+		),
 		linear-gradient(
 			var(--grid-angle),
 			transparent 47%,
@@ -94,6 +101,13 @@
 			justify-content: center;
 			align-items: center;
 			gap: 3rem;
+		}
+
+		&-buttons {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 2rem;
 		}
 	}
 }

@@ -21,12 +21,13 @@
 		.droppable-zone {
 			height: 60%;
 			width: 15rem;
-			width: 20rem;
+			width: 25rem;
 			border: 3px dashed $yellow;
 			border-radius: 12px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			background-color: $blue;
 
 			&::after {
 				content: "Déposez votre première carte ici";
@@ -38,12 +39,14 @@
 
 			&:hover,
 			&.drag-over {
-				background-color: rgba($yellow, 0.1);
+				background-color: $blue;
+				background-image: linear-gradient(rgba($yellow, 0.1), rgba($yellow, 0.1));
 				border-color: lighten($yellow, 10%);
 			}
 
 			&.drag-over {
-				background-color: rgba($yellow, 0.2);
+				background-color: $blue;
+				background-image: linear-gradient(rgba($yellow, 0.1), rgba($yellow, 0.2));
 				border-color: $yellow;
 				border-style: solid;
 
@@ -73,17 +76,20 @@
 			align-items: center;
 			justify-content: center;
 			transition: all 0.3s ease;
+			background-color: $blue;
 
 			&:hover,
 			&.drag-over {
-				background-color: rgba($yellow, 0.1);
+				background-color: $blue;
+				background-image: linear-gradient(rgba($yellow, 0.1), rgba($yellow, 0.1));
 				border-color: lighten($yellow, 10%);
 				min-width: 15rem;
 				max-width: 15rem;
 			}
 
 			&.drag-over {
-				background-color: rgba($yellow, 0.2);
+				background-color: $blue;
+				background-image: linear-gradient(rgba($yellow, 0.1), rgba($yellow, 0.2));
 				border-color: $yellow;
 				border-style: solid;
 			}

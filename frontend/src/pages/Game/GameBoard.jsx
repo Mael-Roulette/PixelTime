@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useSearchParams, useNavigate } from "react-router";
 import HUD from "../../components/gameUi/HUD";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGameStore } from "../../stores/useStore";
 import { observer } from "mobx-react-lite";
 import ZoneDraggable from "../../components/gameUi/ZoneDraggable";
@@ -23,7 +23,6 @@ const GameBoard = observer(() => {
 			navigate("/gamechoice");
 		}
 
-		console.log(gameStore);
 		if (!gameStore.loading) {
 			gameStore.play();
 		}
@@ -48,13 +47,16 @@ const GameBoard = observer(() => {
 
 					<div className='game-hand'>
 						<div className='game-hand-card'>
+							{gameStore.cards.length > 0 && (
+								<ZoneDraggable key={gameStore.cards[0].id} index={gameStore.cards[0].id} card={gameStore.cards[0]} />
+							)}
 							{/* Ajouter le bouton d'indice */}
-							{gameStore.cards.map((card) => (
-								<ZoneDraggable key={card.id} index={card.id} card={card} />
-							))}
 						</div>
 						<div className='game-hand-buttons'>
 							{/* Ajouter les boutons d'accessibilité */}
+							<button className='button-primary'>{t("game.previous")}</button>
+							<button className='button-primary'>{t("game.addCard")}</button>
+							<button className='button-primary'>{t("game.next")}</button>
 						</div>
 					</div>
 				</DndProvider>

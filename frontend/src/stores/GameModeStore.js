@@ -4,11 +4,10 @@ import { getLanguage } from '../../utils/function';
 const API_URL = import.meta.env.API_BASE_URL || 'http://localhost:8000/api';
 
 export default class GameModeStore {
-  loading = false;
   cards = [];
   placedCards = [];
+  loading = false;
   cardResults = new Map();
-  score = 0;
 
   constructor () {
     makeAutoObservable( this );
@@ -19,7 +18,7 @@ export default class GameModeStore {
     const language = getLanguage();
 
     try {
-      const response = await fetch( `${ API_URL }/cards/random/3?lang=${ language }`, {
+      const response = await fetch( `${ API_URL }/cards/random/5?lang=${ language }`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -43,13 +42,16 @@ export default class GameModeStore {
   }
 
   // Permet de placer une carte
-  placeCard ( card, position ) {
+  dropCard ( card, position ) {
     const result = this.getResult( card, position );
     // Retirer la carte des cartes disponibles
     this.cards = this.cards.filter( c => c.id !== card.id );
+    console.log( this.cards );
 
     // Insérer à la position
     this.placedCards.splice( position, 0, card );
+    console.log( position );
+    console.log( this.placedCards );
 
     // Stocker les résultats pour pas qu'il s'enlève à tour de role
     this.cardResults.set( card.id, result.isCorrect );
@@ -76,16 +78,17 @@ export default class GameModeStore {
     return positions;
   }
 
+  // Permet de récupérer le résultat de la position
   getResult ( card, position ) {
-
     let cardBefore = position > 0 ? this.placedCards[ position - 1 ] : null;
-    let cardAfter = position < this.placedCards.length ? this.placedCards[ position + 1 ] : null;
+    let cardAfter = position < this.placedCards.length ? this.placedCards[ position ] : null;
     let isCorrect = true;
 
-    if ( this.placedCards.length === 1 ) {
+    if ( this.placedCards.length === 0 ) {
       isCorrect = true;
     }
 
+    console.log( 'PlaceCards length', this.placedCards.length );
     console.log( 'cardBefore:', cardBefore ? cardBefore : 'null' );
     console.log( 'cardAfter:', cardAfter ? cardAfter : 'null' );
 
