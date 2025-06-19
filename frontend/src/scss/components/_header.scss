@@ -8,6 +8,7 @@
 /* ---------- Header home ---------- */
 
 .header {
+	overflow-x: hidden;
 	position: sticky;
 	width: 100%;
 	top: 0;
@@ -34,7 +35,7 @@
 	}
 
 	&-nav {
-		position: absolute;
+		position: fixed;
 		top: 0;
 		right: -100%;
 		height: 100vh;
@@ -279,7 +280,7 @@
 
 @include responsive("lg") {
 	.header {
-		padding: 1.5rem 5rem;
+		padding: 1.5rem 8rem;
 
 		&-nav {
 			position: relative;
@@ -362,5 +363,11 @@
 		&-label {
 			font-size: 1.6rem;
 		}
+	}
+}
+
+@include responsive('xl') {
+	.header {
+		padding: 1.5rem 30rem;
 	}
 }

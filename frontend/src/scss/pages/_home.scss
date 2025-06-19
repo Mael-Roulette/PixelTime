@@ -3,34 +3,279 @@
 /* -------------------------------------------------- */
 /* ---------- Page d'accueil du site ---------- */
 /* -------------------------------------------------- */
+.home {
+	overflow-x: hidden;
 
-.banner {
-  background-color: $blue;
-  color: $white;
-  height: calc(100vh - 8rem);
+	&-banner {
+		background-color: $blue;
+		color: $white;
+		margin-bottom: 7rem;
 
-  &-content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
-    padding: 2.5rem 2rem;
+		&-content {
+			display: flex;
+			flex-direction: column;
+			justify-content: start;
+			align-items: start;
+			padding: 2.5rem 2rem;
+			margin-bottom: 3rem;
 
-    &-title {
-      font-size: 2.4rem;
-      margin-bottom: 1rem;
-    }
+			&-title {
+				font-size: 2.4rem;
+				margin-bottom: 1rem;
+			}
 
-    &-description {
-      margin-bottom: 2rem;
-    }
+			&-description {
+				margin-bottom: 2rem;
+			}
 
-    &-buttons {
-      height: fit-content;
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-  }
+			&-buttons {
+				height: fit-content;
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 1.5rem;
+
+				&-auth {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					gap: 2rem;
+				}
+
+				> a {
+					color: $white;
+					opacity: 0.75;
+
+					&:hover {
+						text-decoration: underline;
+					}
+				}
+			}
+		}
+
+		&-cards {
+			&-list {
+				list-style: none;
+				display: flex;
+				justify-content: start;
+				align-items: center;
+				overflow: hidden;
+				gap: 3rem;
+
+				&-item {
+					min-width: 15rem;
+					width: 15rem;
+					height: 22rem;
+					border-radius: 8px;
+					border: 2px solid $white;
+					background-size: cover;
+					background-position: center;
+					overflow: hidden;
+					display: flex;
+					align-items: end;
+
+					p {
+						width: 100%;
+						text-align: center;
+						padding: 0.5rem 0;
+						background-color: $white;
+						color: $blue;
+					}
+				}
+			}
+		}
+	}
+
+	&-key-number {
+		padding: 0 2rem;
+		margin-bottom: 5rem;
+
+		&-list {
+			list-style: none;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 1.5rem;
+			padding: 0;
+
+			&-item {
+				width: 100%;
+				padding: 3rem;
+				border: 4px solid #4d68a2;
+				border-radius: 8px;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+        gap: 1.5rem;
+				background-color: #232f4a;
+        flex: 1;
+
+				&-number {
+					font-family: $font-primary;
+					font-size: 7rem;
+					line-height: 7rem;
+				}
+
+				&-text {
+					font-size: 2rem;
+          text-align: center;
+				}
+			}
+		}
+	}
+
+	&-explication {
+		padding: 0 2rem;
+		margin-bottom: 5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+
+		&-image {
+			width: 100%;
+			height: 38rem;
+			background-color: grey;
+			border-radius: 8px;
+			overflow: hidden;
+
+			img {
+				min-width: 100%;
+				width: 100%;
+				max-width: none;
+				min-height: 100%;
+				object-fit: cover;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+
+		&-content {
+			h2 {
+				margin-bottom: 1.5rem;
+			}
+
+      &-text {
+        margin-bottom: 3rem;
+      }
+		}
+
+		&-buttons {
+			height: fit-content;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 1.5rem;
+			margin-bottom: 3rem;
+
+			&-auth {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 2rem;
+			}
+
+			> a {
+				color: $white;
+				opacity: 0.75;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+}
+
+@include responsive("lg") {
+	.home {
+		&-banner {
+			display: flex;
+			gap: 12rem;
+
+			&-content {
+				padding: 10rem 8rem;
+
+				&-title {
+					font-size: 7rem;
+					line-height: 7.2rem;
+				}
+
+				&-description {
+					font-size: 2rem;
+					line-height: 2.2rem;
+				}
+
+				&-buttons {
+					justify-content: start;
+					align-items: start;
+				}
+			}
+
+			&-cards {
+				padding: 10rem 0;
+				gap: 5rem;
+
+				&-list {
+					&-item {
+						width: 26rem;
+						height: 38rem;
+					}
+				}
+			}
+		}
+
+		&-key-number {
+			padding: 0 8rem;
+			margin-bottom: 10rem;
+
+			&-list {
+				flex-direction: row;
+        align-items: stretch;
+			}
+		}
+
+		&-explication {
+			padding: 0 8rem;
+
+      &-buttons {
+        justify-content: start;
+        align-items: start;
+      }
+		}
+	}
+}
+
+@include responsive("xl") {
+	.home {
+		&-banner {
+			&-content {
+				padding: 10rem 0 10rem 30rem;
+			}
+		}
+
+		&-key-number {
+			padding: 0 30rem;
+		}
+
+		&-explication {
+			padding: 0 30rem;
+			flex-direction: row;
+
+			&-image {
+				flex: 1;
+			}
+
+			&-content {
+				flex: 2;
+			}
+		}
+	}
 }
