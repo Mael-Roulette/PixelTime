@@ -169,8 +169,29 @@ class CardController extends AbstractController
     {
         $locale = $request->query->get('lang', 'fr');
 
-        $randomCards = $cardRepository->findBy([], null, $limite);
-        shuffle($randomCards);
+        // Récupérer toutes les cartes puis en sélectionner aléatoirement
+        $allCards = $cardRepository->findAll();
+
+        if (count($allCards) == 0) {
+            return $this->json([]);
+        }
+
+        if (count($allCards) <= $limite) {
+            $randomCards = $allCards;
+        } else {
+            // Sélectionner des indices aléatoirement
+            $randomIndices = array_rand($allCards, $limite);
+            $randomCards = [];
+
+            // Si on ne récupère qu'une carte, array_rand retourne un entier
+            if (!is_array($randomIndices)) {
+                $randomIndices = [$randomIndices];
+            }
+
+            foreach ($randomIndices as $index) {
+                $randomCards[] = $allCards[$index];
+            }
+        }
 
         $result = [];
         foreach ($randomCards as $card) {
