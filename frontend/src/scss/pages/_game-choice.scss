@@ -5,48 +5,76 @@
 /* -------------------------------------------------- */
 
 .game-choice {
-  &-container {
-    background-color: $blue;
-    padding-top: 2rem;
-    padding-bottom: 9rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+	&-container {
+		--grid-size: 45px;
+		--grid-color: #8d898b3a;
+		--grid-angle: 45deg;
 
-  }
+		background-color: $blue;
+		background-image: linear-gradient(
+				to bottom,
+				$blue 5%,
+				rgba($blue, 0.8) 15%,
+				transparent,
+				rgba($blue, 0.8) 85%,
+				$blue
+			),
+			linear-gradient(
+				var(--grid-angle),
+				transparent 47%,
+				var(--grid-color) 49%,
+				var(--grid-color) 51%,
+				transparent 53%
+			),
+			linear-gradient(
+				calc(var(--grid-angle) * -1),
+				transparent 47%,
+				var(--grid-color) 49%,
+				var(--grid-color) 51%,
+				transparent 53%
+			);
+		background-size: 100% 100%, var(--grid-size) var(--grid-size),
+			var(--grid-size) var(--grid-size);
 
-  &-title {
-    text-align: center;
-    color: $white;
-    margin-bottom: 4rem;
-  }
+		background-color: $blue;
+		padding-top: 2rem;
+		padding-bottom: 9rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
 
-  &-list {
-    margin-bottom: 4rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    width: fit-content;
-  }
+	&-title {
+		text-align: center;
+		color: $white;
+		margin-bottom: 4rem;
+	}
 
-  &-catalog {
-    background-color: transparent;
-    color: $white;
-    text-decoration: underline;
+	&-list {
+		margin-bottom: 4rem;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 3rem 8rem;
+		width: fit-content;
+	}
 
-  }
+	&-catalog {
+		background-color: transparent;
+		color: $white;
+		text-decoration: underline;
+	}
 }
 
-@include responsive('lg') {
-  .game-choice {
-    &-container {
-      padding-top: 5rem;
-    }
+@include responsive("lg") {
+	.game-choice {
+		&-container {
+			padding-top: 5rem;
+		}
 
-    &-list {
-      grid-template-columns: repeat(3, 1fr);
-      place-items: center;
-    }
-  }
+		&-list {
+			grid-template-columns: repeat(3, 1fr);
+			place-items: center;
+		}
+	}
 }

@@ -7,7 +7,8 @@ const GameTimeline = observer(() => {
 	const gameStore = useGameStore();
 
 	const handleDrop = (item, position) => {
-		gameStore.placeCard(item.card, position);
+		const dropResult = gameStore.placeCard(item.card, position);
+		console.log(dropResult);
 	};
 
 	return (
@@ -37,7 +38,11 @@ const GameTimeline = observer(() => {
 						<div key={card.id} className='game-timeline-segment'>
 							{/* Carte */}
 							<div className='game-timeline-card'>
-								<Card card={card} />
+								<Card
+									card={card}
+									isPlaced={true}
+									result={gameStore.getCardResult(card.id)}
+								/>
 							</div>
 
 							{/* Zone de drop après cette carte */}

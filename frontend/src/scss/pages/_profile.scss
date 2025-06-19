@@ -5,9 +5,39 @@
 /* -------------------------------------------------- */
 
 .profile {
+	--grid-size: 35px;
+	--grid-color: #8d898b3a;
+	--grid-angle: 45deg;
+
+	background-color: $blue;
+	background-image: linear-gradient(
+			to bottom,
+			$blue 5%,
+			rgba($blue, 0.8) 15%,
+			transparent,
+			rgba($blue, 0.8) 85%,
+			$blue
+		),
+		linear-gradient(
+			var(--grid-angle),
+			transparent 47%,
+			var(--grid-color) 49%,
+			var(--grid-color) 51%,
+			transparent 53%
+		),
+		linear-gradient(
+			calc(var(--grid-angle) * -1),
+			transparent 47%,
+			var(--grid-color) 49%,
+			var(--grid-color) 51%,
+			transparent 53%
+		);
+	background-size: 100% 100%, var(--grid-size) var(--grid-size),
+		var(--grid-size) var(--grid-size);
+
 	background-color: $blue;
 	color: $white;
-	min-height: 100vh;
+	min-height: calc( 100vh - 5rem );
 
 	&-picture {
 		display: flex;
@@ -75,7 +105,8 @@
 				li {
 					border: 1px solid $white;
 					border-radius: 8px;
-					padding: 1rem 0;
+					background-color: $blue;
+					padding: 1rem;
 					display: flex;
 					flex-direction: column;
 					justify-content: center;
@@ -88,6 +119,7 @@
 						font-family: $font-secondary;
 						font-weight: $fsemibold;
 						margin: 0;
+						text-align: center;
 					}
 				}
 			}
@@ -144,7 +176,8 @@
 @include responsive("lg") {
 	.profile {
 		margin: 5rem auto 0;
-		max-width: 90rem;
+		padding: 0 30rem;
+	--grid-size: 45px;
 
 		&-picture {
 			border-radius: 20px;

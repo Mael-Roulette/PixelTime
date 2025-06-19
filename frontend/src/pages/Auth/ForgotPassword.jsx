@@ -73,7 +73,7 @@ function ForgotPassword() {
 					{message && <p>{message}</p>}
 					<p>
 						{t("forgotPassword.notForgotPassword")}
-						<NavLink href='/login'> {t("forgotPassword.login")}</NavLink>
+						<NavLink to={'/login'}> {t("forgotPassword.login")}</NavLink>
 					</p>
 				</div>
 			</main>

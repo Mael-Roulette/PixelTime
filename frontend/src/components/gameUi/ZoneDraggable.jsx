@@ -23,7 +23,7 @@ const ZoneDraggable = ({ card }) => {
 				opacity: isDragging ? 0 : 1,
 			}}
 		>
-			<Card card={card} draggable='false' />
+			<Card card={card} draggable='false' isPlaced={false} />
 		</div>
 	);
 };

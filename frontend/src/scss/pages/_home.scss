@@ -7,6 +7,35 @@
 	overflow-x: hidden;
 
 	&-banner {
+		--grid-size: 30px;
+		--grid-color: #8d898b3a;
+		--grid-angle: 45deg;
+
+		background-color: $blue;
+		background-image: linear-gradient(
+				to bottom,
+				$blue 5%,
+				rgba($blue, 0.8) 20%,
+				transparent,
+				rgba($blue, 0.8) 60%,
+				$blue
+			),
+			linear-gradient(
+				var(--grid-angle),
+				transparent 47%,
+				var(--grid-color) 49%,
+				var(--grid-color) 51%,
+				transparent 53%
+			),
+			linear-gradient(
+				calc(var(--grid-angle) * -1),
+				transparent 47%,
+				var(--grid-color) 49%,
+				var(--grid-color) 51%,
+				transparent 53%
+			);
+		background-size: 100% 100%, var(--grid-size) var(--grid-size),
+			var(--grid-size) var(--grid-size);
 		background-color: $blue;
 		color: $white;
 		margin-bottom: 7rem;
@@ -63,6 +92,7 @@
 				align-items: center;
 				overflow: hidden;
 				gap: 3rem;
+				height: 100%;
 
 				&-item {
 					min-width: 15rem;
@@ -110,9 +140,9 @@
 				flex-direction: column;
 				justify-content: center;
 				align-items: center;
-        gap: 1.5rem;
+				gap: 1.5rem;
 				background-color: #232f4a;
-        flex: 1;
+				flex: 1;
 
 				&-number {
 					font-family: $font-primary;
@@ -122,7 +152,7 @@
 
 				&-text {
 					font-size: 2rem;
-          text-align: center;
+					text-align: center;
 				}
 			}
 		}
@@ -160,9 +190,9 @@
 				margin-bottom: 1.5rem;
 			}
 
-      &-text {
-        margin-bottom: 3rem;
-      }
+			&-text {
+				margin-bottom: 3rem;
+			}
 		}
 
 		&-buttons {
@@ -197,15 +227,18 @@
 @include responsive("lg") {
 	.home {
 		&-banner {
+		--grid-size: 50px;
 			display: flex;
 			gap: 12rem;
+			min-height: 70vh;
 
 			&-content {
 				padding: 10rem 8rem;
+				justify-content: center;
 
 				&-title {
-					font-size: 7rem;
-					line-height: 7.2rem;
+					font-size: 5rem;
+					line-height: 5.2rem;
 				}
 
 				&-description {
@@ -221,9 +254,10 @@
 
 			&-cards {
 				padding: 10rem 0;
-				gap: 5rem;
 
 				&-list {
+					gap: 5rem;
+
 					&-item {
 						width: 26rem;
 						height: 38rem;
@@ -238,17 +272,17 @@
 
 			&-list {
 				flex-direction: row;
-        align-items: stretch;
+				align-items: stretch;
 			}
 		}
 
 		&-explication {
 			padding: 0 8rem;
 
-      &-buttons {
-        justify-content: start;
-        align-items: start;
-      }
+			&-buttons {
+				justify-content: start;
+				align-items: start;
+			}
 		}
 	}
 }

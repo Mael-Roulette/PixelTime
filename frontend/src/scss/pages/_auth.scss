@@ -5,167 +5,196 @@
 /* -------------------------------------------------- */
 
 .header-login {
-    position: sticky;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    background-color: $blue;
-    padding: 1.5rem 2rem;
+	position: sticky;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	background-color: $blue;
+	padding: 1.5rem 2rem;
 
-    a {
-        color: $white;
-        text-decoration: underline;
-    }
+	a {
+		color: $white;
+		text-decoration: underline;
+	}
 }
 
 .main-login {
-    background-color: $blue;
-    height: calc(100vh - 5.2rem);
-    color: $white;
-    padding: 6rem 2rem;
+	--grid-size: 45px;
+	--grid-color: #8d898b3a;
+	--grid-angle: 45deg;
 
-    h1 {
-        margin: 4rem 0;
-    }
+	background-color: $blue;
+	background-image: linear-gradient(
+			to bottom,
+			$blue 5%,
+			rgba($blue, 0.8) 15%,
+			transparent,
+			rgba($blue, 0.8) 85%,
+			$blue
+		),
+		linear-gradient(
+			var(--grid-angle),
+			transparent 47%,
+			var(--grid-color) 49%,
+			var(--grid-color) 51%,
+			transparent 53%
+		),
+		linear-gradient(
+			calc(var(--grid-angle) * -1),
+			transparent 47%,
+			var(--grid-color) 49%,
+			var(--grid-color) 51%,
+			transparent 53%
+		);
+	background-size: 100% 100%, var(--grid-size) var(--grid-size),
+		var(--grid-size) var(--grid-size);
 
-    &-form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        height: 100%;
+	height: calc(100vh - 5.2rem);
+	color: $white;
+	padding: 6rem 2rem;
 
-        form {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 1.5rem;
-            width: 30rem;
-            height: 100%;
-            margin-bottom: 1rem;
+	h1 {
+		margin: 4rem 0;
+	}
 
-            .form-group {
-                display: flex;
-                flex-direction: column;
-                gap: 1.5rem;
-                color: $white;
+	&-form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+        background-color: $blue;
 
-                input {
-                    color: $white;
-                }
+		form {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			gap: 1.5rem;
+			width: 30rem;
+			height: 100%;
+			margin-bottom: 1rem;
 
-                span {
-                    svg {
-                        color: $white;
-                    }
-                }
+			.form-group {
+				display: flex;
+				flex-direction: column;
+				gap: 1.5rem;
+				color: $white;
 
-                &-info {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 1.5rem;
-                }
+				input {
+					color: $white;
+				}
 
-                &-password {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 1.5rem;
-                }
+				span {
+					svg {
+						color: $white;
+					}
+				}
 
-                label {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 0.5rem;
-                    width: 100%;
-                    font-size: 1.6rem;
-                    font-weight: $fsemibold;
-                }
-            }
+				&-info {
+					display: flex;
+					flex-direction: column;
+					gap: 1.5rem;
+				}
 
-            button {
-                background-color: $yellow;
-                color: $black;
-                border: none;
-                padding: 0.5rem 1rem;
-                font-size: 1.6rem;
-                cursor: pointer;
+				&-password {
+					display: flex;
+					flex-direction: column;
+					gap: 1.5rem;
+				}
 
-                &:hover {
-                    background-color: darken($yellow, 10%);
-                }
-            }
-        }
-    }
+				label {
+					display: flex;
+					flex-direction: column;
+					gap: 0.5rem;
+					width: 100%;
+					font-size: 1.6rem;
+					font-weight: $fsemibold;
+				}
+			}
 
-    a {
-        color: $yellow;
-        text-decoration: none;
-    }
+			button {
+				background-color: $yellow;
+				color: $black;
+				border: none;
+				padding: 0.5rem 1rem;
+				font-size: 1.6rem;
+				cursor: pointer;
+
+				&:hover {
+					background-color: darken($yellow, 10%);
+				}
+			}
+		}
+	}
+
+	a {
+		color: $yellow;
+		text-decoration: none;
+	}
 }
 
 @include responsive("lg") {
-    .main-login {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem;
-        overflow-y: auto;
+	.main-login {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 2rem;
+		overflow-y: auto;
 
-        h1 {
-            margin: 0 0 2rem 0;
-        }
+		h1 {
+			margin: 0 0 2rem 0;
+		}
 
-        &-form {
-            width: fit-content;
-            height: fit-content;
-            max-height: calc(100vh - 10rem);
-            border: solid 2px $white;
-            border-radius: 8px;
-            padding: 2rem;
-            overflow-y: auto;
+		&-form {
+			width: fit-content;
+			height: fit-content;
+			max-height: calc(100vh - 10rem);
+			border: solid 2px $white;
+			border-radius: 8px;
+			padding: 2rem;
+			overflow-y: auto;
 
-            form {
-                height: auto;
-                justify-content: flex-start;
-                padding-bottom: 0;
-                gap: 2rem;
-                width: auto;
-                min-width: 50rem;
+			form {
+				height: auto;
+				justify-content: flex-start;
+				padding-bottom: 0;
+				gap: 2rem;
+				width: auto;
+				min-width: 50rem;
 
-                .form-group {
-                    align-items: center;
-                    &-info {
-                        display: flex;
-                        flex-direction: row;
-                        gap: 2rem;
-    
-                    }
-                    label {
-                        flex: 1;
-                        min-width: 20rem;
-                        max-width: 40rem;
-                        text-wrap: nowrap;
-                    }
-                    &-password {
-                        display: flex;
-                        flex-direction: row;
-                        gap: 2rem;
-                    }
+				.form-group {
+					align-items: center;
+					&-info {
+						display: flex;
+						flex-direction: row;
+						gap: 2rem;
+					}
+					label {
+						flex: 1;
+						min-width: 20rem;
+						max-width: 40rem;
+						text-wrap: nowrap;
+					}
+					&-password {
+						display: flex;
+						flex-direction: row;
+						gap: 2rem;
+					}
 
-                    &-required {
-                        width: 100%;
-                        text-align: left;
-                        padding-left: 4rem;
-                    }
-                }
-            }
-        }
+					&-required {
+						width: 100%;
+						text-align: left;
+						padding-left: 4rem;
+					}
+				}
+			}
+		}
 
-        .submit-button {
-            margin-top: 2rem;
-            width: fit-content;
-            align-self: center;
-        }
-    }
+		.submit-button {
+			margin-top: 2rem;
+			width: fit-content;
+			align-self: center;
+		}
+	}
 }

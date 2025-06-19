@@ -5,11 +5,33 @@
 /* -------------------------------------------------- */
 
 .game {
+	--grid-size: 60px;
+	--grid-color: #8d898b3a;
+	--grid-angle: 45deg;
+
 	background-color: $blue;
+	background-image: linear-gradient(to bottom, $blue 20%, rgba($blue, 0.8) 60%, transparent),
+		linear-gradient(
+			var(--grid-angle),
+			transparent 47%,
+			var(--grid-color) 49%,
+			var(--grid-color) 51%,
+			transparent 53%
+		),
+		linear-gradient(
+			calc(var(--grid-angle) * -1),
+			transparent 47%,
+			var(--grid-color) 49%,
+			var(--grid-color) 51%,
+			transparent 53%
+		);
+	background-size: 100% 100%, var(--grid-size) var(--grid-size),
+		var(--grid-size) var(--grid-size);
+
 	width: 100%;
 	min-height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr 1fr;
+	display: grid;
+	grid-template-rows: auto 1fr 1fr;
 
 	&-info {
 		&-container {
@@ -60,20 +82,20 @@
 		}
 	}
 
-  &-hand {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
+	&-hand {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 2rem;
 
-    &-card {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 3rem;
-    }
-  }
+		&-card {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 3rem;
+		}
+	}
 }
 
 .description-popup {

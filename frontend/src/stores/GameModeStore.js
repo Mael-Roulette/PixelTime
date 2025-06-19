@@ -1,12 +1,14 @@
 import { makeAutoObservable } from 'mobx';
-import { getToken, getLanguage } from '../../utils/function';
+import { getLanguage } from '../../utils/function';
 
 const API_URL = import.meta.env.API_BASE_URL || 'http://localhost:8000/api';
 
 export default class GameModeStore {
+  loading = false;
   cards = [];
   placedCards = [];
-  loading = false;
+  cardResults = new Map();
+  score = 0;
 
   constructor () {
     makeAutoObservable( this );
@@ -42,11 +44,22 @@ export default class GameModeStore {
 
   // Permet de placer une carte
   placeCard ( card, position ) {
+    const result = this.getResult( card, position );
     // Retirer la carte des cartes disponibles
     this.cards = this.cards.filter( c => c.id !== card.id );
 
-    // Insérer à la position spécifiée
+    // Insérer à la position
     this.placedCards.splice( position, 0, card );
+
+    // Stocker les résultats pour pas qu'il s'enlève à tour de role
+    this.cardResults.set( card.id, result.isCorrect );
+
+    return result;
+  }
+
+  // Méthode pour récupérer le résultat d'une carte
+  getCardResult ( cardId ) {
+    return this.cardResults.has( cardId ) ? this.cardResults.get( cardId ) : null;
   }
 
   // Génère les positions possibles pour les drops
@@ -61,5 +74,39 @@ export default class GameModeStore {
       positions.push( i );
     }
     return positions;
+  }
+
+  getResult ( card, position ) {
+
+    let cardBefore = position > 0 ? this.placedCards[ position - 1 ] : null;
+    let cardAfter = position < this.placedCards.length ? this.placedCards[ position + 1 ] : null;
+    let isCorrect = true;
+
+    if ( this.placedCards.length === 1 ) {
+      isCorrect = true;
+    }
+
+    console.log( 'cardBefore:', cardBefore ? cardBefore : 'null' );
+    console.log( 'cardAfter:', cardAfter ? cardAfter : 'null' );
+
+
+    if ( cardBefore && card.year < cardBefore.year ) {
+      console.log( "Erreur: année trop petite par rapport à la carte précédente" );
+      isCorrect = false;
+    }
+
+    if ( cardAfter && card.year > cardAfter.year ) {
+      console.log( "Erreur: année trop grande par rapport à la carte suivante" );
+      isCorrect = false;
+    }
+
+    return { cardId: card.id, isCorrect };
+  }
+
+  // Méthode pour réinitialiser le jeu
+  resetGame () {
+    this.cards = [];
+    this.placedCards = [];
+    this.cardResults.clear();
   }
 }
