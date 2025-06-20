@@ -18,8 +18,6 @@ class AuthService {
         localStorage.setItem( TOKEN_KEY, data.token );
         localStorage.setItem( USER_KEY, JSON.stringify( data.user ) );
 
-        console.log( "login" )
-
         return data;
       } else {
         throw new Error( data.error || 'Erreur lors de la connexion' );

@@ -1,0 +1,84 @@
+@use "../abstracts" as *;
+
+/* -------------------------------------------------- */
+/* ---------- Notification du jeu ---------- */
+/* -------------------------------------------------- */
+
+.notification {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	z-index: 30;
+	max-width: 400px;
+	animation: slideIn 0.3s ease-out;
+
+	&-content {
+		display: flex;
+		align-items: flex-start;
+		padding: 1.5rem;
+		border-radius: 8px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		background: white;
+		border-left: 6px solid;
+		overflow: hidden;
+
+		&-warning {
+			border-left-color: $yellow;
+		}
+
+		&-error {
+			border-left-color: $red;
+		}
+
+		&-success {
+			border-left-color: $green;
+		}
+	}
+
+	&-icon {
+		font-size: 2rem;
+		margin-right: 1rem;
+		flex-shrink: 0;
+	}
+
+	&-text {
+		flex: 1;
+	}
+
+	&-title {
+		font-weight: bold;
+		font-size: 1.8rem;
+		margin-bottom: 0.5rem;
+		color: $black;
+	}
+
+	&-message {
+		color: $blue;
+		font-size: 1.6rem;
+	}
+
+	&-close {
+		background: none;
+		border: none;
+		font-size: 2rem;
+		color: $black;
+		cursor: pointer;
+		padding: 0;
+		margin-left: 1.5rem;
+
+		&:hover {
+			color: $blue;
+		}
+	}
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}

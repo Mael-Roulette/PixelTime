@@ -38,7 +38,7 @@ const GameBoard = observer(() => {
 	return (
 		<>
 			<div className='game'>
-				<HUD score={0} mode={mode} description={t("game.description")} />
+				<HUD score={gameStore.score} mode={mode} description={t("game.description")} />
 
 				<DndProvider backend={backend}>
 					<div className='game-board'>

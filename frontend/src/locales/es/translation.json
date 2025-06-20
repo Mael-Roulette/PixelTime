@@ -16,7 +16,7 @@
 		"loading": "Cargando...",
 		"verification": "Verificación en curso...",
 		"cancel": "Cancelar",
-        "close": "Cerrar"
+		"close": "Cerrar"
 	},
 
 	"footer": {
@@ -145,11 +145,26 @@
 		"homeTitle": "Área de administración",
 		"user": {
 			"title": "Lista de usuarios",
-            "seeAll" : "Ver todos los usuarios"
+			"seeAll": "Ver todos los usuarios"
 		},
 		"card": {
 			"title": "Lista de tarjetas",
-            "seeAll" : "Ver todas las tarjetas"
+			"seeAll": "Ver todas las tarjetas"
+		}
+	},
+
+	"gameNotification": {
+		"success": {
+			"title": "¡Respuesta correcta!",
+			"message": "+10 puntos !"
+		},
+		"incorrect": {
+			"title": "¡Colocación incorrecta!",
+			"message": "La tarjeta \"{{cardName}}\" ha sido colocada automáticamente en la posición correcta."
+		},
+		"finish": {
+			"title": "¡Juego terminado!",
+			"message": "¡El juego ha terminado! Si estabas conectado puedes encontrar tu puntuación en tu perfil."
 		}
 	}
 }

@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx';
-import { getLanguage } from '../../utils/function';
+import { getLanguage, getToken } from '../../utils/function';
+import { t } from 'i18next';
 
 const API_URL = import.meta.env.API_BASE_URL || 'http://localhost:8000/api';
 
@@ -8,6 +9,9 @@ export default class GameModeStore {
   placedCards = [];
   loading = false;
   cardResults = new Map();
+  notification = null;
+  score = 0;
+  gameFinished = false;
 
   constructor () {
     makeAutoObservable( this );
@@ -41,22 +45,123 @@ export default class GameModeStore {
     this.loadCards();
   }
 
+  async finishGame () {
+    if ( this.gameFinished ) return;
+
+    this.showNotification( {
+      type: 'finish',
+      title: t( 'gameNotification.finish.title' ),
+      message: t( 'gameNotification.finish.message' ),
+      duration: 8000
+    } );
+
+    this.gameFinished = true;
+
+    try {
+      const token = getToken();
+      if ( !token ) return;
+
+      const response = await fetch( `${ API_URL }/users/add-score`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${ token }`
+        },
+        body: JSON.stringify( {
+          score: this.score,
+        } )
+      } );
+
+      if ( response.ok ) {
+        const result = await response.json();
+
+        return result;
+      } else {
+        throw new Error( 'Erreur lors de la sauvegarde du score' );
+      }
+    } catch ( error ) {
+      console.error( 'Erreur lors de la sauvegarde du score:', error );
+    }
+  }
+
+  // Vérifie si la partie est terminée
+  get isGameFinished () {
+    return this.cards.length === 0 && this.placedCards.length > 0;
+  }
+
   // Permet de placer une carte
   dropCard ( card, position ) {
     const result = this.getResult( card, position );
-    // Retirer la carte des cartes disponibles
+
     this.cards = this.cards.filter( c => c.id !== card.id );
-    console.log( this.cards );
 
-    // Insérer à la position
-    this.placedCards.splice( position, 0, card );
-    console.log( position );
-    console.log( this.placedCards );
+    if ( result.isCorrect ) {
+      this.placedCards.splice( position, 0, card );
+      this.addScore( 10 );
 
-    // Stocker les résultats pour pas qu'il s'enlève à tour de role
+      this.showNotification( {
+        type: 'success',
+        title: t( 'gameNotification.success.title' ),
+        message: t( 'gameNotification.success.message', { cardName: card.title } ),
+        duration: 5000
+      } );
+    } else {
+      const correctPosition = this.findCorrectPosition( card );
+      this.placedCards.splice( correctPosition, 0, card );
+      this.addScore( -5 );
+
+      this.showNotification( {
+        type: 'warning',
+        title: t( 'gameNotification.incorrect.title' ),
+        message: t( 'gameNotification.incorrect.message', { cardName: card.title } ),
+        duration: 5000
+      } );
+
+      result.isCorrect = false;
+      result.autoPlaced = true;
+    }
+
     this.cardResults.set( card.id, result.isCorrect );
 
+    if ( this.isGameFinished ) {
+      setTimeout( () => {
+        this.finishGame();
+      }, 2000 );
+    }
+
     return result;
+  }
+
+  // Trouverla position correcte d'une carte
+  findCorrectPosition ( card ) {
+    if ( this.placedCards.length === 0 ) {
+      return 0;
+    }
+
+    for ( let i = 0; i < this.placedCards.length; i++ ) {
+      if ( card.year <= this.placedCards[ i ].year ) {
+        return i;
+      }
+    }
+
+    return this.placedCards.length;
+  }
+
+  // Affiche une notification
+  showNotification ( notification ) {
+    this.notification = notification;
+
+    // Auto-masquer la notif après la durée spécifiée
+    if ( notification.duration ) {
+      setTimeout( () => {
+        this.hideNotification();
+      }, notification.duration );
+    }
+  }
+
+  // Masquer la notification
+  hideNotification () {
+    this.notification = null;
   }
 
   // Méthode pour récupérer le résultat d'une carte
@@ -88,22 +193,24 @@ export default class GameModeStore {
       isCorrect = true;
     }
 
-    console.log( 'PlaceCards length', this.placedCards.length );
-    console.log( 'cardBefore:', cardBefore ? cardBefore : 'null' );
-    console.log( 'cardAfter:', cardAfter ? cardAfter : 'null' );
-
 
     if ( cardBefore && card.year < cardBefore.year ) {
-      console.log( "Erreur: année trop petite par rapport à la carte précédente" );
       isCorrect = false;
     }
 
     if ( cardAfter && card.year > cardAfter.year ) {
-      console.log( "Erreur: année trop grande par rapport à la carte suivante" );
       isCorrect = false;
     }
 
     return { cardId: card.id, isCorrect };
+  }
+
+  // Méthode pour ajouter/retirer des points
+  addScore ( points ) {
+    this.score += points;
+    if ( this.score < 0 ) {
+      this.score = 0;
+    }
   }
 
   // Méthode pour réinitialiser le jeu
@@ -111,5 +218,6 @@ export default class GameModeStore {
     this.cards = [];
     this.placedCards = [];
     this.cardResults.clear();
+    this.score = 0;
   }
 }

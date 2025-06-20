@@ -1,155 +1,170 @@
 {
-    "global": {
-        "login": "Connexion",
-        "logout": "Déconnexion",
-        "logoutText": "Êtes vous sur de vouloir vous déconnecter ? Votre progression ne sera pas sauvegarder.",
-        "signup": "Inscription",
-        "play": "Jouer",
-        "leaderboard": "Classement",
-        "backHome": "Retour à l'accueil",
-        "classicMode": "Mode classique",
-        "livesMode": "Mode survie",
-        "chronoMode": "Mode chrono",
-        "catalog": "Catalogue",
-        "profile": "Profil",
-        "gameModes": "Modes",
-        "loading": "Chargement...",
-        "verification": "Vérification en cours...",
-        "cancel": "Annuler",
-        "close": "Fermer"
-    },
+	"global": {
+		"login": "Connexion",
+		"logout": "Déconnexion",
+		"logoutText": "Êtes vous sur de vouloir vous déconnecter ? Votre progression ne sera pas sauvegarder.",
+		"signup": "Inscription",
+		"play": "Jouer",
+		"leaderboard": "Classement",
+		"backHome": "Retour à l'accueil",
+		"classicMode": "Mode classique",
+		"livesMode": "Mode survie",
+		"chronoMode": "Mode chrono",
+		"catalog": "Catalogue",
+		"profile": "Profil",
+		"gameModes": "Modes",
+		"loading": "Chargement...",
+		"verification": "Vérification en cours...",
+		"cancel": "Annuler",
+		"close": "Fermer"
+	},
 
-    "footer": {
-        "sloggan": "Le jeu où chaque époque a sa manette",
-        "navigation": "Navigation",
-        "home": "Accueil",
-        "myAccount": "Mon compte",
-        "contact": "Contact",
-        "legal": "Mentions légales",
-        "privacy": "Politique de confidentialité"
-    },
+	"footer": {
+		"sloggan": "Le jeu où chaque époque a sa manette",
+		"navigation": "Navigation",
+		"home": "Accueil",
+		"myAccount": "Mon compte",
+		"contact": "Contact",
+		"legal": "Mentions légales",
+		"privacy": "Politique de confidentialité"
+	},
 
-    "home": {
-        "title": "Bienvenue sur PixelTime",
-        "description": "De Pong à Elden Ring… Revivez l’histoire du jeu vidéo et prouvez que vous êtes incollable sur les époques !",
-        "guest": "Continuer en tant qu'invité",
-        "more": "En savoir plus",
-        "originalTheme": "Thème original",
-        "gameModes": "Modes de jeu",
-        "iconicGames": "Jeux emblématiques",
-        "howItWorks": "PixelTime, comment ça marche ?",
-        "howItWorksDescription": "Plonge dans l'univers vidéoludique et remonte le temps ! À chaque partie, tu reçois une série de cartes représentant des jeux vidéo cultes. Ton objectif ? Les replacer dans l'ordre chronologique sur une frise du temps. À chaque bonne réponse, tu gagnes 10 points.<br> Mais attention : une erreur te coûte 5 points et la carte est retirée. Tu devras alors en piocher une nouvelle.  Trois modes de jeu sont disponibles pour varier les défis : <ul><li><p>🕹️ Classique : joue sans pression, à ton rythme</p></li> <li><p>❤️ Avec vies : trois erreurs, et c'est fini</p></li><li><p>⏱️ Chrono : chaque carte doit être placée en quelques secondes !</p></li></ul>Accumule les points, débloque de nouveaux niveaux, et grimpe dans le classement des meilleurs joueurs."
-    },
+	"home": {
+		"title": "Bienvenue sur PixelTime",
+		"description": "De Pong à Elden Ring… Revivez l’histoire du jeu vidéo et prouvez que vous êtes incollable sur les époques !",
+		"guest": "Continuer en tant qu'invité",
+		"more": "En savoir plus",
+		"originalTheme": "Thème original",
+		"gameModes": "Modes de jeu",
+		"iconicGames": "Jeux emblématiques",
+		"howItWorks": "PixelTime, comment ça marche ?",
+		"howItWorksDescription": "Plonge dans l'univers vidéoludique et remonte le temps ! À chaque partie, tu reçois une série de cartes représentant des jeux vidéo cultes. Ton objectif ? Les replacer dans l'ordre chronologique sur une frise du temps. À chaque bonne réponse, tu gagnes 10 points.<br> Mais attention : une erreur te coûte 5 points et la carte est retirée. Tu devras alors en piocher une nouvelle.  Trois modes de jeu sont disponibles pour varier les défis : <ul><li><p>🕹️ Classique : joue sans pression, à ton rythme</p></li> <li><p>❤️ Avec vies : trois erreurs, et c'est fini</p></li><li><p>⏱️ Chrono : chaque carte doit être placée en quelques secondes !</p></li></ul>Accumule les points, débloque de nouveaux niveaux, et grimpe dans le classement des meilleurs joueurs."
+	},
 
-    "signup": {
-        "title": "Créer mon compte",
-        "password": "Mot de passe",
-        "confirmPassword": "Confirmer le mot de passe",
-        "fieldsRequired": "Champs obligatoires",
-        "continue": "Continuer",
-        "alreadyHaveAccount": "Vous avez déjà un compte ?",
-        "login": "Se connecter",
-        "passwordMismatch": "Les mots de passe ne correspondent pas",
-        "errors" : {
-            "pseudoRequired": "Le pseudo est obligatoire",
-            "emailRequired": "L'email est obligatoire",
-            "emailInvalid": "L'email n'est pas valide",
-            "passwordRequired": "Le mot de passe est obligatoire",
-            "passwordTooShort": "Le mot de passe doit contenir au moins 6 caractères",
-            "passwordFormat": "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial",
-            "confirmPasswordRequired": "La confirmation du mot de passe est obligatoire",
-            "registrationFailed": "Échec de l'inscription, veuillez réessayer."
-        }
-    },
+	"signup": {
+		"title": "Créer mon compte",
+		"password": "Mot de passe",
+		"confirmPassword": "Confirmer le mot de passe",
+		"fieldsRequired": "Champs obligatoires",
+		"continue": "Continuer",
+		"alreadyHaveAccount": "Vous avez déjà un compte ?",
+		"login": "Se connecter",
+		"passwordMismatch": "Les mots de passe ne correspondent pas",
+		"errors": {
+			"pseudoRequired": "Le pseudo est obligatoire",
+			"emailRequired": "L'email est obligatoire",
+			"emailInvalid": "L'email n'est pas valide",
+			"passwordRequired": "Le mot de passe est obligatoire",
+			"passwordTooShort": "Le mot de passe doit contenir au moins 6 caractères",
+			"passwordFormat": "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial",
+			"confirmPasswordRequired": "La confirmation du mot de passe est obligatoire",
+			"registrationFailed": "Échec de l'inscription, veuillez réessayer."
+		}
+	},
 
-    "login": {
-        "title": "Me connecter",
-        "password": "Mot de passe",
-        "continue": "Continuer",
-        "noAccount": "Vous n'avez pas encore de compte ?",
-        "signup": "S'inscrire",
-        "forgotPassword": "Mot de passe oublié ?",
-        "errors" : {
-            "emailRequired": "L'email est obligatoire",
-            "emailInvalid": "L'email n'est pas valide",
-            "passwordRequired": "Le mot de passe est obligatoire",
-            "loginFailed": "Échec de la connexion, veuillez vérifier vos identifiants."
-        }
-    },
+	"login": {
+		"title": "Me connecter",
+		"password": "Mot de passe",
+		"continue": "Continuer",
+		"noAccount": "Vous n'avez pas encore de compte ?",
+		"signup": "S'inscrire",
+		"forgotPassword": "Mot de passe oublié ?",
+		"errors": {
+			"emailRequired": "L'email est obligatoire",
+			"emailInvalid": "L'email n'est pas valide",
+			"passwordRequired": "Le mot de passe est obligatoire",
+			"loginFailed": "Échec de la connexion, veuillez vérifier vos identifiants."
+		}
+	},
 
-    "forgotPassword": {
-        "title": "Mot de passe oublié",
-        "resetPassword": "Réinitialiser le mot de passe",
-        "notForgotPassword": "Vous vous êtes trompé ?",
-        "login": "Se connecter"
-    },
+	"forgotPassword": {
+		"title": "Mot de passe oublié",
+		"resetPassword": "Réinitialiser le mot de passe",
+		"notForgotPassword": "Vous vous êtes trompé ?",
+		"login": "Se connecter"
+	},
 
-    "newPassword": {
-        "title": "Nouveau mot de passe",
-        "password": "Mot de passe",
-        "confirmPassword": "Confirmer le mot de passe",
-        "resetPassword": "Réinitialiser le mot de passe",
-        "fieldsRequired": "Champs obligatoires"
-    },
+	"newPassword": {
+		"title": "Nouveau mot de passe",
+		"password": "Mot de passe",
+		"confirmPassword": "Confirmer le mot de passe",
+		"resetPassword": "Réinitialiser le mot de passe",
+		"fieldsRequired": "Champs obligatoires"
+	},
 
-    "gameChoice": {
-        "title": "Choisissez votre mode de jeu",
-        "description": "Sélectionnez un jeu pour commencer à jouer.",
-        "play": "Jouer",
-        "cancel": "Annuler",
-        "classicModeDescription": "Un mode sans pression : 15 cartes à replacer dans l’ordre, avec un temps et des vies illimités. Chaque carte bien placée vaut +10 points, chaque erreur retire –5 points.",
-        "livesModeDescription": "Tu as 3 vies pour replacer 15 cartes. Le temps est illimité, mais chaque erreur te coûte une vie. Une bonne réponse vaut +10 points, une erreur –5 points. Ton score final est multiplié par x1.5.",
-        "chronoModeDescription": "15 cartes, 5 secondes par carte, 5 vies. Chaque bonne réponse donne +10 points, chaque erreur retire –5 points et une vie. À la fin, ton score est multiplié par x2. Rapide, intense et stratégique !",
-        "trainingWithCatalog": "Entraînez-vous avec le catalogue"
-    },
+	"gameChoice": {
+		"title": "Choisissez votre mode de jeu",
+		"description": "Sélectionnez un jeu pour commencer à jouer.",
+		"play": "Jouer",
+		"cancel": "Annuler",
+		"classicModeDescription": "Un mode sans pression : 15 cartes à replacer dans l’ordre, avec un temps et des vies illimités. Chaque carte bien placée vaut +10 points, chaque erreur retire –5 points.",
+		"livesModeDescription": "Tu as 3 vies pour replacer 15 cartes. Le temps est illimité, mais chaque erreur te coûte une vie. Une bonne réponse vaut +10 points, une erreur –5 points. Ton score final est multiplié par x1.5.",
+		"chronoModeDescription": "15 cartes, 5 secondes par carte, 5 vies. Chaque bonne réponse donne +10 points, chaque erreur retire –5 points et une vie. À la fin, ton score est multiplié par x2. Rapide, intense et stratégique !",
+		"trainingWithCatalog": "Entraînez-vous avec le catalogue"
+	},
 
-    "game": {
-        "score": "Score",
-        "time": "Temps",
-        "lives": "Vies",
-        "leave": "Quitter la partie",
-        "previous": "Précédent",
-        "addCard": "Ajouter la carte",
-        "next": "Suivant"
-    },
+	"game": {
+		"score": "Score",
+		"time": "Temps",
+		"lives": "Vies",
+		"leave": "Quitter la partie",
+		"previous": "Précédent",
+		"addCard": "Ajouter la carte",
+		"next": "Suivant"
+	},
 
-    "profile": {
-        "stats": "Statistiques",
-        "totalScore": "Score total",
-        "level": "Niveau",
-        "defaultLevel": "Débutant",
-        "money": "Argent",
-        "badges": "Badges",
-        "levelReach": "Vous avez atteint le niveau {{level}} !"
-    },
+	"profile": {
+		"stats": "Statistiques",
+		"totalScore": "Score total",
+		"level": "Niveau",
+		"defaultLevel": "Débutant",
+		"money": "Argent",
+		"badges": "Badges",
+		"levelReach": "Vous avez atteint le niveau {{level}} !"
+	},
 
-    "cardsCatalog": {
-        "title": "Catalogue des cartes",
-        "descriptionPC": "Survolez la carte pour afficher les informations",
-        "descriptionMobile": "Touchez la carte pour afficher les informations"
-    },
+	"cardsCatalog": {
+		"title": "Catalogue des cartes",
+		"descriptionPC": "Survolez la carte pour afficher les informations",
+		"descriptionMobile": "Touchez la carte pour afficher les informations"
+	},
 
-    "leaderboard": {
-        "title": "Classement",
-        "general": "Classement général",
-        "level": "Classement par niveau"
-    },
+	"leaderboard": {
+		"title": "Classement",
+		"general": "Classement général",
+		"level": "Classement par niveau"
+	},
 
-    "page404": {
-        "title": "Erreur 404",
-        "description": "La page que vous cherchez semble avoir été égarée dans le temps.",
-        "backHome": "Retour à la bonne époque"
-    },
+	"page404": {
+		"title": "Erreur 404",
+		"description": "La page que vous cherchez semble avoir été égarée dans le temps.",
+		"backHome": "Retour à la bonne époque"
+	},
 
-    "admin": {
-        "homeTitle": "Espace d'administration",
-        "user" : {
-            "title" : "Liste des utilisateurs",
-            "seeAll" : "Voir tous les utilisateurs"
-        },
-        "card" : {
-            "title" : "Liste des cartes",
-            "seeAll" : "Voir toutes les cartes"
-        }
-    }
+	"admin": {
+		"homeTitle": "Espace d'administration",
+		"user": {
+			"title": "Liste des utilisateurs",
+			"seeAll": "Voir tous les utilisateurs"
+		},
+		"card": {
+			"title": "Liste des cartes",
+			"seeAll": "Voir toutes les cartes"
+		}
+	},
+
+	"gameNotification": {
+		"success": {
+			"title": "Bonne réponse !",
+			"message": "+10 points !"
+		},
+		"incorrect": {
+			"title": "Placement incorrect !",
+			"message": "La carte \"{{cardName}}\" a été automatiquement placée à la bonne position. -5 points !"
+		},
+		"finish": {
+			"title": "Partie terminée !",
+			"message": "La partie est terminée ! Si vous étiez connecté vous pouvez retrouver votre score dans votre profil."
+		}
+	}
 }
