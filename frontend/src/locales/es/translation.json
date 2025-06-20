@@ -108,12 +108,19 @@
 		"time": "Tiempo",
 		"lives": "Vidas",
 		"leave": "Abandonar el juego",
+		"playAgain": "Jugar de nuevo",
 		"previous": "Anterior",
 		"addCard": "Añadir la tarjeta",
 		"next": "Siguiente",
 		"validate": "Validar",
 		"finished": "¡Terminado!",
-		"gameOver": "¡Se acabó el juego! No quedan vidas."
+		"gameOver": "¡Se acabó el juego! No quedan vidas.",
+		"resume": {
+			"title": "Reanudar juego",
+			"description": "¿Quieres reanudar el juego?",
+			"newGame": "Iniciar un nuevo juego",
+			"resumeGame": "Reanudar el juego"
+		}
 	},
 
 	"profile": {

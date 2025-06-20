@@ -108,12 +108,19 @@
 		"time": "Temps",
 		"lives": "Vies",
 		"leave": "Quitter la partie",
+		"playAgain": "Rejouer",
 		"previous": "Précédent",
 		"addCard": "Ajouter la carte",
 		"next": "Suivant",
 		"validate": "Valider",
 		"finished": "Terminé !",
-		"gameOver": "Game Over ! Plus de vies restantes."
+		"gameOver": "Game Over ! Plus de vies restantes.",
+		"resume": {
+			"title": "Reprendre la partie",
+			"description": "Vous avez une partie en cours. Voulez-vous la reprendre ?",
+			"newGame": "Nouvelle partie",
+			"resumeGame": "Reprendre"
+		}
 	},
 
 	"profile": {

@@ -30,27 +30,46 @@ const HUD = ({ score, mode, lives, timeLeft, onQuit }) => {
 
 	return (
 		<div className='game-info-container'>
-			<button className='game-info-back' onClick={onQuit}>
-				{t("game.leave")}
-			</button>
-			<div className='game-info-center'>
-				<h1 className='game-info-center-score'>
-					{t("game.score")} : {score}
-				</h1>
-				{mode === "classic" && (
-					<p className='game-info-center-mode'>{t("global.classicMode")}</p>
-				)}
-				{mode === "chrono" && (
-					<p className='game-info-center-mode'>{t("global.chronoMode")}</p>
-				)}
-				{mode === "lives" && (
-					<p className='game-info-center-mode'>{t("global.livesMode")}</p>
-				)}
+			<div className='game-info-container-primary'>
+				<button className='game-info-back' onClick={onQuit}>
+					{t("game.leave")}
+				</button>
+				<div className='game-info-center'>
+					<h1 className='game-info-center-score'>
+						{t("game.score")} : {score}
+					</h1>
+					{mode === "classic" && (
+						<p className='game-info-center-mode'>{t("global.classicMode")}</p>
+					)}
+					{mode === "chrono" && (
+						<p className='game-info-center-mode'>{t("global.chronoMode")}</p>
+					)}
+					{mode === "lives" && (
+						<p className='game-info-center-mode'>{t("global.livesMode")}</p>
+					)}
+				</div>
+
+				<button className='game-info-description' onClick={toggleDescription}>
+					<p className='game-info-description-text'>?</p>
+				</button>
 			</div>
 
-			<button className='game-info-description' onClick={toggleDescription}>
-				<p className='game-info-description-text'>?</p>
-			</button>
+			<div className='game-info-container-secondary'>
+				{mode === "lives" && (
+					<div className='lives'>
+						{Array.from({ length: lives }, (_, index) => (
+							<p key={index} className='heart'>
+								❤️
+							</p>
+						))}
+					</div>
+				)}
+				{mode === "chrono" && (
+					<div className='time'>
+						<p className='time-value'>{Math.max(0, timeLeft)}s</p>
+					</div>
+				)}
+			</div>
 
 			<div
 				className={`description-popup${isDescriptionVisible ? " visible" : ""}`}

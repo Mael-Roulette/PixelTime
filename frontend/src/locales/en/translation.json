@@ -108,12 +108,19 @@
 		"time": "Time",
 		"lives": "Lives",
 		"leave": "Leave the game",
+		"playAgain": "Play again",
 		"previous": "Previous",
 		"addCard": "Add the card",
 		"next": "Next",
 		"validate": "Validate",
 		"finished": "Finished!",
-		"gameOver": "Game Over! No lives left."
+		"gameOver": "Game Over! No lives left.",
+		"resume": {
+			"title": "Resume game",
+			"description": "You have an unfinished game. Do you want to resume it?",
+			"newGame": "Start a new game",
+			"resumeGame": "Resume the game"
+		}
 	},
 
 	"profile": {

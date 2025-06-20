@@ -46,11 +46,31 @@
 
 	&-info {
 		&-container {
-			width: 100%;
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			align-items: center;
-			padding: 2rem;
+			&-primary {
+				width: 100%;
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				align-items: center;
+				padding: 2rem;
+			}
+
+			&-secondary {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 1.5rem;
+				padding: 1rem 0;
+
+				p {
+					font-size: 2.4rem;
+				}
+				.lives {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					gap: 1rem;
+				}
+			}
 		}
 
 		&-back {
@@ -122,7 +142,7 @@
 
 			button {
 				font-size: 1.4rem;
-				padding: .5rem 1rem;
+				padding: 0.5rem 1rem;
 			}
 		}
 	}

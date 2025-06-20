@@ -132,17 +132,16 @@ const GameBoard = observer(() => {
 			{showResumeDialog && (
 				<div className='resume-dialog'>
 					<div className='resume-dialog-content'>
-						<h3>Partie en cours détectée</h3>
+						<h3>{t("game.resume.title")}</h3>
 						<p>
-							Voulez-vous reprendre votre partie en cours ou commencer une
-							nouvelle partie ?
+							{t("game.resume.description")}
 						</p>
 						<div className='resume-dialog-buttons'>
 							<button className='button-secondary' onClick={handleNewGame}>
-								Nouvelle partie
+								{t("game.resume.newGame")}
 							</button>
 							<button className='button-primary' onClick={handleResumeGame}>
-								Reprendre
+								{t("game.resume.resumeGame")}
 							</button>
 						</div>
 					</div>
@@ -170,7 +169,7 @@ const GameBoard = observer(() => {
 
 					<div className='game-hand'>
 						<div className='game-hand-card'>
-							{gameStore.cards.length > 0  && !gameStore.isGameFinished ? (
+							{gameStore.cards.length > 0 && !gameStore.isGameFinished ? (
 								<ZoneDraggable
 									key={gameStore.cards[0].id}
 									index={gameStore.cards[0].id}
@@ -178,39 +177,53 @@ const GameBoard = observer(() => {
 								/>
 							) : (
 								<div className='game-finished-message'>
-									<p>{gameStore.isGameOver()
-                ? t("game.gameOver")
-                : t("game.finished")
-            }</p>
+									<p>
+										{gameStore.isGameOver()
+											? t("game.gameOver")
+											: t("game.finished")}
+									</p>
 								</div>
 							)}
 							{/* Ajouter le bouton d'indice */}
 						</div>
 						<div className='game-hand-buttons'>
-							<button
-								className='button-primary'
-								onClick={handlePreviousPosition}
-								disabled={isCardPlacing && previewPosition === 0}
-							>
-								{t("game.previous")}
-							</button>
-							<button
-								className='button-primary'
-								onClick={handleAddCard}
-								disabled={gameStore.cards.length === 0}
-							>
-								{isCardPlacing ? t("game.validate") : t("game.addCard")}
-							</button>
-							<button
-								className='button-primary'
-								onClick={handleNextPosition}
-								disabled={
-									isCardPlacing &&
-									previewPosition >= gameStore.placedCards.length
-								}
-							>
-								{t("game.next")}
-							</button>
+							{gameStore.isGameFinished ? (
+								<>
+									<button className='button-secondary' onClick={handleQuitGame}>
+										{t("game.leave")}
+									</button>
+									<button className='button-primary' onClick={handleNewGame}>
+										{t("game.playAgain")}
+									</button>
+								</>
+							) : (
+								<>
+									<button
+										className='button-primary'
+										onClick={handlePreviousPosition}
+										disabled={isCardPlacing && previewPosition === 0}
+									>
+										{t("game.previous")}
+									</button>
+									<button
+										className='button-primary'
+										onClick={handleAddCard}
+										disabled={gameStore.cards.length === 0}
+									>
+										{isCardPlacing ? t("game.validate") : t("game.addCard")}
+									</button>
+									<button
+										className='button-primary'
+										onClick={handleNextPosition}
+										disabled={
+											isCardPlacing &&
+											previewPosition >= gameStore.placedCards.length
+										}
+									>
+										{t("game.next")}
+									</button>
+								</>
+							)}
 						</div>
 					</div>
 				</DndProvider>
