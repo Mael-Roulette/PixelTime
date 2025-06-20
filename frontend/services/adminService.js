@@ -10,7 +10,11 @@ class AdminService {
     makeAutoObservable( this );
   }
 
-  // Permet de récupérer un tableau avec tous les utilisateurs
+  /**
+   * Permet de récupérer tous les utilisateurs
+   * @returns {Promise<Array>} Un tableau d'utilisateurs
+   * @throws {Error} Si une erreur se produit lors de la récupération des utilisateurs
+   */
   async getUsers () {
     try {
       const response = await fetch( `${ API_URL }/users`, {
@@ -26,11 +30,16 @@ class AdminService {
         return data;
       }
     } catch ( error ) {
-      console.error( 'Erreur lors de la récupération des utilisateurs :', error );
+      throw new Error( 'Erreur lors de la récupération des utilisateurs : ' + error.message );
     }
   }
 
-  // Permet de supprimer un utilisateur
+  /**
+   * Permet de supprimer un utilisateur donné
+   * @param {string} userId - L'ID de l'utilisateur à supprimer
+   * @return {Promise<Object>} Un objet contenant le statut de la suppression
+   * @throws {Error} Si une erreur se produit lors de la suppression
+   */
   async deleteUser ( userId ) {
     try {
       const response = await fetch( `${ API_URL }/users/${ userId }`, {
@@ -53,7 +62,11 @@ class AdminService {
     }
   }
 
-  // Permet de récupérer un tableau avec toutes les cartes selon la langue de l'administrateur
+  /**
+   * Permet de récupérer toutes les cartes en fonction de la langue de l'utilisateur
+   * @returns {Promise<Array>} Un tableau de cartes
+   * @throws {Error} Si une erreur se produit lors de la récupération des cartes
+   */
   async getCards () {
     try {
       const response = await fetch( `${ API_URL }/cards?lang=${ language }`, {
@@ -73,7 +86,12 @@ class AdminService {
     }
   }
 
-  // Permet d'ajouter une carte
+  /**
+   * Permet de créer une carte à partir des data d'un formulaires
+   * @param {Object} cardData - Les données de la carte à créer
+   * @returns {Promise<Object>} Un objet contenant le statut de la création
+   * @throws {Error} Si une erreur se produit lors de la création de la carte
+   */
   async createCard ( cardData ) {
     try {
       const response = await fetch( `${ API_URL }/cards`, {
@@ -91,13 +109,16 @@ class AdminService {
         const errorData = await response.json();
         return { success: false, error: errorData.error || 'Erreur lors de la création' };
       }
-    } catch ( error ) {
-      console.error( 'Erreur lors de la création de la carte :', error );
+    } catch {
       return { success: false, error: 'Une erreur est survenue lors de la création' };
     }
   }
 
-  // Permet de récupérer tous les niveaux
+  /**
+   * Permet de récupérer tous les niveaux du jeu
+   * @returns {Promise<Array>} Un tableau de niveaux
+   * @throws {Error} Si une erreur se produit lors de la récupération des niveaux
+   */
   async getLevels () {
     try {
       const response = await fetch( `${ API_URL }/levels?lang=${ language }`, {
@@ -113,7 +134,7 @@ class AdminService {
         return data;
       }
     } catch ( error ) {
-      console.error( 'Erreur lors de la récupération des niveaux : ', error );
+      throw new Error( 'Erreur lors de la récupération des niveaux : ' + error.message );
     }
   }
 }

@@ -33,7 +33,7 @@ const GameTimeline = observer(({ previewPosition, previewCard }) => {
 			) : (
 				// Timeline avec toutes les positions
 				<div className='game-timeline-track'>
-					{/* Position avant la première carte */}
+					{/* Zone de dépot avant la première carte */}
 					<ZoneDroppable
 						index={0}
 						onDrop={handleDrop}

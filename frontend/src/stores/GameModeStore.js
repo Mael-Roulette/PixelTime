@@ -46,6 +46,9 @@ export default class GameModeStore {
     } );
   }
 
+  /**
+   * Permet de charger un nombre de carte défini aléatoirement
+   */
   async loadCards () {
     this.loading = true;
     const language = getLanguage();
@@ -69,13 +72,21 @@ export default class GameModeStore {
     }
   }
 
-  // Lance le jeu
+  /**
+   * Permet de démarrer le jeu
+   */
   play () {
     if ( !this.loadGameState() ) {
       this.loadCards();
     }
   }
 
+  /**
+   * Permet de terminer la partie en cours
+   * @description Cette méthode est appelée lorsque la partie est terminée, soit parce que l'utilisateur a placé toutes les cartes, soit parce qu'il n'a plus de vies.
+   * Elle calcule le score final et le rendre dans la table du joueur et affiche une notification de fin de jeu.
+   * @returns
+   */
   async finishGame () {
     if ( this.gameFinished ) return;
 
@@ -112,9 +123,11 @@ export default class GameModeStore {
     this.clearGameState();
   }
 
-  // Vérifie si la partie est terminée
+  /**
+   * Permet de savoir si le jeu est terminé
+   */
   get isGameFinished () {
-    const gameOverByLives = this.isGameOver(); // Plus de vies
+    const gameOverByLives = this.isGameOver();
     const gameOverByCards = !this.loading &&
         this.cards.length === 0 &&
         this.placedCards.length >= this.maxCards &&
@@ -125,7 +138,13 @@ export default class GameModeStore {
     return result;
   }
 
-  // Permet de placer une carte
+  /**
+   * Permet de déposer une carte à une position donnée
+   * @description Cette méthode est appelée lorsque l'utilisateur dépose une carte sur la timeline
+   * @param {*} card c'est la carte à déposer
+   * @param {*} position c'est la position où la carte doit être déposée
+   * @returns {Object} Un objet contenant le résultat du dépôt de la carte, avec un booléen isCorrect indiquant si le dépôt est correct ou non.
+   */
   dropCard ( card, position ) {
     const result = this.getResult( card, position );
     this.cards = this.cards.filter( c => c.id !== card.id );
@@ -155,6 +174,12 @@ export default class GameModeStore {
     return result;
   }
 
+  /**
+   * Permet de gérer une réponse incorrecte
+   * @description Cette méthode est appelée lorsque l'utilisateur dépose une carte à une position incorrecte et envoie une notification
+   * @param {*} card c'est la carte qui a été déposée et qui est mal placée
+   * @param {*} result c'est le résultat du dépôt de la carte, avec un booléen isCorrect indiquant si le dépôt est correct ou non.
+   */
   handleIncorrectAnswer ( card, result ) {
     const correctPosition = this.findCorrectPosition( card );
     this.placedCards.splice( correctPosition, 0, card );
@@ -171,11 +196,19 @@ export default class GameModeStore {
     result.autoPlaced = true;
   }
 
+  /**
+   * Permet de savoir si le jeu est terminé
+   * @returns {boolean} Retourne true si le jeu est terminé, false sinon
+   */
   isGameOver () {
     return this.lives !== null && this.lives <= 0;
   }
 
-  // Trouverla position correcte d'une carte
+  /**
+   * PErmet de trouver la bonne position pour placer une carte en cas d'erreur
+   * @param {*} card c'est la carte à placer
+   * @returns {number} Retourne la position correcte pour placer la carte
+   */
   findCorrectPosition ( card ) {
     if ( this.placedCards.length === 0 ) {
       return 0;
@@ -190,7 +223,10 @@ export default class GameModeStore {
     return this.placedCards.length;
   }
 
-  // Affiche une notification
+  /**
+   * Afficge une notification / Message à l'utilisateur
+   * @param {*} notification C'est l'objet de notification à afficher
+   */
   showNotification ( notification ) {
     this.hideNotification();
 
@@ -204,17 +240,25 @@ export default class GameModeStore {
     }
   }
 
-  // Masquer la notification
+  /**
+   * Permet de masquer la notification actuelle
+   */
   hideNotification () {
     this.notification = null;
   }
 
-  // Méthode pour récupérer le résultat d'une carte
+  /**
+   * Permet de récupérer le résultat d'une carte précise
+   * @param {*} cardId C'est l'identifiant de la carte pour laquelle on veut récupérer le résultat
+   * @returns {Object|null} Retourne l'objet de résultat de la carte si elle existe, sinon retourne null
+   */
   getCardResult ( cardId ) {
     return this.cardResults.has( cardId ) ? this.cardResults.get( cardId ) : null;
   }
 
-  // Génère les positions possibles pour les drops
+  /**
+   * Génère les positions où l'utilisateur peut déposer une carte
+   */
   get dropPositions () {
     if ( this.placedCards.length === 0 ) {
       return [ 0 ]; // Une seule position pour la première carte
@@ -228,7 +272,12 @@ export default class GameModeStore {
     return positions;
   }
 
-  // Permet de récupérer le résultat de la position
+  /**
+   * PErmet de récupérer le résultat d'une carte à une position donnée
+   * @param {*} card C'est la carte pour laquelle on veut récupérer le résultat
+   * @param {*} position C'est la position où la carte a été déposée
+   * @returns {Object} Retourne un objet contenant l'identifiant de la carte et un booléen isCorrect indiquant si le dépôt est correct ou non.
+   */
   getResult ( card, position ) {
     let cardBefore = position > 0 ? this.placedCards[ position - 1 ] : null;
     let cardAfter = position < this.placedCards.length ? this.placedCards[ position ] : null;
@@ -250,7 +299,10 @@ export default class GameModeStore {
     return { cardId: card.id, isCorrect };
   }
 
-  // Méthode pour ajouter/retirer des points
+  /**
+   * Permet d'ajouter des points au score du joueur
+   * @param {*} points C'est le nombre de points à ajouter
+   */
   addScore ( points ) {
     this.score += points;
     if ( this.score < 0 ) {
@@ -258,6 +310,9 @@ export default class GameModeStore {
     }
   }
 
+  /**
+   * Permet de quitter le jeu
+   */
   async quitGame () {
     if ( !this.gameFinished && this.placedCards.length > 0 ) {
       await this.finishGame();
@@ -268,7 +323,9 @@ export default class GameModeStore {
     this.hideNotification();
   }
 
-  // Méthode pour réinitialiser le jeu
+  /**
+   * Permet de réinitialiser le jeu
+   */
   resetGame () {
     this.cards = [];
     this.placedCards = [];
@@ -277,7 +334,9 @@ export default class GameModeStore {
     this.clearGameState();
   }
 
-  // Sauvegarder l'état du jeu
+  /**
+   * Permet de sauvegarder l'état du jeu dans le localStorage en cas de reprise
+   */
   saveGameState () {
     const gameState = {
       cards: this.cards,
@@ -293,7 +352,10 @@ export default class GameModeStore {
     localStorage.setItem( 'pixeltime_game_state', JSON.stringify( gameState ) );
   }
 
-  // Charger l'état du jeu
+  /**
+   * Charger l'état du jeu depuis le localStorage en cas de reprise
+   * @returns {boolean} Retourne true si l'état du jeu a été chargé avec succès, false sinon.
+   */
   loadGameState () {
     const savedState = localStorage.getItem( 'pixeltime_game_state' );
     if ( savedState ) {
@@ -324,12 +386,17 @@ export default class GameModeStore {
     return false;
   }
 
-  // Supprimer la sauvegarde
+  /**
+   * Permet de supprimer la sauvegarde de l'état du jeu
+   */
   clearGameState () {
     localStorage.removeItem( 'pixeltime_game_state' );
   }
 
-  // Vérifier s'il y a une partie en cours
+  /**
+   * Permet de vérifier si une partie est en cours
+   * @returns {boolean} Retourne true si une partie est en cours, false sinon.
+   */
   hasGameInProgress () {
     const savedState = localStorage.getItem( 'pixeltime_game_state' );
     if ( savedState ) {

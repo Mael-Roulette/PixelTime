@@ -63,11 +63,13 @@ const GameBoard = observer(() => {
 		}
 	}, [initialized, mode, gameStore]);
 
+	// Permet de commencer le jeu à partir d'une ancienne partie
 	const handleResumeGame = () => {
 		gameStore.play();
 		setShowResumeDialog(false);
 	};
 
+	// Permet de commencer le jeu de zéro
 	const handleNewGame = () => {
 		gameStore.resetGame();
 		setIsCardPlacing(false);
@@ -76,14 +78,16 @@ const GameBoard = observer(() => {
 		setShowResumeDialog(false);
 	};
 
+	// Permet de quitter le jeu
 	const handleQuitGame = async () => {
 		await gameStore.quitGame();
-		// Réinitialiser les états
+		// Réinitialiser les états du jeu
 		currentModeRef.current = null;
 		setInitialized(false);
 		navigate("/gamechoice");
 	};
 
+	// Permet de placer la card dans la timeline
 	const handleAddCard = () => {
 		if (!isCardPlacing) {
 			setIsCardPlacing(true);
@@ -95,6 +99,7 @@ const GameBoard = observer(() => {
 		}
 	};
 
+	// Permet d'emmener la carte sur la zone de drop précédente
 	const handlePreviousPosition = () => {
 		if (!isCardPlacing) {
 			setIsCardPlacing(true);
@@ -104,6 +109,7 @@ const GameBoard = observer(() => {
 		}
 	};
 
+	// Permet d'emmener la carte sur la zone de drop suivante
 	const handleNextPosition = () => {
 		if (!isCardPlacing) {
 			setIsCardPlacing(true);
@@ -116,6 +122,7 @@ const GameBoard = observer(() => {
 		}
 	};
 
+	// Fermet ou ouvrir le popup de l'indice
 	const toggleHint = () => {
 		setIsHintVisible(!isHintVisible);
 		if (!isHintVisible) {

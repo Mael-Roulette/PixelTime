@@ -64,6 +64,7 @@ const Profile = () => {
 		document.body.classList.remove("no-scroll");
 	};
 
+	// Permet de se déconnecter
 	const handleLogout = () => {
 		authService.logout();
 		navigate("/login");

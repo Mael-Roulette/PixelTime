@@ -3,7 +3,13 @@ import { getToken, TOKEN_KEY, USER_KEY } from "../utils/function";
 const API_URL =  import.meta.env.API_BASE_URL || 'http://localhost:8000/api';
 
 class AuthService {
-  // Méthode de connexion
+  /**
+   * Méthode pour la connexion d'un utilisateur
+   * @param {*} email email de l'utilisateur
+   * @param {*} password mot de passe de l'utilisateur
+   * @returns {Promise<Object>} Un objet contenant le token et les informations de l'utilisateur
+   * @throws {Error} Si une erreur se produit lors de la connexion
+   */
   async login ( email, password ) {
     try {
       const response = await fetch( `${ API_URL }/login`, {
@@ -28,7 +34,12 @@ class AuthService {
     }
   }
 
-  // Méthode d'inscription
+  /**
+   * Permet l'inscription d'un nouvel utilisateur
+   * @param {Object} userData - Les données de l'utilisateur à enregistrer
+   * @returns {Promise<Object>} Un objet contenant les informations de l'utilisateur inscrit
+   * @throws {Error} Si une erreur se produit lors de l'inscription
+   */
   async register ( userData ) {
     try {
       const response = await fetch( `${ API_URL }/register`, {
@@ -51,18 +62,29 @@ class AuthService {
     }
   }
 
-  // Méthode de déconnexion
+  /**
+   * Permet de déconnecter l'utilisateur
+   * @returns {void}
+   */
   logout () {
     localStorage.removeItem( 'jwt_token' );
     localStorage.removeItem( 'language' );
   }
 
-  // Méthode pour vérifier si l'utilisateur est connecté
+  /**
+   * Méthode pour vérifier si l'utilisateur est authentifié
+   * @returns {boolean} true si l'utilisateur est authentifié, false sinon
+   * @description La méthode contient deux "!" pour remettre le booléan à son état d'origine
+   */
   isAuthenticated () {
     return !!localStorage.getItem( 'jwt_token' );
   }
 
-  // Méthode pour vérifier si l'utilisateur est admin
+  /**
+   * Permet de vérifier si l'utilisateur est admin
+   * @returns {Promise<boolean>} true si l'utilisateur est admin, false sinon
+   * @throws {Error} Si une erreur se produit lors de la vérification du rôle
+   */
   async isAdmin () {
     const token = getToken();
     if ( !token ) return false;
@@ -87,7 +109,11 @@ class AuthService {
     }
   }
 
-  // Permet de récupére l'utilisateur actuel
+  /**
+   * Récupère les informations de l'utilisateur authentifié
+   * @returns {Promise<Object|boolean>} Les informations de l'utilisateur si authentifié, false sinon
+   * @throws {Error} Si une erreur se produit lors de la récupération de l'utilisateur
+   */
   async getUser () {
     const token = getToken();
     if ( !token ) return false;
@@ -103,7 +129,6 @@ class AuthService {
 
 
       const data = await response.json();
-      console.log(data)
 
       if ( response.ok ) {
         return data;

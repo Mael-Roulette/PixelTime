@@ -25,7 +25,6 @@ const LeaderBoard = observer(() => {
 
 			if (response.ok) {
 				const data = await response.json();
-				console.log(data);
 				const sortedUsers = data.sort(
 					(a, b) => (b.score || 0) - (a.score || 0)
 				);
@@ -45,6 +44,7 @@ const LeaderBoard = observer(() => {
 		fetchUsers();
 	}, []);
 
+	// Permet d'avoir le bon icon pour le rank
 	const getRankIcon = (rank) => {
 		switch (rank) {
 			case 1:
@@ -58,7 +58,7 @@ const LeaderBoard = observer(() => {
 		}
 	};
 
-	// Fonction pour déterminer le niveau basé sur le score
+	// Permet de déterminer le niveau basé sur le score
 	const getUserLevel = (score) => {
 		if (score >= 1000) return "Expert";
 		if (score >= 500) return "Avancé";
@@ -66,7 +66,7 @@ const LeaderBoard = observer(() => {
 		return "Débutant";
 	};
 
-	// Fonction pour formater le niveau de l'utilisateur
+	// Permet de formater le niveau de l'utilisateur
 	const formatUserLevel = (user) => {
 		if (
 			user.level &&
@@ -81,8 +81,9 @@ const LeaderBoard = observer(() => {
 		return getUserLevel(user.score || 0);
 	};
 
+	// Permet de récupérer les 20 premiers utilisateurs
 	const getTopUsers = () => {
-		return users.slice(0, 10);
+		return users.slice(0, 20);
 	};
 
 	if (loading) {
