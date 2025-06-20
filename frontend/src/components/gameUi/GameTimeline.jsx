@@ -7,7 +7,7 @@ const GameTimeline = observer(() => {
 	const gameStore = useGameStore();
 
 	const handleDrop = (item, position) => {
-		const dropResult = gameStore.placeCard(item.card, position);
+		const dropResult = gameStore.dropCard(item.card, position);
 		console.log(dropResult);
 	};
 

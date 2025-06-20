@@ -105,7 +105,7 @@ function BottomNavBar() {
 
 	return (
 		<nav className={`bottom-navigation`}>
-			<NavLink to={"/"} className='bottom-navigation-logo'>
+			<NavLink to={"/gamechoice"} className='bottom-navigation-logo'>
 				<img src='/pixeltime.png' alt='PixelTime' />
 			</NavLink>
 			<div className='bottom-navigation-container'>
