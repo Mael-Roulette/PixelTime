@@ -34,22 +34,22 @@ export default class ChronoModeStore extends GameModeStore {
   }
 
   handleTimeOut () {
-    if ( this.cards.length > 0 ) {
+    if ( this.cards.length > 0 && !this.isGameFinished && !this.isGameOver() ) {
       const currentCard = this.cards[ 0 ];
-      // Placer automatiquement la carte à une position aléatoire (erreur)
       const randomPosition = Math.floor( Math.random() * ( this.placedCards.length + 1 ) );
       this.dropCard( currentCard, randomPosition );
+    } else {
+      this.stopTimer();
     }
   }
 
   dropCard ( card, position ) {
     const result = super.dropCard( card, position );
 
-    // Réinitialiser le timer pour la prochaine carte
-    if ( this.cards.length > 0 && !this.gameFinished && !this.isGameOver() ) {
-      this.timeLeft = 5;
-    } else {
+    if ( this.isGameFinished || this.isGameOver() ) {
       this.stopTimer();
+    } else if ( this.cards.length > 0 ) {
+      this.timeLeft = 5;
     }
 
     return result;
@@ -72,6 +72,7 @@ export default class ChronoModeStore extends GameModeStore {
     result.autoPlaced = true;
 
     if ( this.lives <= 0 ) {
+      this.stopTimer();
       this.showNotification( {
         type: 'gameOver',
         title: 'Game Over!',

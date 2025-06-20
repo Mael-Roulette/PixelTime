@@ -131,6 +131,24 @@
 			justify-content: center;
 			align-items: center;
 			gap: 3rem;
+
+			&-hint {
+				background-color: $yellow;
+				border-radius: 50rem;
+				width: 3rem;
+				height: 3rem;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				justify-self: end;
+				border: none;
+				cursor: pointer;
+
+				&-text {
+					color: $blue;
+					font-size: 2rem;
+				}
+			}
 		}
 
 		&-buttons {
@@ -148,7 +166,8 @@
 	}
 }
 
-.description-popup {
+.description-popup,
+.hint-popup {
 	display: none;
 	position: fixed;
 	top: 0;

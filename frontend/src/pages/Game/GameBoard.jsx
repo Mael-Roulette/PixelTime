@@ -1,16 +1,13 @@
+import { observer } from "mobx-react-lite";
+import { useEffect, useRef, useState } from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { TouchBackend } from "react-dnd-touch-backend";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router";
-import HUD from "../../components/gameUi/HUD";
-import { useEffect, useRef, useState } from "react";
-import { observer } from "mobx-react-lite";
-import ZoneDraggable from "../../components/gameUi/ZoneDraggable";
-import { DndProvider } from "react-dnd";
-import { TouchBackend } from "react-dnd-touch-backend";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import GameTimeline from "../../components/gameUi/GameTimeline";
-import LivesModeStore from "../../stores/LivesModeStore";
-import ChronoModeStore from "../../stores/ChronoModeStore";
-import GameModeStore from "../../stores/GameModeStore";
+import HUD from "../../components/gameUi/HUD";
+import ZoneDraggable from "../../components/gameUi/ZoneDraggable";
 import { useGameStore, useSwitchGameMode } from "../../stores/useStore";
 
 const GameBoard = observer(() => {
@@ -24,6 +21,7 @@ const GameBoard = observer(() => {
 	const [isCardPlacing, setIsCardPlacing] = useState(false);
 	const [previewPosition, setPreviewPosition] = useState(null);
 	const [showResumeDialog, setShowResumeDialog] = useState(false);
+	const [isHintVisible, setIsHintVisible] = useState(false);
 
 	const [initialized, setInitialized] = useState(false);
 	const currentModeRef = useRef(null);
@@ -45,7 +43,6 @@ const GameBoard = observer(() => {
 		}
 
 		if (currentModeRef.current !== mode) {
-			console.log("🔄 Switching to mode:", mode);
 			currentModeRef.current = mode;
 			setInitialized(false);
 			switchGameMode(mode);
@@ -54,7 +51,6 @@ const GameBoard = observer(() => {
 
 	useEffect(() => {
 		if (!initialized && currentModeRef.current === mode && !gameStore.loading) {
-			console.log("🎮 Initializing game for mode:", mode);
 			setInitialized(true);
 
 			if (gameStore.hasGameInProgress()) {
@@ -120,6 +116,29 @@ const GameBoard = observer(() => {
 		}
 	};
 
+	const toggleHint = () => {
+		setIsHintVisible(!isHintVisible);
+		if (!isHintVisible) {
+			document.body.classList.add("no-scroll");
+		} else {
+			document.body.classList.remove("no-scroll");
+		}
+	};
+
+	// Fermer le popup en cliquant sur le fond
+	const handlePopupBackgroundClick = (e) => {
+		if (e.target === e.currentTarget) {
+			setIsHintVisible(false);
+			document.body.classList.remove("no-scroll");
+		}
+	};
+
+	// Fermer le popup avec le bouton fermer
+	const handleCloseHint = () => {
+		setIsHintVisible(false);
+		document.body.classList.remove("no-scroll");
+	};
+
 	const isTouchedDevice = window.matchMedia("(pointer: coarse)").matches;
 	const backend = isTouchedDevice ? TouchBackend : HTML5Backend;
 
@@ -133,9 +152,7 @@ const GameBoard = observer(() => {
 				<div className='resume-dialog'>
 					<div className='resume-dialog-content'>
 						<h3>{t("game.resume.title")}</h3>
-						<p>
-							{t("game.resume.description")}
-						</p>
+						<p>{t("game.resume.description")}</p>
 						<div className='resume-dialog-buttons'>
 							<button className='button-secondary' onClick={handleNewGame}>
 								{t("game.resume.newGame")}
@@ -170,11 +187,32 @@ const GameBoard = observer(() => {
 					<div className='game-hand'>
 						<div className='game-hand-card'>
 							{gameStore.cards.length > 0 && !gameStore.isGameFinished ? (
-								<ZoneDraggable
-									key={gameStore.cards[0].id}
-									index={gameStore.cards[0].id}
-									card={gameStore.cards[0]}
-								/>
+								<>
+									<ZoneDraggable
+										key={gameStore.cards[0].id}
+										index={gameStore.cards[0].id}
+										card={gameStore.cards[0]}
+									/>
+
+									<button className='game-hand-card-hint' onClick={toggleHint}>
+										<p className='game-hand-card-hint-text'>?</p>
+									</button>
+
+									<div
+										className={`hint-popup${isHintVisible ? " visible" : ""}`}
+										onClick={handlePopupBackgroundClick}
+									>
+										<div className='popup-content'>
+											<p>{gameStore.cards[0].hint}</p>
+											<button
+												className='button-secondary'
+												onClick={handleCloseHint}
+											>
+												{t("global.close")}
+											</button>
+										</div>
+									</div>
+								</>
 							) : (
 								<div className='game-finished-message'>
 									<p>

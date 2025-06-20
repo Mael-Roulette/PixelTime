@@ -54,6 +54,7 @@ export default function Header() {
 			<button
 				onClick={toggleNav}
 				className={`header-toggle ${isNavVisible ? "opened" : ""}`}
+				aria-label="Menu"
 			>
 				<span className='header-toggle-bars'></span>
 				<span className='screen-reader-text'>Menu</span>

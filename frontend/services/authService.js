@@ -101,13 +101,9 @@ class AuthService {
         }
       } );
 
-      // On refresh le token s'il est expiré
-      if ( response.status === 401 ) {
-        return await this.refreshToken();
-      }
-
 
       const data = await response.json();
+      console.log(data)
 
       if ( response.ok ) {
         return data;
@@ -118,34 +114,6 @@ class AuthService {
     catch ( error ) {
       console.error( 'Erreur de récupération :', error );
       throw error;
-    }
-  }
-
-  // Rafraîchir le token
-  async refreshToken () {
-    const token = getToken();
-    if ( !token ) return false;
-
-    try {
-      const response = await fetch( `${ API_URL }/refresh-token`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      } );
-
-      if ( response.ok ) {
-        const data = await response.json();
-        localStorage.setItem( TOKEN_KEY, data.token );
-        return true;
-      } else {
-        this.logout();
-        return false;
-      }
-    } catch ( error ) {
-      console.error( 'Erreur lors du refresh du token:', error );
-      this.logout();
-      return false;
     }
   }
 }

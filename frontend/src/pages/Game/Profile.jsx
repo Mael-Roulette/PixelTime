@@ -102,18 +102,18 @@ const Profile = () => {
 							</li>
 							<li>
 								<h3 className='stat-title'>🏆 {t("profile.level")}</h3>
-								{user.level && Object.keys(user.level).length > 0 ? (
+								{user.level && user.level.length > 0 ? (
 									<p className='stat-value'>
-										{Object.values(user.level).pop()}
+										{user.level[user.level.length - 1].name}
 									</p>
 								) : (
 									<p className='stat-value'>{t("profile.defaultLevel")}</p>
 								)}
 							</li>
-							<li>
+							{/* <li>
 								<h3 className='stat-title'>🪙 {t("profile.money")}</h3>
 								<p className='stat-value'>{user.money}</p>
-							</li>
+							</li> */}
 						</ul>
 					</div>
 				</div>

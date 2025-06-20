@@ -60,7 +60,6 @@ export default class GameModeStore {
 
       if ( response.ok ) {
         const data = await response.json();
-        console.log( data );
         this.cards = data;
       }
     } catch ( error ) {

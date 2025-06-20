@@ -15,6 +15,7 @@ const CardMode = ({ title, description, type, image }) => {
 				<button
 					className='card-mode-header-description'
 					onClick={handleDescriptionClick}
+					aria-label="Afficher la description du mode de jeu"
 				>
 					?
 				</button>
@@ -32,6 +33,7 @@ const CardMode = ({ title, description, type, image }) => {
         <button
           className='card-mode-description-close'
           onClick={handleDescriptionClick}
+					aria-label="Fermer la description"
         >X</button>
 			</div>
 		</div>
