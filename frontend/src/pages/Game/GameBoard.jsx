@@ -19,7 +19,7 @@ const GameBoard = observer(() => {
 	const { t } = useTranslation();
 	const mode = searchParams.get("type");
 
-	const switchGameMode = useSwitchGameMode();
+	// const switchGameMode = useSwitchGameMode();
 	const gameStore = useGameStore();
 	const [isCardPlacing, setIsCardPlacing] = useState(false);
 	const [previewPosition, setPreviewPosition] = useState(null);
