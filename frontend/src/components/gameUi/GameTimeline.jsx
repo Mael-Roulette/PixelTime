@@ -2,17 +2,23 @@ import { observer } from "mobx-react-lite";
 import { useGameStore } from "../../stores/useStore";
 import ZoneDroppable from "./ZoneDroppable";
 import Card from "./Card";
+import Notification from "./Notification";
+
 
 const GameTimeline = observer(() => {
 	const gameStore = useGameStore();
 
 	const handleDrop = (item, position) => {
 		const dropResult = gameStore.dropCard(item.card, position);
-		console.log(dropResult);
 	};
 
 	return (
 		<div className='game-timeline'>
+			<Notification
+				notification={gameStore.notification}
+				onClose={() => gameStore.hideNotification()}
+			/>
+
 			{gameStore.placedCards.length === 0 ? (
 				// Zone pour la première carte
 				<div className='game-timeline-start'>

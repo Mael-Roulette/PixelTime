@@ -16,7 +16,7 @@
 		"loading": "Loading...",
 		"verification": "Verification in progress...",
 		"cancel": "Cancel",
-        "close": "Close"
+		"close": "Close"
 	},
 
 	"footer": {
@@ -149,7 +149,22 @@
 		},
 		"card": {
 			"title": "List of cards",
-            "seeAll" : "See all cards"
+			"seeAll": "See all cards"
+		}
+	},
+
+	"gameNotification": {
+		"success": {
+			"title": "Correct answer!",
+			"message": "+10 points!"
+		},
+		"incorrect": {
+			"title": "Incorrect placement!",
+			"message": "Placement is incorrect, -5 points and the card is removed."
+		},
+		"finish": {
+			"title": "Game over!",
+			"message": "The game is over! If you were logged in you can find your score in your profile."
 		}
 	}
 }

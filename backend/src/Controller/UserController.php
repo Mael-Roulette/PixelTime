@@ -183,4 +183,38 @@ class UserController extends AbstractController
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    #[Route('/add-score', name: 'user_add_score', methods: ['POST'])]
+    public function addScore(Request $request, #[CurrentUser] User $user): JsonResponse
+    {
+        try {
+            $data = json_decode($request->getContent(), true);
+
+            // Validation des données
+            if (!isset($data['score']) || !is_numeric($data['score']) || $data['score'] < 0) {
+                return new JsonResponse([
+                    'error' => 'Score invalide'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            $scoreToAdd = (int) $data['score'];
+
+            // Ajouter le score au score total de l'utilisateur
+            $currentScore = $user->getScore();
+            $user->setScore($currentScore + $scoreToAdd);
+
+            $this->entityManager->flush();
+
+            return new JsonResponse([
+                'message' => 'Score ajouté avec succès',
+                'scoreAdded' => $scoreToAdd,
+                'totalScore' => $user->getScore()
+            ]);
+
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'error' => 'Une erreur est survenue lors de la sauvegarde du score'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

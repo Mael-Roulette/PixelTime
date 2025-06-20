@@ -15,14 +15,13 @@ export default function Catalog() {
 		try {
 			const response = await adminService.getCards();
 			setCards(response);
-			console.log(response);
 		} catch (error) {
 			console.error(error);
 		} finally {
 			setLoading(false);
 		}
 	};
-	
+
 	useEffect(() => {
 		const checkIfMobile = () => {
 			setIsMobile(window.innerWidth <= 768);
