@@ -110,7 +110,9 @@
 		"leave": "Quitter la partie",
 		"previous": "Précédent",
 		"addCard": "Ajouter la carte",
-		"next": "Suivant"
+		"next": "Suivant",
+		"validate": "Valider",
+		"finished": "Terminé !"
 	},
 
 	"profile": {
@@ -150,6 +152,10 @@
 		"card": {
 			"title": "Liste des cartes",
 			"seeAll": "Voir toutes les cartes"
+		},
+		"level": {
+			"title": "Liste des niveaux",
+			"seeAll": "Voir tous les niveaux"
 		}
 	},
 

@@ -12,6 +12,10 @@ export default class GameModeStore {
   notification = null;
   score = 0;
   gameFinished = false;
+  lives = null;
+  timeLeft = null;
+  scoreMultiplier = 1;
+  maxCards = 5;
 
   constructor () {
     makeAutoObservable( this );
@@ -22,7 +26,7 @@ export default class GameModeStore {
     const language = getLanguage();
 
     try {
-      const response = await fetch( `${ API_URL }/cards/random/5?lang=${ language }`, {
+      const response = await fetch( `${ API_URL }/cards/random/${ this.maxCards }?lang=${ language }`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -31,6 +35,7 @@ export default class GameModeStore {
 
       if ( response.ok ) {
         const data = await response.json();
+        console.log( data );
         this.cards = data;
       }
     } catch ( error ) {
@@ -42,11 +47,16 @@ export default class GameModeStore {
 
   // Lance le jeu
   play () {
-    this.loadCards();
+    if ( !this.loadGameState() ) {
+      this.loadCards();
+    }
   }
 
   async finishGame () {
     if ( this.gameFinished ) return;
+
+    const finalScore = Math.floor( this.score * this.scoreMultiplier );
+    this.score = finalScore;
 
     this.showNotification( {
       type: 'finish',
@@ -61,7 +71,7 @@ export default class GameModeStore {
       const token = getToken();
       if ( !token ) return;
 
-      const response = await fetch( `${ API_URL }/users/add-score`, {
+      await fetch( `${ API_URL }/users/add-score`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,65 +81,80 @@ export default class GameModeStore {
           score: this.score,
         } )
       } );
-
-      if ( response.ok ) {
-        const result = await response.json();
-
-        return result;
-      } else {
-        throw new Error( 'Erreur lors de la sauvegarde du score' );
-      }
     } catch ( error ) {
       console.error( 'Erreur lors de la sauvegarde du score:', error );
     }
+
+    this.clearGameState();
   }
 
   // Vérifie si la partie est terminée
   get isGameFinished () {
-    return this.cards.length === 0 && this.placedCards.length > 0;
+    const result = !this.loading &&
+      this.cards.length === 0 &&
+      this.placedCards.length >= this.maxCards &&
+      !this.gameFinished;
+
+    console.log('🎯 isGameFinished check:', {
+      loading: this.loading,
+      cardsLength: this.cards.length,
+      placedCardsLength: this.placedCards.length,
+      maxCards: this.maxCards,
+      gameFinished: this.gameFinished,
+      result: result
+    });
+
+    return result;
   }
 
   // Permet de placer une carte
   dropCard ( card, position ) {
     const result = this.getResult( card, position );
-
     this.cards = this.cards.filter( c => c.id !== card.id );
 
     if ( result.isCorrect ) {
       this.placedCards.splice( position, 0, card );
       this.addScore( 10 );
-
       this.showNotification( {
         type: 'success',
         title: t( 'gameNotification.success.title' ),
         message: t( 'gameNotification.success.message', { cardName: card.title } ),
-        duration: 2000
+        duration: 3500
       } );
     } else {
-      const correctPosition = this.findCorrectPosition( card );
-      this.placedCards.splice( correctPosition, 0, card );
-      this.addScore( -5 );
-
-      this.showNotification( {
-        type: 'warning',
-        title: t( 'gameNotification.incorrect.title' ),
-        message: t( 'gameNotification.incorrect.message', { cardName: card.title } ),
-        duration: 2000
-      } );
-
-      result.isCorrect = false;
-      result.autoPlaced = true;
+      this.handleIncorrectAnswer( card, result );
     }
 
     this.cardResults.set( card.id, result.isCorrect );
+    this.saveGameState();
 
-    if ( this.isGameFinished ) {
+    if ( this.isGameFinished || this.isGameOver() ) {
       setTimeout( () => {
         this.finishGame();
-      }, 4000 );
+      }, 2000 );
     }
 
     return result;
+  }
+
+  handleIncorrectAnswer ( card, result ) {
+    const correctPosition = this.findCorrectPosition( card );
+    this.placedCards.splice( correctPosition, 0, card );
+    this.addScore( -5 );
+
+    this.showNotification( {
+      type: 'warning',
+      title: t( 'gameNotification.incorrect.title' ),
+      message: t( 'gameNotification.incorrect.message', { cardName: card.title } ),
+      duration: 3500
+    } );
+
+    result.isCorrect = false;
+    result.autoPlaced = true;
+  }
+
+  isGameOver () {
+    return this.lives !== null && this.lives <= 0;
   }
 
   // Trouverla position correcte d'une carte
@@ -149,6 +174,8 @@ export default class GameModeStore {
 
   // Affiche une notification
   showNotification ( notification ) {
+    this.hideNotification();
+
     this.notification = notification;
 
     // Auto-masquer la notif après la durée spécifiée
@@ -229,5 +256,72 @@ export default class GameModeStore {
     this.placedCards = [];
     this.cardResults.clear();
     this.score = 0;
+    this.clearGameState();
+  }
+
+  // Sauvegarder l'état du jeu
+  saveGameState () {
+    const gameState = {
+      cards: this.cards,
+      placedCards: this.placedCards,
+      score: this.score,
+      cardResults: Array.from( this.cardResults.entries() ),
+      gameFinished: this.gameFinished,
+      lives: this.lives,
+      timeLeft: this.timeLeft,
+      scoreMultiplier: this.scoreMultiplier,
+      timestamp: Date.now()
+    };
+    localStorage.setItem( 'pixeltime_game_state', JSON.stringify( gameState ) );
+  }
+
+  // Charger l'état du jeu
+  loadGameState () {
+    const savedState = localStorage.getItem( 'pixeltime_game_state' );
+    if ( savedState ) {
+      try {
+        const gameState = JSON.parse( savedState );
+
+        const maxAge = 24 * 60 * 60 * 1000;
+        if ( Date.now() - gameState.timestamp > maxAge ) {
+          this.clearGameState();
+          return false;
+        }
+
+        this.cards = gameState.cards || [];
+        this.placedCards = gameState.placedCards || [];
+        this.score = gameState.score || 0;
+        this.cardResults = new Map( gameState.cardResults || [] );
+        this.gameFinished = gameState.gameFinished || false;
+        this.lives = gameState.lives;
+        this.timeLeft = gameState.timeLeft;
+        this.scoreMultiplier = gameState.scoreMultiplier || 1;
+
+        return true;
+      } catch ( error ) {
+        console.error( 'Erreur lors du chargement de la sauvegarde:', error );
+        this.clearGameState();
+      }
+    }
+    return false;
+  }
+
+  // Supprimer la sauvegarde
+  clearGameState () {
+    localStorage.removeItem( 'pixeltime_game_state' );
+  }
+
+  // Vérifier s'il y a une partie en cours
+  hasGameInProgress () {
+    const savedState = localStorage.getItem( 'pixeltime_game_state' );
+    if ( savedState ) {
+      try {
+        const gameState = JSON.parse( savedState );
+        return gameState.cards.length > 0 || gameState.placedCards.length > 0;
+      } catch {
+        return false;
+      }
+    }
+    return false;
   }
 }

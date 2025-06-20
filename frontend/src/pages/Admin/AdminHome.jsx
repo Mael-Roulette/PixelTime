@@ -11,6 +11,7 @@ const AdminHome = () => {
 
 	const [users, setUsers] = useState([]);
 	const [cards, setCards] = useState([]);
+	const [levels, setLevels] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [deletePopupVisible, setDeletePopupVisible] = useState(false);
 	const [userToDelete, setUserToDelete] = useState(null);
@@ -40,8 +41,21 @@ const AdminHome = () => {
 			}
 		};
 
+		const fetchLevels = async () => {
+			try {
+				setLoading(true);
+				const response = await adminService.getLevels();
+				setLevels(response);
+			} catch (error) {
+				console.error(error);
+			} finally {
+				setLoading(false);
+			}
+		};
+
 		fetchUsers();
 		fetchCards();
+		fetchLevels();
 	}, []);
 
 	const displayDeletePopup = (userId) => {
@@ -90,6 +104,10 @@ const AdminHome = () => {
 		}
 	};
 
+	if (loading) {
+		return <p className='loading'>Chargement des informations...</p>;
+	}
+
 	return (
 		<>
 			<BottomNavBar />
@@ -106,36 +124,38 @@ const AdminHome = () => {
 						) : (
 							<ul className='user-container-list'>
 								{users.slice(-5).map((user) => {
-                  return (
-                    <li key={user.id} className='user-container-list-item'>
-                      <div className='user-container-list-item-content'>
-                        <div className='photo'>
-                          {user.profilePicture ? (
-                            <img src={user.profilePicture} alt={user.pseudo} />
-                          ) : (
-                            <div className='profile-initial'>
-                              <p>{user.pseudo?.charAt(0).toUpperCase()}</p>
-                            </div>
-                          )}
-                        </div>
+									return (
+										<li key={user.id} className='user-container-list-item'>
+											<div className='user-container-list-item-content'>
+												<div className='photo'>
+													{user.profilePicture ? (
+														<img src={user.profilePicture} alt={user.pseudo} />
+													) : (
+														<div className='profile-initial'>
+															<p>{user.pseudo?.charAt(0).toUpperCase()}</p>
+														</div>
+													)}
+												</div>
 
-                        <div className='info'>
-                          <p className='info-pseudo'>
-                            {user.pseudo}
-                            {user.role && user.role.includes("ROLE_ADMIN") && " (Admin)"}
-                          </p>
-                          <p className='info-mail'>{user.email}</p>
-                        </div>
-                      </div>
+												<div className='info'>
+													<p className='info-pseudo'>
+														{user.pseudo}
+														{user.role &&
+															user.role.includes("ROLE_ADMIN") &&
+															" (Admin)"}
+													</p>
+													<p className='info-mail'>{user.email}</p>
+												</div>
+											</div>
 
-                      <button
-                        className='delete-button'
-                        onClick={() => displayDeletePopup(user.id)}
-                      >
-                        <MdDeleteForever size={25} />
-                      </button>
-                    </li>
-                  );
+											<button
+												className='delete-button'
+												onClick={() => displayDeletePopup(user.id)}
+											>
+												<MdDeleteForever size={25} />
+											</button>
+										</li>
+									);
 								})}
 							</ul>
 						)}
@@ -158,7 +178,9 @@ const AdminHome = () => {
 									>
 										{t("global.cancel")}
 									</button>
-									<button className='button-primary' onClick={handleDelete}>Supprimer</button>
+									<button className='button-primary' onClick={handleDelete}>
+										Supprimer
+									</button>
 								</div>
 							</div>
 						</div>
@@ -194,6 +216,43 @@ const AdminHome = () => {
 							className='button-tertiary admin-home-card-seemore'
 						>
 							{t("admin.card.seeAll")}
+						</NavLink>
+					</div>
+
+					<div className='admin-home-level-container'>
+						<h2>{t("admin.level.title")}</h2>
+
+						{levels.length === 0 ? (
+							<p>Aucun niveau</p>
+						) : (
+							<ul className='admin-home-level-list'>
+								{levels.map((level) => {
+									return (
+										<li key={level.id} className='admin-home-level-list-item'>
+											<div className='admin-home-level-list-item-info'>
+												<div className='image'>
+													{level.image ? (
+														<img src={level.image} alt={level.name} />
+													) : (
+														<div className='image-initial'>
+															<p>{level.name?.charAt(0).toUpperCase()}</p>
+														</div>
+													)}
+												</div>
+												<p className='title'>{level.name}</p>
+											</div>
+											<p className='score'>{level.minScore}</p>
+										</li>
+									);
+								})}
+							</ul>
+						)}
+
+						<NavLink
+							to='/admin/levels'
+							className='button-tertiary admin-home-level-seemore'
+						>
+							{t("admin.level.seeAll")}
 						</NavLink>
 					</div>
 				</div>

@@ -9,7 +9,7 @@ export default function Home() {
 	const cards = [
 		{ id: 1, name: "Tetris", image: "tetris.png" },
 		{ id: 2, name: "PacMan", image: "pacman.png" },
-		{ id: 3, name: "Snake", image: "snake.avif" },
+		{ id: 3, name: "Snake", image: "snake.png" },
 	];
 
 	const keyNumbers = [

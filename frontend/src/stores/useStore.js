@@ -13,3 +13,8 @@ export const useGameStore = () => {
   const pixeltimeStore = usePixeltimeStore();
   return pixeltimeStore.gameStore;
 };
+
+export const useSwitchGameMode = () => {
+  const pixeltimeStore = usePixeltimeStore();
+  return pixeltimeStore.switchGameMode;
+};

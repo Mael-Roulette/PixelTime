@@ -130,8 +130,7 @@ class AuthService {
       const response = await fetch( `${ API_URL }/refresh-token`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${ token }`
+          'Content-Type': 'application/json'
         }
       } );
 

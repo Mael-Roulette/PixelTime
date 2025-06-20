@@ -61,17 +61,22 @@
 				}
 			}
 
+			&:has(.preview-card) {
+				&::after {
+					display: none;
+					background-color: $blue;
+					background-image: linear-gradient(
+						rgba($yellow, 0.1),
+						rgba($yellow, 0.1)
+					);
+					border-color: lighten($yellow, 10%);
+				}
+			}
+
 			.preview-card {
-				opacity: 0.7;
-				transform: scale(0.9);
-				border: 2px dashed $yellow;
+				opacity: 0.75;
 				border-radius: 8px;
 				animation: pulse 1.5s infinite;
-
-				.droppable-zone & {
-					min-width: 15rem;
-					max-width: 15rem;
-				}
 			}
 		}
 	}
@@ -83,8 +88,30 @@
 		gap: 1rem;
 		height: 100%;
 		width: 100%;
+		overflow-x: scroll;
+		overflow-y: hidden;
+		padding: 1rem 0;
+
+		&::-webkit-scrollbar {
+			height: 8px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: rgba($blue, 0.3);
+			border-radius: 4px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background: $yellow;
+			border-radius: 4px;
+
+			&:hover {
+				background: lighten($yellow, 10%);
+			}
+		}
 
 		.droppable-zone {
+			flex-shrink: 0;
 			height: 20rem;
 			width: 100%;
 			min-width: 5rem;
@@ -120,6 +147,12 @@
 			}
 
 			&:has(.preview-card) {
+				background-color: $blue;
+				background-image: linear-gradient(
+					rgba($yellow, 0.1),
+					rgba($yellow, 0.1)
+				);
+				border-color: lighten($yellow, 10%);
 				min-width: 15rem;
 				max-width: 15rem;
 			}

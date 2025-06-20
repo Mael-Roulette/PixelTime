@@ -13,6 +13,7 @@ import Profile from "./pages/Game/Profile";
 import AdminHome from "./pages/Admin/AdminHome";
 import AdminUsers from "./pages/Admin/AdminUsers";
 import AdminCards from "./pages/Admin/AdminCards";
+import AdminLevels from "./pages/Admin/AdminLevels";
 import "./App.css";
 import UserRoute from "./components/UserRoute";
 import AdminRoute from "./components/AdminRoute";
@@ -68,6 +69,14 @@ const App = observer(() => {
 				>
 					<Route path='add' element={<AddCard />}></Route>
 				</Route>
+				<Route
+					path='/admin/levels'
+					element={
+						<AdminRoute>
+							<AdminLevels />
+						</AdminRoute>
+					}
+				></Route>
 			</Routes>
 		</BrowserRouter>
 	);

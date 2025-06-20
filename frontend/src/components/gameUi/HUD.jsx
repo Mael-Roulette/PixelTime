@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 
-const HUD = ({ score = 0, mode, onQuit }) => {
+const HUD = ({ score, mode, lives, timeLeft, onQuit }) => {
 	const { t } = useTranslation();
 	const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
 

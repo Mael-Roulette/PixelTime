@@ -12,11 +12,11 @@
 	background-color: $blue;
 	background-image: linear-gradient(
 			to bottom,
-				$blue 5%,
-				rgba($blue, 0.8) 15%,
-				rgba($blue, 0.5) 50%,
-				rgba($blue, 0.8) 85%,
-				$blue
+			$blue 5%,
+			rgba($blue, 0.8) 15%,
+			rgba($blue, 0.5) 50%,
+			rgba($blue, 0.8) 85%,
+			$blue
 		),
 		linear-gradient(
 			var(--grid-angle),
@@ -39,6 +39,10 @@
 	min-height: 100vh;
 	display: grid;
 	grid-template-rows: auto 1fr 1fr;
+
+	&-board {
+		overflow: hidden;
+	}
 
 	&-info {
 		&-container {
@@ -149,6 +153,49 @@
 			font-size: 1.6rem;
 			line-height: 1.5;
 		}
+	}
+}
+
+.resume-dialog {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.7);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 20;
+
+	&-content {
+		background-color: $blue;
+		border: 2px solid $yellow;
+		border-radius: 12px;
+		padding: 3rem;
+		max-width: 90%;
+		width: 500px;
+		text-align: center;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+		h3 {
+			color: $yellow;
+			font-size: 2.4rem;
+			margin-bottom: 1.5rem;
+		}
+
+		p {
+			color: $white;
+			font-size: 1.6rem;
+			line-height: 1.5;
+			margin-bottom: 2.5rem;
+		}
+	}
+
+	&-buttons {
+		display: flex;
+		gap: 1.5rem;
+		justify-content: center;
 	}
 }
 

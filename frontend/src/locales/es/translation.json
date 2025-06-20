@@ -110,7 +110,9 @@
 		"leave": "Abandonar el juego",
 		"previous": "Anterior",
 		"addCard": "Añadir la tarjeta",
-		"next": "Siguiente"
+		"next": "Siguiente",
+		"validate": "Validar",
+		"finished": "¡Terminado!"
 	},
 
 	"profile": {
@@ -150,6 +152,10 @@
 		"card": {
 			"title": "Lista de tarjetas",
 			"seeAll": "Ver todas las tarjetas"
+		},
+		"level": {
+			"title": "Lista de niveles",
+			"seeAll": "Ver todos los niveles"
 		}
 	},
 

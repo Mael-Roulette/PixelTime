@@ -21,10 +21,9 @@ const Profile = () => {
 				const userData = response.user;
 				setUser(userData);
 			} catch (error) {
-				console.error(error);
 				setError(error.message);
 				authService.logout();
-				navigate('/login');
+				navigate("/login");
 			} finally {
 				setLoading(false);
 			}

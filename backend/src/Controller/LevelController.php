@@ -15,6 +15,13 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/api/levels')]
 class LevelController extends AbstractController
 {
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     #[Route('', name: 'api_level_index', methods: ['GET'])]
     public function index(LevelRepository $levelRepository, Request $request): JsonResponse
     {
@@ -32,12 +39,31 @@ class LevelController extends AbstractController
             foreach ($levels as $level) {
                 $translation = $level->getTranslation($locale);
 
+                // Calculer le nombre d'utilisateurs pour ce niveau
+                $nextLevelMinScore = $this->getNextLevelMinScore($levelRepository, $level->getMinScore());
+                $isLastLevel = $this->isLastLevel($levelRepository, $level->getMinScore());
+
+                $qb = $this->entityManager->createQueryBuilder()
+                    ->select('COUNT(u.id)')
+                    ->from('App\Entity\User', 'u')
+                    ->where('u.score >= :minScore')
+                    ->setParameter('minScore', $level->getMinScore());
+
+                // Si ce n'est pas le dernier niveau, ajouter la condition de score maximum
+                if (!$isLastLevel && $nextLevelMinScore !== null) {
+                    $qb->andWhere('u.score < :nextMinScore')
+                       ->setParameter('nextMinScore', $nextLevelMinScore);
+                }
+
+                $userCount = $qb->getQuery()->getSingleScalarResult();
+
                 $result[] = [
                     'id' => $level->getId(),
                     'minScore' => $level->getMinScore(),
                     'image' => $level->getImage(),
                     'name' => $translation ? $translation->getName() : "Niveau {$level->getId()}",
-                    'locale' => $locale
+                    'locale' => $locale,
+                    'userCount' => (int) $userCount,
                 ];
             }
 
@@ -89,7 +115,7 @@ class LevelController extends AbstractController
     }
 
     #[Route('', name: 'api_level_create', methods: ['POST'])]
-    public function create(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    public function create(Request $request, LevelRepository $levelRepository): JsonResponse
     {
         try {
             $data = json_decode($request->getContent(), true);
@@ -147,11 +173,11 @@ class LevelController extends AbstractController
                 $translation->setName($translationData['name']);
                 $translation->setLevel($level);
 
-                $entityManager->persist($translation);
+                $this->entityManager->persist($translation);
             }
 
-            $entityManager->persist($level);
-            $entityManager->flush();
+            $this->entityManager->persist($level);
+            $this->entityManager->flush();
 
             return $this->json([
                 'id' => $level->getId(),
@@ -171,7 +197,7 @@ class LevelController extends AbstractController
     }
 
     #[Route('/{id}', name: 'api_level_update', methods: ['PUT'])]
-    public function update(int $id, Request $request, LevelRepository $levelRepository, EntityManagerInterface $entityManager): JsonResponse
+    public function update(int $id, Request $request, LevelRepository $levelRepository): JsonResponse
     {
         try {
             $level = $levelRepository->find($id);
@@ -231,7 +257,7 @@ class LevelController extends AbstractController
                         $translation = new LevelTranslation();
                         $translation->setLocale($translationData['locale']);
                         $translation->setLevel($level);
-                        $entityManager->persist($translation);
+                        $this->entityManager->persist($translation);
                     }
 
                     if (isset($translationData['name'])) {
@@ -240,7 +266,7 @@ class LevelController extends AbstractController
                 }
             }
 
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->json([
                 'id' => $level->getId(),
@@ -255,7 +281,7 @@ class LevelController extends AbstractController
     }
 
     #[Route('/{id}', name: 'api_level_delete', methods: ['DELETE'])]
-    public function delete(int $id, LevelRepository $levelRepository, EntityManagerInterface $entityManager): JsonResponse
+    public function delete(int $id, LevelRepository $levelRepository): JsonResponse
     {
         try {
             $level = $levelRepository->find($id);
@@ -266,8 +292,8 @@ class LevelController extends AbstractController
                 ], Response::HTTP_NOT_FOUND);
             }
 
-            $entityManager->remove($level);
-            $entityManager->flush();
+            $this->entityManager->remove($level);
+            $this->entityManager->flush();
 
             return $this->json([
                 'message' => 'Niveau supprimé avec succès'
@@ -323,7 +349,6 @@ class LevelController extends AbstractController
     public function getCurrentUserLevel(LevelRepository $levelRepository, Request $request): JsonResponse
     {
         try {
-            /** @var \App\Entity\User $user */
             $user = $this->getUser();
 
             if (!$user) {
@@ -392,5 +417,30 @@ class LevelController extends AbstractController
                 'error' => 'Erreur lors de la récupération du niveau utilisateur: ' . $e->getMessage()
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private function getNextLevelMinScore(LevelRepository $levelRepository, int $currentMinScore): ?int
+    {
+        $nextLevel = $levelRepository->createQueryBuilder('l')
+            ->where('l.minScore > :currentMinScore')
+            ->orderBy('l.minScore', 'ASC')
+            ->setParameter('currentMinScore', $currentMinScore)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $nextLevel ? $nextLevel->getMinScore() : null;
+    }
+
+    private function isLastLevel(LevelRepository $levelRepository, int $currentMinScore): bool
+    {
+        $nextLevel = $levelRepository->createQueryBuilder('l')
+            ->where('l.minScore > :currentMinScore')
+            ->setParameter('currentMinScore', $currentMinScore)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $nextLevel === null;
     }
 }
