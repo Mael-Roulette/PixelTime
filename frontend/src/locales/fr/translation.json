@@ -112,7 +112,8 @@
 		"addCard": "Ajouter la carte",
 		"next": "Suivant",
 		"validate": "Valider",
-		"finished": "Terminé !"
+		"finished": "Terminé !",
+		"gameOver": "Game Over ! Plus de vies restantes."
 	},
 
 	"profile": {

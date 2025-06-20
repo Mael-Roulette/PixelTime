@@ -19,7 +19,7 @@ const GameBoard = observer(() => {
 	const { t } = useTranslation();
 	const mode = searchParams.get("type");
 
-	// const switchGameMode = useSwitchGameMode();
+	const switchGameMode = useSwitchGameMode();
 	const gameStore = useGameStore();
 	const [isCardPlacing, setIsCardPlacing] = useState(false);
 	const [previewPosition, setPreviewPosition] = useState(null);
@@ -38,35 +38,34 @@ const GameBoard = observer(() => {
 		}
 	}, [mode, navigate, gameStore]);
 
-	// useEffect(() => {
-	// 	if (!mode) {
-	// 		navigate("/gamechoice");
-	// 		return;
-	// 	}
+	useEffect(() => {
+		if (!mode) {
+			navigate("/gamechoice");
+			return;
+		}
 
-	// 	if (currentModeRef.current !== mode) {
-	// 		console.log("🔄 Switching to mode:", mode);
-	// 		currentModeRef.current = mode;
-	// 		setInitialized(false);
-	// 		switchGameMode(mode);
-	// 	}
-	// }, [mode, navigate, switchGameMode]);
+		if (currentModeRef.current !== mode) {
+			console.log("🔄 Switching to mode:", mode);
+			currentModeRef.current = mode;
+			setInitialized(false);
+			switchGameMode(mode);
+		}
+	}, [mode, navigate, switchGameMode]);
 
-	// useEffect(() => {
-	// 	if (!initialized && currentModeRef.current === mode && !gameStore.loading) {
-	// 		console.log("🎮 Initializing game for mode:", mode);
-	// 		setInitialized(true);
+	useEffect(() => {
+		if (!initialized && currentModeRef.current === mode && !gameStore.loading) {
+			console.log("🎮 Initializing game for mode:", mode);
+			setInitialized(true);
 
-	// 		if (gameStore.hasGameInProgress()) {
-	// 			setShowResumeDialog(true);
-	// 		} else {
-	// 			// Réinitialiser les états locaux
-	// 			setIsCardPlacing(false);
-	// 			setPreviewPosition(null);
-	// 			gameStore.play();
-	// 		}
-	// 	}
-	// }, [initialized, mode, gameStore.loading]);
+			if (gameStore.hasGameInProgress()) {
+				setShowResumeDialog(true);
+			} else {
+				setIsCardPlacing(false);
+				setPreviewPosition(null);
+				gameStore.play();
+			}
+		}
+	}, [initialized, mode, gameStore]);
 
 	const handleResumeGame = () => {
 		gameStore.play();
@@ -171,7 +170,7 @@ const GameBoard = observer(() => {
 
 					<div className='game-hand'>
 						<div className='game-hand-card'>
-							{gameStore.cards.length > 0 ? (
+							{gameStore.cards.length > 0  && !gameStore.isGameFinished ? (
 								<ZoneDraggable
 									key={gameStore.cards[0].id}
 									index={gameStore.cards[0].id}
@@ -179,7 +178,10 @@ const GameBoard = observer(() => {
 								/>
 							) : (
 								<div className='game-finished-message'>
-									<p>{t("game.finished")}</p>
+									<p>{gameStore.isGameOver()
+                ? t("game.gameOver")
+                : t("game.finished")
+            }</p>
 								</div>
 							)}
 							{/* Ajouter le bouton d'indice */}

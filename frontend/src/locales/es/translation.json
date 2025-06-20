@@ -112,7 +112,8 @@
 		"addCard": "Añadir la tarjeta",
 		"next": "Siguiente",
 		"validate": "Validar",
-		"finished": "¡Terminado!"
+		"finished": "¡Terminado!",
+		"gameOver": "¡Se acabó el juego! No quedan vidas."
 	},
 
 	"profile": {

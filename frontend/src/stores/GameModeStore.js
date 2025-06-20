@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { makeObservable, observable, action, computed } from 'mobx';
 import { getLanguage, getToken } from '../../utils/function';
 import { t } from 'i18next';
 
@@ -15,10 +15,35 @@ export default class GameModeStore {
   lives = null;
   timeLeft = null;
   scoreMultiplier = 1;
-  maxCards = 5;
+  maxCards = 7;
 
   constructor () {
-    makeAutoObservable( this );
+    makeObservable( this, {
+      cards: observable,
+      placedCards: observable,
+      loading: observable,
+      cardResults: observable,
+      notification: observable,
+      score: observable,
+      gameFinished: observable,
+      lives: observable,
+      timeLeft: observable,
+      scoreMultiplier: observable,
+      maxCards: observable,
+
+      loadCards: action,
+      play: action,
+      finishGame: action,
+      dropCard: action,
+      handleIncorrectAnswer: action,
+      showNotification: action,
+      hideNotification: action,
+      resetGame: action,
+      saveGameState: action,
+      loadGameState: action,
+
+      isGameFinished: computed,
+    } );
   }
 
   async loadCards () {
@@ -90,19 +115,13 @@ export default class GameModeStore {
 
   // Vérifie si la partie est terminée
   get isGameFinished () {
-    const result = !this.loading &&
-      this.cards.length === 0 &&
-      this.placedCards.length >= this.maxCards &&
-      !this.gameFinished;
+    const gameOverByLives = this.isGameOver(); // Plus de vies
+    const gameOverByCards = !this.loading &&
+        this.cards.length === 0 &&
+        this.placedCards.length >= this.maxCards &&
+        !this.gameFinished;
 
-    console.log('🎯 isGameFinished check:', {
-      loading: this.loading,
-      cardsLength: this.cards.length,
-      placedCardsLength: this.placedCards.length,
-      maxCards: this.maxCards,
-      gameFinished: this.gameFinished,
-      result: result
-    });
+    const result = gameOverByLives || gameOverByCards;
 
     return result;
   }
