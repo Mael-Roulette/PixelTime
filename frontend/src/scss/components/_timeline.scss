@@ -40,18 +40,37 @@
 			&:hover,
 			&.drag-over {
 				background-color: $blue;
-				background-image: linear-gradient(rgba($yellow, 0.1), rgba($yellow, 0.1));
+				background-image: linear-gradient(
+					rgba($yellow, 0.1),
+					rgba($yellow, 0.1)
+				);
 				border-color: lighten($yellow, 10%);
 			}
 
 			&.drag-over {
 				background-color: $blue;
-				background-image: linear-gradient(rgba($yellow, 0.1), rgba($yellow, 0.2));
+				background-image: linear-gradient(
+					rgba($yellow, 0.1),
+					rgba($yellow, 0.2)
+				);
 				border-color: $yellow;
 				border-style: solid;
 
 				&::after {
 					opacity: 1;
+				}
+			}
+
+			.preview-card {
+				opacity: 0.7;
+				transform: scale(0.9);
+				border: 2px dashed $yellow;
+				border-radius: 8px;
+				animation: pulse 1.5s infinite;
+
+				.droppable-zone & {
+					min-width: 15rem;
+					max-width: 15rem;
 				}
 			}
 		}
@@ -81,7 +100,10 @@
 			&:hover,
 			&.drag-over {
 				background-color: $blue;
-				background-image: linear-gradient(rgba($yellow, 0.1), rgba($yellow, 0.1));
+				background-image: linear-gradient(
+					rgba($yellow, 0.1),
+					rgba($yellow, 0.1)
+				);
 				border-color: lighten($yellow, 10%);
 				min-width: 15rem;
 				max-width: 15rem;
@@ -89,9 +111,22 @@
 
 			&.drag-over {
 				background-color: $blue;
-				background-image: linear-gradient(rgba($yellow, 0.1), rgba($yellow, 0.2));
+				background-image: linear-gradient(
+					rgba($yellow, 0.1),
+					rgba($yellow, 0.2)
+				);
 				border-color: $yellow;
 				border-style: solid;
+			}
+
+			&:has(.preview-card) {
+				min-width: 15rem;
+				max-width: 15rem;
+			}
+
+			.preview-card {
+				opacity: 0.75;
+				animation: pulse 1.5s infinite;
 			}
 		}
 	}
@@ -101,5 +136,15 @@
 		align-items: center;
 		gap: 1rem;
 		height: 100%;
+	}
+}
+
+@keyframes pulse {
+	0%,
+	100% {
+		opacity: 0.7;
+	}
+	50% {
+		opacity: 0.9;
 	}
 }

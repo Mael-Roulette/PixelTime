@@ -50,6 +50,9 @@
 		}
 
 		&-back {
+			all: unset;
+			font-size: 1.6rem;
+			cursor: pointer;
 			color: $yellow;
 			width: fit-content;
 

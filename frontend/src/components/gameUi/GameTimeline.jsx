@@ -4,12 +4,11 @@ import ZoneDroppable from "./ZoneDroppable";
 import Card from "./Card";
 import Notification from "./Notification";
 
-
-const GameTimeline = observer(() => {
+const GameTimeline = observer(({ previewPosition, previewCard }) => {
 	const gameStore = useGameStore();
 
 	const handleDrop = (item, position) => {
-		const dropResult = gameStore.dropCard(item.card, position);
+		gameStore.dropCard(item.card, position);
 	};
 
 	return (
@@ -27,6 +26,8 @@ const GameTimeline = observer(() => {
 						onDrop={handleDrop}
 						cardDrop={null}
 						isTimeline={true}
+						previewCard={previewCard}
+						showPreview={previewPosition === 0}
 					/>
 				</div>
 			) : (
@@ -38,11 +39,13 @@ const GameTimeline = observer(() => {
 						onDrop={handleDrop}
 						cardDrop={null}
 						isTimeline={true}
+						previewCard={previewCard}
+						showPreview={previewPosition === 0}
 					/>
 
 					{gameStore.placedCards.map((card, cardIndex) => (
 						<div key={card.id} className='game-timeline-segment'>
-							{/* Carte */}
+							{/* Carte placée */}
 							<div className='game-timeline-card'>
 								<Card
 									card={card}
@@ -57,6 +60,8 @@ const GameTimeline = observer(() => {
 								onDrop={handleDrop}
 								cardDrop={null}
 								isTimeline={true}
+								previewCard={previewCard}
+								showPreview={previewPosition === cardIndex + 1}
 							/>
 						</div>
 					))}

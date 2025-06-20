@@ -103,7 +103,7 @@ export default class GameModeStore {
         type: 'success',
         title: t( 'gameNotification.success.title' ),
         message: t( 'gameNotification.success.message', { cardName: card.title } ),
-        duration: 5000
+        duration: 2000
       } );
     } else {
       const correctPosition = this.findCorrectPosition( card );
@@ -114,7 +114,7 @@ export default class GameModeStore {
         type: 'warning',
         title: t( 'gameNotification.incorrect.title' ),
         message: t( 'gameNotification.incorrect.message', { cardName: card.title } ),
-        duration: 5000
+        duration: 2000
       } );
 
       result.isCorrect = false;
@@ -126,7 +126,7 @@ export default class GameModeStore {
     if ( this.isGameFinished ) {
       setTimeout( () => {
         this.finishGame();
-      }, 2000 );
+      }, 4000 );
     }
 
     return result;
@@ -211,6 +211,16 @@ export default class GameModeStore {
     if ( this.score < 0 ) {
       this.score = 0;
     }
+  }
+
+  async quitGame () {
+    if ( !this.gameFinished && this.placedCards.length > 0 ) {
+      await this.finishGame();
+    }
+
+    this.resetGame();
+    this.gameFinished = false;
+    this.hideNotification();
   }
 
   // Méthode pour réinitialiser le jeu
