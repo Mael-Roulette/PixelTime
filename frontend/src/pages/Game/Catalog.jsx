@@ -35,7 +35,7 @@ export default function Catalog() {
 		return () => window.removeEventListener("resize", checkIfMobile);
 	}, []);
 
-	if (loading){
+	if (loading) {
 		return <p className="loading">Chargement des cartes...</p>
 	}
 
@@ -55,9 +55,11 @@ export default function Catalog() {
 					{cards.map((card) => {
 						return (
 							<li key={card.id} className='catalog-list-item'>
-								<Card
-									card={card}
-								/>
+								<div className='flip-card'>
+									<div className='flip-card-inner'>
+										<Card card={card} isCatalog={true} />
+									</div>
+								</div>
 							</li>
 						);
 					})}
