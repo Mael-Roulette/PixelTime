@@ -2,6 +2,8 @@ import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
 import React, { useState } from "react";
 
+const API_URL = import.meta.env.API_BASE_URL || "http://localhost:8000/api";
+
 function ForgotPassword() {
 	const { t } = useTranslation();
 
@@ -14,7 +16,7 @@ function ForgotPassword() {
 		setIsLoading(true);
 
 		try {
-			const response = await fetch("http://localhost:8000/api/forgot-password", {
+			const response = await fetch(`${API_URL}/forgot-password`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -73,7 +75,7 @@ function ForgotPassword() {
 					{message && <p>{message}</p>}
 					<p>
 						{t("forgotPassword.notForgotPassword")}
-						<NavLink to={'/login'}> {t("forgotPassword.login")}</NavLink>
+						<NavLink to={"/login"}> {t("forgotPassword.login")}</NavLink>
 					</p>
 				</div>
 			</main>

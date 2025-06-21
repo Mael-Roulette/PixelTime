@@ -46,19 +46,41 @@
 
 	&-info {
 		&-container {
-			width: 100%;
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			align-items: center;
-			padding: 2rem 4rem;
+			&-primary {
+				width: 100%;
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				align-items: center;
+				padding: 2rem;
+			}
+
+			&-secondary {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 1.5rem;
+				padding: 1rem 0;
+
+				p {
+					font-size: 2.4rem;
+				}
+				.lives {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					gap: 1rem;
+				}
+			}
 		}
 
 		&-back {
 			all: unset;
-			font-size: 1.6rem;
+			font-size: 1.4rem;
+			line-height: 1.8rem;
 			cursor: pointer;
 			color: $yellow;
 			width: fit-content;
+			max-width: 6rem;
 
 			&:hover {
 				text-decoration: underline;
@@ -69,6 +91,7 @@
 			&-score {
 				color: $yellow;
 				text-align: center;
+				font-size: 2rem;
 			}
 
 			&-mode {
@@ -80,8 +103,8 @@
 		&-description {
 			background-color: $yellow;
 			border-radius: 50rem;
-			width: 3.5rem;
-			height: 3.5rem;
+			width: 3rem;
+			height: 3rem;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -91,7 +114,7 @@
 
 			&-text {
 				color: $blue;
-				font-size: 3rem;
+				font-size: 2rem;
 			}
 		}
 	}
@@ -108,18 +131,43 @@
 			justify-content: center;
 			align-items: center;
 			gap: 3rem;
+
+			&-hint {
+				background-color: $yellow;
+				border-radius: 50rem;
+				width: 3rem;
+				height: 3rem;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				justify-self: end;
+				border: none;
+				cursor: pointer;
+
+				&-text {
+					color: $blue;
+					font-size: 2rem;
+				}
+			}
 		}
 
 		&-buttons {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			gap: 2rem;
+			gap: 1rem;
+			padding: 0 2rem;
+
+			button {
+				font-size: 1.4rem;
+				padding: 0.5rem 1rem;
+			}
 		}
 	}
 }
 
-.description-popup {
+.description-popup,
+.hint-popup {
 	display: none;
 	position: fixed;
 	top: 0;
@@ -200,6 +248,40 @@
 }
 
 @include responsive("lg") {
+	.game {
+		&-info {
+			&-back {
+				max-width: none;
+				font-size: 1.6rem;
+				line-height: 2rem;
+			}
+
+			&-center {
+				&-score {
+					font-size: 3rem;
+				}
+			}
+
+			&-description {
+				width: 3.5rem;
+				height: 3.5rem;
+
+				&-text {
+					font-size: 3rem;
+				}
+			}
+		}
+
+		&-hand {
+			&-buttons {
+				button {
+					font-size: 1.6rem;
+					padding: 1rem 2rem;
+				}
+			}
+		}
+	}
+
 	.description-popup {
 		& .popup-content {
 			max-width: 60%;

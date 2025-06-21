@@ -6,92 +6,219 @@
 
 .leaderboard {
 	padding: 3rem 2rem;
+	min-height: 100vh;
+
+	&-title {
+		text-align: center;
+		margin-bottom: 2rem;
+		font-size: 2.5rem;
+		color: $white;
+	}
 
 	&-content {
 		margin-top: 2.5rem;
 		display: flex;
 		flex-direction: column;
+		gap: 3rem;
+	}
+
+	&-podium {
+		display: flex;
+		justify-content: center;
+		align-items: end;
 		gap: 2rem;
+		margin-bottom: 3rem;
 
-		&-table {
-			width: 100%;
-			border-collapse: separate;
-			border-spacing: 0;
-			border: 1px solid $white;
-			border-radius: 0.75rem;
-			overflow: hidden;
+		.podium-place {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
 
-			th,
-			td {
+			.podium-user {
+				margin-bottom: 1rem;
 				padding: 1rem;
-				border-right: 1px solid $white;
-				border-bottom: 1px solid $white;
+				border-radius: 12px;
+				background: rgba($white, 0.1);
+				border: 2px solid rgba($white, 0.3);
 
-				&:last-child {
-					border-right: none;
+				.profile-image {
+					width: 4rem;
+					height: 4rem;
+					border-radius: 50%;
+					object-fit: cover;
+					margin-bottom: 0.5rem;
 				}
-			}
 
-			thead {
-				th {
-					background-color: rgba($color: $white, $alpha: .3);
+				.profile-initial {
+					width: 4rem;
+					height: 4rem;
+					border-radius: 50%;
+					background: $yellow;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					margin: 0 auto 0.5rem;
+					font-size: 1.5rem;
 					font-weight: bold;
-					text-transform: uppercase;
+					color: $blue;
+				}
 
-					&:first-child {
-						text-align: center;
-					}
+				h3 {
+					color: $white;
+					margin: 0.5rem 0;
+					font-size: 1.2rem;
+				}
 
-					&:nth-child(2) {
-						text-align: left;
-					}
-
-					&:last-child {
-						text-align: left;
-					}
+				.score {
+					color: $yellow;
+					font-weight: bold;
+					margin: 0;
 				}
 			}
 
-			tbody {
-				tr {
-					&:last-child {
-						td {
-							border-bottom: none;
-						}
-					}
+			.podium-base {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				border-radius: 8px 8px 0 0;
+				padding: 1rem;
+				min-width: 6rem;
 
-					&:hover {
-						background-color: rgba(255, 255, 255, 0.05);
-					}
+				.rank {
+					font-size: 2rem;
+					margin-bottom: 0.5rem;
 				}
 
-				td {
-					&:first-child {
-						text-align: center;
-						font-weight: bold;
-					}
+				.position {
+					font-weight: bold;
+					color: $white;
+				}
+			}
 
-					&:nth-child(2) {
-						text-align: left;
-						display: flex;
-						align-items: center;
-						gap: 0.75rem;
+			&.first .podium-base {
+				background: linear-gradient(135deg, #ffd700, #ffa500);
+				height: 6rem;
+			}
 
-						.profile-image {
-							width: 2rem;
-							height: 2rem;
-							border-radius: 50%;
-							object-fit: cover;
-							border: 1px solid $white;
-						}
-					}
+			&.second .podium-base {
+				background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
+				height: 4.5rem;
+			}
 
-					&:last-child {
-						text-align: left;
-						font-weight: bold;
-					}
+			&.third .podium-base {
+				background: linear-gradient(135deg, #cd7f32, #b8860b);
+				height: 3rem;
+			}
+		}
+	}
+
+	&-table-container {
+		overflow-x: auto;
+	}
+
+	&-content-table {
+		width: 100%;
+		border-collapse: separate;
+		border-spacing: 0;
+		border: 1px solid $white;
+		border-radius: 0.75rem;
+		overflow: hidden;
+		background: rgba($white, 0.05);
+
+		th,
+		td {
+			padding: 1rem;
+			border-right: 1px solid rgba($white, 0.3);
+			border-bottom: 1px solid rgba($white, 0.3);
+
+			&:last-child {
+				border-right: none;
+			}
+		}
+
+		thead {
+			th {
+				background-color: rgba($white, 0.3);
+				font-weight: bold;
+				text-transform: uppercase;
+				color: $white;
+				text-align: center;
+
+				&:nth-child(2) {
+					text-align: left;
 				}
 			}
 		}
+
+		tbody {
+			tr {
+				transition: background-color 0.2s ease;
+
+				&:last-child {
+					td {
+						border-bottom: none;
+					}
+				}
+
+				&:hover {
+					background-color: rgba($white, 0.1);
+				}
+
+				&.top-three {
+					background-color: rgba($yellow, 0.2);
+				}
+			}
+
+			.rank-cell {
+				text-align: center;
+				font-size: 2.2rem;
+				font-weight: bold;
+				color: $white;
+				vertical-align: middle;
+			}
+
+			.user-cell {
+				.user-info {
+					display: flex;
+					align-items: center;
+
+					.username {
+						color: $white;
+						font-weight: 500;
+					}
+				}
+			}
+
+			.score-cell {
+				color: $yellow;
+				font-weight: bold;
+			}
+
+			.level-cell {
+				color: $white;
+
+				p {
+					font-size: 1.4rem;
+				}
+			}
+		}
+	}
+}
+
+// Responsive design
+@include responsive("md") {
+	.leaderboard {
+		padding: 3rem 4rem;
+
+		&-podium {
+			gap: 3rem;
+		}
+	}
+}
+
+@include responsive("lg") {
+	.leaderboard {
+		padding: 3rem 8rem;
 	}
 }

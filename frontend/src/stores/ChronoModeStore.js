@@ -11,6 +11,10 @@ export default class ChronoModeStore extends GameModeStore {
     this.scoreMultiplier = 2;
   }
 
+  /**
+   * @override
+   * Permet de lancer le jeu avec un timer
+   */
   play () {
     if ( !this.loadGameState() ) {
       this.loadCards();
@@ -18,6 +22,9 @@ export default class ChronoModeStore extends GameModeStore {
     this.startTimer();
   }
 
+  /**
+   * Permet de démarrer le timer pour le mode Chrono
+   */
   startTimer () {
     if ( this.timer ) {
       clearInterval( this.timer );
@@ -33,28 +40,44 @@ export default class ChronoModeStore extends GameModeStore {
     }, 1000 );
   }
 
+  /**
+   * Permet de gérer le timeout lorsque le temps est écoulé
+   */
   handleTimeOut () {
-    if ( this.cards.length > 0 ) {
+    if ( this.cards.length > 0 && !this.isGameFinished && !this.isGameOver() ) {
       const currentCard = this.cards[ 0 ];
-      // Placer automatiquement la carte à une position aléatoire (erreur)
       const randomPosition = Math.floor( Math.random() * ( this.placedCards.length + 1 ) );
       this.dropCard( currentCard, randomPosition );
+    } else {
+      this.stopTimer();
     }
   }
 
+  /**
+   * @override
+   * Permet de déposer une carte à une position donnée
+   * @param {*} card c'est la carte à placé
+   * @param {*} position c'est la position où la carte doit être placée
+   * @returns Retourne le résultat de la méthode parent dropCard
+   */
   dropCard ( card, position ) {
     const result = super.dropCard( card, position );
 
-    // Réinitialiser le timer pour la prochaine carte
-    if ( this.cards.length > 0 && !this.gameFinished && !this.isGameOver() ) {
-      this.timeLeft = 5;
-    } else {
+    if ( this.isGameFinished || this.isGameOver() ) {
       this.stopTimer();
+    } else if ( this.cards.length > 0 ) {
+      this.timeLeft = 5;
     }
 
     return result;
   }
 
+  /**
+   * @override
+   * Permet de gérer une réponse incorrecte avec le nombre de vies de l'utilisateur
+   * @param {*} card c'est la carte qui a été placée
+   * @param {*} result c'est le résultat de la réponse
+   */
   handleIncorrectAnswer ( card, result ) {
     const correctPosition = this.findCorrectPosition( card );
     this.placedCards.splice( correctPosition, 0, card );
@@ -72,6 +95,7 @@ export default class ChronoModeStore extends GameModeStore {
     result.autoPlaced = true;
 
     if ( this.lives <= 0 ) {
+      this.stopTimer();
       this.showNotification( {
         type: 'gameOver',
         title: 'Game Over!',
@@ -82,6 +106,9 @@ export default class ChronoModeStore extends GameModeStore {
     }
   }
 
+  /**
+   * Permet de stopper le timer
+   */
   stopTimer () {
     if ( this.timer ) {
       clearInterval( this.timer );
@@ -89,6 +116,10 @@ export default class ChronoModeStore extends GameModeStore {
     }
   }
 
+  /**
+   * @override
+   * Permet de réinitialiser le jeu en mode "Chrono"
+   */
   resetGame () {
     super.resetGame();
     this.lives = 5;
@@ -97,6 +128,10 @@ export default class ChronoModeStore extends GameModeStore {
     this.stopTimer();
   }
 
+  /**
+   * @override
+   * Permet de terminer le jeu en mode "Chrono"
+   */
   async finishGame () {
     this.stopTimer();
     await super.finishGame();

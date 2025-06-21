@@ -8,6 +8,12 @@ export default class LivesModeStore extends GameModeStore {
     this.scoreMultiplier = 1.5;
   }
 
+  /**
+   * @override
+   * Permet de gérer une réponse incorrecte avec le nombre de vies de l'utilisateur
+   * @param {*} card c'est la carte qui a été placée
+   * @param {*} result c'est le résultat de la réponse
+   */
   handleIncorrectAnswer ( card, result ) {
     const correctPosition = this.findCorrectPosition( card );
     this.placedCards.splice( correctPosition, 0, card );
@@ -35,6 +41,10 @@ export default class LivesModeStore extends GameModeStore {
     }
   }
 
+  /**
+   * @override
+   * Permet de réinitialiser le jeu en mode "Vies"
+   */
   resetGame () {
     super.resetGame();
     this.lives = 3;

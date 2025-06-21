@@ -2,12 +2,18 @@ const TOKEN_KEY = 'jwt_token';
 const LANGUAGE_KEY = 'language';
 const USER_KEY = 'user';
 
-// Méthode pour obtenir le token JWT
+/**
+ * Permet d'obtenir le token JWT stocké dans le localStorage
+ * @returns Retourne le token JWT stocké dans le localStorage
+ */
 function getToken () {
   return localStorage.getItem( TOKEN_KEY );
 }
 
-// Méthode pour obtenir la langue
+/**
+ * PErmet de récupérer la langue stocker dans le localStorage
+ * @returns Retourne la langue stocker dans le localStorage, ou 'fr' par défaut si aucune langue n'est définie
+ */
 function getLanguage () {
   return localStorage.getItem( LANGUAGE_KEY ) || 'fr';
 }

@@ -1,16 +1,13 @@
+import { observer } from "mobx-react-lite";
+import { useEffect, useRef, useState } from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { TouchBackend } from "react-dnd-touch-backend";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router";
-import HUD from "../../components/gameUi/HUD";
-import { useEffect, useRef, useState } from "react";
-import { observer } from "mobx-react-lite";
-import ZoneDraggable from "../../components/gameUi/ZoneDraggable";
-import { DndProvider } from "react-dnd";
-import { TouchBackend } from "react-dnd-touch-backend";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import GameTimeline from "../../components/gameUi/GameTimeline";
-import LivesModeStore from "../../stores/LivesModeStore";
-import ChronoModeStore from "../../stores/ChronoModeStore";
-import GameModeStore from "../../stores/GameModeStore";
+import HUD from "../../components/gameUi/HUD";
+import ZoneDraggable from "../../components/gameUi/ZoneDraggable";
 import { useGameStore, useSwitchGameMode } from "../../stores/useStore";
 
 const GameBoard = observer(() => {
@@ -19,11 +16,12 @@ const GameBoard = observer(() => {
 	const { t } = useTranslation();
 	const mode = searchParams.get("type");
 
-	// const switchGameMode = useSwitchGameMode();
+	const switchGameMode = useSwitchGameMode();
 	const gameStore = useGameStore();
 	const [isCardPlacing, setIsCardPlacing] = useState(false);
 	const [previewPosition, setPreviewPosition] = useState(null);
 	const [showResumeDialog, setShowResumeDialog] = useState(false);
+	const [isHintVisible, setIsHintVisible] = useState(false);
 
 	const [initialized, setInitialized] = useState(false);
 	const currentModeRef = useRef(null);
@@ -38,41 +36,40 @@ const GameBoard = observer(() => {
 		}
 	}, [mode, navigate, gameStore]);
 
-	// useEffect(() => {
-	// 	if (!mode) {
-	// 		navigate("/gamechoice");
-	// 		return;
-	// 	}
+	useEffect(() => {
+		if (!mode) {
+			navigate("/gamechoice");
+			return;
+		}
 
-	// 	if (currentModeRef.current !== mode) {
-	// 		console.log("🔄 Switching to mode:", mode);
-	// 		currentModeRef.current = mode;
-	// 		setInitialized(false);
-	// 		switchGameMode(mode);
-	// 	}
-	// }, [mode, navigate, switchGameMode]);
+		if (currentModeRef.current !== mode) {
+			currentModeRef.current = mode;
+			setInitialized(false);
+			switchGameMode(mode);
+		}
+	}, [mode, navigate, switchGameMode]);
 
-	// useEffect(() => {
-	// 	if (!initialized && currentModeRef.current === mode && !gameStore.loading) {
-	// 		console.log("🎮 Initializing game for mode:", mode);
-	// 		setInitialized(true);
+	useEffect(() => {
+		if (!initialized && currentModeRef.current === mode && !gameStore.loading) {
+			setInitialized(true);
 
-	// 		if (gameStore.hasGameInProgress()) {
-	// 			setShowResumeDialog(true);
-	// 		} else {
-	// 			// Réinitialiser les états locaux
-	// 			setIsCardPlacing(false);
-	// 			setPreviewPosition(null);
-	// 			gameStore.play();
-	// 		}
-	// 	}
-	// }, [initialized, mode, gameStore.loading]);
+			if (gameStore.hasGameInProgress()) {
+				setShowResumeDialog(true);
+			} else {
+				setIsCardPlacing(false);
+				setPreviewPosition(null);
+				gameStore.play();
+			}
+		}
+	}, [initialized, mode, gameStore]);
 
+	// Permet de commencer le jeu à partir d'une ancienne partie
 	const handleResumeGame = () => {
 		gameStore.play();
 		setShowResumeDialog(false);
 	};
 
+	// Permet de commencer le jeu de zéro
 	const handleNewGame = () => {
 		gameStore.resetGame();
 		setIsCardPlacing(false);
@@ -81,14 +78,16 @@ const GameBoard = observer(() => {
 		setShowResumeDialog(false);
 	};
 
+	// Permet de quitter le jeu
 	const handleQuitGame = async () => {
 		await gameStore.quitGame();
-		// Réinitialiser les états
+		// Réinitialiser les états du jeu
 		currentModeRef.current = null;
 		setInitialized(false);
 		navigate("/gamechoice");
 	};
 
+	// Permet de placer la card dans la timeline
 	const handleAddCard = () => {
 		if (!isCardPlacing) {
 			setIsCardPlacing(true);
@@ -100,6 +99,7 @@ const GameBoard = observer(() => {
 		}
 	};
 
+	// Permet d'emmener la carte sur la zone de drop précédente
 	const handlePreviousPosition = () => {
 		if (!isCardPlacing) {
 			setIsCardPlacing(true);
@@ -109,6 +109,7 @@ const GameBoard = observer(() => {
 		}
 	};
 
+	// Permet d'emmener la carte sur la zone de drop suivante
 	const handleNextPosition = () => {
 		if (!isCardPlacing) {
 			setIsCardPlacing(true);
@@ -119,6 +120,30 @@ const GameBoard = observer(() => {
 				setPreviewPosition(previewPosition + 1);
 			}
 		}
+	};
+
+	// Fermet ou ouvrir le popup de l'indice
+	const toggleHint = () => {
+		setIsHintVisible(!isHintVisible);
+		if (!isHintVisible) {
+			document.body.classList.add("no-scroll");
+		} else {
+			document.body.classList.remove("no-scroll");
+		}
+	};
+
+	// Fermer le popup en cliquant sur le fond
+	const handlePopupBackgroundClick = (e) => {
+		if (e.target === e.currentTarget) {
+			setIsHintVisible(false);
+			document.body.classList.remove("no-scroll");
+		}
+	};
+
+	// Fermer le popup avec le bouton fermer
+	const handleCloseHint = () => {
+		setIsHintVisible(false);
+		document.body.classList.remove("no-scroll");
 	};
 
 	const isTouchedDevice = window.matchMedia("(pointer: coarse)").matches;
@@ -133,17 +158,14 @@ const GameBoard = observer(() => {
 			{showResumeDialog && (
 				<div className='resume-dialog'>
 					<div className='resume-dialog-content'>
-						<h3>Partie en cours détectée</h3>
-						<p>
-							Voulez-vous reprendre votre partie en cours ou commencer une
-							nouvelle partie ?
-						</p>
+						<h3>{t("game.resume.title")}</h3>
+						<p>{t("game.resume.description")}</p>
 						<div className='resume-dialog-buttons'>
 							<button className='button-secondary' onClick={handleNewGame}>
-								Nouvelle partie
+								{t("game.resume.newGame")}
 							</button>
 							<button className='button-primary' onClick={handleResumeGame}>
-								Reprendre
+								{t("game.resume.resumeGame")}
 							</button>
 						</div>
 					</div>
@@ -171,44 +193,82 @@ const GameBoard = observer(() => {
 
 					<div className='game-hand'>
 						<div className='game-hand-card'>
-							{gameStore.cards.length > 0 ? (
-								<ZoneDraggable
-									key={gameStore.cards[0].id}
-									index={gameStore.cards[0].id}
-									card={gameStore.cards[0]}
-								/>
+							{gameStore.cards.length > 0 && !gameStore.isGameFinished ? (
+								<>
+									<ZoneDraggable
+										key={gameStore.cards[0].id}
+										index={gameStore.cards[0].id}
+										card={gameStore.cards[0]}
+									/>
+
+									<button className='game-hand-card-hint' onClick={toggleHint}>
+										<p className='game-hand-card-hint-text'>?</p>
+									</button>
+
+									<div
+										className={`hint-popup${isHintVisible ? " visible" : ""}`}
+										onClick={handlePopupBackgroundClick}
+									>
+										<div className='popup-content'>
+											<p>{gameStore.cards[0].hint}</p>
+											<button
+												className='button-secondary'
+												onClick={handleCloseHint}
+											>
+												{t("global.close")}
+											</button>
+										</div>
+									</div>
+								</>
 							) : (
 								<div className='game-finished-message'>
-									<p>{t("game.finished")}</p>
+									<p>
+										{gameStore.isGameOver()
+											? t("game.gameOver")
+											: t("game.finished")}
+									</p>
 								</div>
 							)}
 							{/* Ajouter le bouton d'indice */}
 						</div>
 						<div className='game-hand-buttons'>
-							<button
-								className='button-primary'
-								onClick={handlePreviousPosition}
-								disabled={isCardPlacing && previewPosition === 0}
-							>
-								{t("game.previous")}
-							</button>
-							<button
-								className='button-primary'
-								onClick={handleAddCard}
-								disabled={gameStore.cards.length === 0}
-							>
-								{isCardPlacing ? t("game.validate") : t("game.addCard")}
-							</button>
-							<button
-								className='button-primary'
-								onClick={handleNextPosition}
-								disabled={
-									isCardPlacing &&
-									previewPosition >= gameStore.placedCards.length
-								}
-							>
-								{t("game.next")}
-							</button>
+							{gameStore.isGameFinished ? (
+								<>
+									<button className='button-secondary' onClick={handleQuitGame}>
+										{t("game.leave")}
+									</button>
+									<button className='button-primary' onClick={handleNewGame}>
+										{t("game.playAgain")}
+									</button>
+								</>
+							) : (
+								<>
+									<button
+										className='button-primary'
+										onClick={handlePreviousPosition}
+										disabled={isCardPlacing && previewPosition === 0}
+									>
+										{t("game.previous")}
+									</button>
+									<button
+										className='button-primary'
+										onClick={handleAddCard}
+										disabled={gameStore.cards.length === 0}
+									>
+										{isCardPlacing ? t("game.validate") : t("game.addCard")}
+									</button>
+									<button
+										className='button-primary'
+										onClick={handleNextPosition}
+										disabled={
+											isCardPlacing &&
+											previewPosition >= gameStore.placedCards.length
+										}
+									>
+										{t("game.next")}
+									</button>
+								</>
+							)}
 						</div>
 					</div>
 				</DndProvider>

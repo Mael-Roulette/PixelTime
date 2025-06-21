@@ -159,13 +159,35 @@ class AuthController extends AbstractController
             ], Response::HTTP_UNAUTHORIZED);
         }
 
+        $userScore = $user->getScore() ?? 0;
+        $levelRepository = $this->entityManager->getRepository(\App\Entity\Level::class);
+
+        $availableLevels = $levelRepository->createQueryBuilder('l')
+            ->leftJoin('l.translations', 't')
+            ->addSelect('t')
+            ->where('l.minScore <= :score')
+            ->orderBy('l.minScore', 'ASC')
+            ->setParameter('score', $userScore)
+            ->getQuery()
+            ->getResult();
+
+        $levels = [];
+        foreach ($availableLevels as $level) {
+            $translation = $level->getTranslation('fr');
+            $levels[] = [
+                'id' => $level->getId(),
+                'minScore' => $level->getMinScore(),
+                'image' => $level->getImage(),
+                'name' => $translation ? $translation->getName() : "Niveau {$level->getId()}"
+            ];
+        }
         return new JsonResponse([
             'user' => [
                 'id' => $user->getId(),
                 'email' => $user->getEmail(),
                 'pseudo' => $user->getPseudo(),
                 'score' => $user->getScore(),
-                'level' => $user->getLevels(),
+                'level' => $levels,
                 'money' => $user->getMoney(),
                 'profilePicture' => $user->getProfilePicture(),
                 'roles' => $user->getRoles(),

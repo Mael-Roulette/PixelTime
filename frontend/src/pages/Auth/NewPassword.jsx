@@ -2,8 +2,9 @@ import { useTranslation } from "react-i18next";
 import { NavLink, useSearchParams } from "react-router";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-
 import { FiEye, FiEyeOff } from "react-icons/fi";
+
+const API_URL =  import.meta.env.API_BASE_URL || 'http://localhost:8000/api';
 
 function NewPassword() {
 	const { t } = useTranslation();
@@ -34,7 +35,7 @@ function NewPassword() {
 			return;
 		}
 
-		const res = await fetch(`http://localhost:8000/api/reset-password/${token}`, {
+		const res = await fetch(`${API_URL}/reset-password/${token}`, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ password }),
