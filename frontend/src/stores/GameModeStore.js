@@ -156,7 +156,7 @@ export default class GameModeStore {
         type: 'success',
         title: t( 'gameNotification.success.title' ),
         message: t( 'gameNotification.success.message', { cardName: card.title } ),
-        duration: 3500
+        duration: 4000
       } );
     } else {
       this.handleIncorrectAnswer( card, result );

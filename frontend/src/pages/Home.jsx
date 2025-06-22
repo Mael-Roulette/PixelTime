@@ -78,7 +78,9 @@ export default function Home() {
 				</section>
 
 				<section className='home-explication'>
-					<div className='home-explication-image'></div>
+					<div className='home-explication-image'>
+						<img src="/game_capture.png" alt="Pixeltime" />
+					</div>
 					<div className='home-explication-content'>
 						<h2>{t("home.howItWorks")}</h2>
 						<p

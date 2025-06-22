@@ -169,8 +169,10 @@
 			width: 100%;
 			height: 38rem;
 			background-color: grey;
+			border: 1px solid $white;
 			border-radius: 8px;
 			overflow: hidden;
+			position: relative;
 
 			img {
 				min-width: 100%;
