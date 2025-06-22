@@ -108,7 +108,7 @@ const AddCard = () => {
 						required
 						min={1950}
 						max={currentYear}
-						placeholder='1974'
+						placeholder='1950'
 						disabled={isLoading}
 					/>
 				</div>
