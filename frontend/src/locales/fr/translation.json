@@ -2,7 +2,7 @@
 	"global": {
 		"login": "Connexion",
 		"logout": "Déconnexion",
-		"logoutText": "Êtes vous sur de vouloir vous déconnecter ? Votre progression ne sera pas sauvegarder.",
+		"logoutText": "Êtes-vous sûr de vouloir vous déconnecter ? Votre progression ne sera pas sauvegardée.",
 		"signup": "Inscription",
 		"play": "Jouer",
 		"leaderboard": "Classement",
