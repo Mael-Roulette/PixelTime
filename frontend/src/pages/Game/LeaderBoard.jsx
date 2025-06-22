@@ -11,38 +11,38 @@ const LeaderBoard = observer(() => {
 	const [error, setError] = useState(null);
 	const API_URL = import.meta.env.API_BASE_URL || "http://localhost:8000/api";
 
-	const fetchUsers = async () => {
-		try {
-			setLoading(true);
-			setError(null);
-
-			const response = await fetch(`${API_URL}/users`, {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-
-			if (response.ok) {
-				const data = await response.json();
-				const sortedUsers = data.sort(
-					(a, b) => (b.score || 0) - (a.score || 0)
-				);
-				setUsers(sortedUsers);
-			} else {
-				throw new Error("Erreur lors de la récupération des données");
-			}
-		} catch (error) {
-			console.error("Erreur lors du chargement du classement:", error);
-			setError(error.message);
-		} finally {
-			setLoading(false);
-		}
-	};
-
 	useEffect(() => {
+		const fetchUsers = async () => {
+			try {
+				setLoading(true);
+				setError(null);
+
+				const response = await fetch(`${API_URL}/users`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+
+				if (response.ok) {
+					const data = await response.json();
+					const sortedUsers = data.sort(
+						(a, b) => (b.score || 0) - (a.score || 0)
+					);
+					setUsers(sortedUsers);
+				} else {
+					throw new Error("Erreur lors de la récupération des données");
+				}
+			} catch (error) {
+				console.error("Erreur lors du chargement du classement:", error);
+				setError(error.message);
+			} finally {
+				setLoading(false);
+			}
+		};
+
 		fetchUsers();
-	}, []);
+	}, [API_URL]);
 
 	// Permet d'avoir le bon icon pour le rank
 	const getRankIcon = (rank) => {
@@ -58,36 +58,13 @@ const LeaderBoard = observer(() => {
 		}
 	};
 
-	// Permet de déterminer le niveau basé sur le score
-	const getUserLevel = (score) => {
-		if (score >= 1000) return "Expert";
-		if (score >= 500) return "Avancé";
-		if (score >= 100) return "Intermédiaire";
-		return "Débutant";
-	};
-
-	// Permet de formater le niveau de l'utilisateur
-	const formatUserLevel = (user) => {
-		if (
-			user.level &&
-			typeof user.level === "object" &&
-			Object.keys(user.level).length > 0
-		) {
-			if (user.level.name) {
-				return user.level.name;
-			}
-		}
-
-		return getUserLevel(user.score || 0);
-	};
-
 	// Permet de récupérer les 20 premiers utilisateurs
 	const getTopUsers = () => {
 		return users.slice(0, 20);
 	};
 
 	if (loading) {
-		return <p className="loading">{t("global.loading")}</p>;
+		return <p className='loading'>{t("global.loading")}</p>;
 	}
 
 	return (
@@ -112,7 +89,11 @@ const LeaderBoard = observer(() => {
 										<div className='podium-user'>
 											<h3>{users[1].pseudo}</h3>
 											<p className='score'>{users[1].score || 0} pts</p>
-											<p className='level'>{formatUserLevel(users[1])}</p>
+											<p className='level'>
+												{users[1].level && users[1].level.length > 0
+													? users[1].level[users[1].level.length - 1].name
+													: t("profile.defaultLevel")}
+											</p>
 										</div>
 										<div className='podium-base'>
 											<span className='rank'>🥈</span>
@@ -125,7 +106,11 @@ const LeaderBoard = observer(() => {
 										<div className='podium-user'>
 											<h3>{users[0].pseudo}</h3>
 											<p className='score'>{users[0].score || 0} pts</p>
-											<p className='level'>{formatUserLevel(users[0])}</p>
+											<p className='level'>
+												{users[0].level && users[0].level.length > 0
+													? users[0].level[users[0].level.length - 1].name
+													: t("profile.defaultLevel")}
+											</p>
 										</div>
 										<div className='podium-base'>
 											<span className='rank'>🥇</span>
@@ -138,7 +123,11 @@ const LeaderBoard = observer(() => {
 										<div className='podium-user'>
 											<h3>{users[2].pseudo}</h3>
 											<p className='score'>{users[2].score || 0} pts</p>
-											<p className='level'>{formatUserLevel(users[2])}</p>
+											<p className='level'>
+												{users[2].level && users[2].level.length > 0
+													? users[2].level[users[2].level.length - 1].name
+													: t("profile.defaultLevel")}
+											</p>
 										</div>
 										<div className='podium-base'>
 											<span className='rank'>🥉</span>
@@ -174,7 +163,13 @@ const LeaderBoard = observer(() => {
 												<td className='score-cell'>
 													<strong>{user.score || 0}</strong> pts
 												</td>
-												<td className='level-cell'><p>{formatUserLevel(user)}</p></td>
+												<td className='level-cell'>
+													<p>
+														{user.level && user.level.length > 0
+															? user.level[user.level.length - 1].name
+															: t("profile.defaultLevel")}
+													</p>
+												</td>
 											</tr>
 										))}
 									</tbody>

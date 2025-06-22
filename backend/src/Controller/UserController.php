@@ -21,21 +21,45 @@ class UserController extends AbstractController
         private EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $passwordHasher,
         private ValidatorInterface $validator
-    ) {}
+    ) {
+    }
 
     #[Route('', name: 'user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): JsonResponse
     {
         $users = $userRepository->findAll();
+        $levelRepository = $this->entityManager->getRepository(\App\Entity\Level::class);
 
-        $userData = array_map(function($user) {
+        $userData = array_map(function ($user) use ($levelRepository) {
+            $userScore = $user->getScore() ?? 0;
+
+            $availableLevels = $levelRepository->createQueryBuilder('l')
+                ->leftJoin('l.translations', 't')
+                ->addSelect('t')
+                ->where('l.minScore <= :score')
+                ->orderBy('l.minScore', 'ASC')
+                ->setParameter('score', $userScore)
+                ->getQuery()
+                ->getResult();
+
+            $levels = [];
+            foreach ($availableLevels as $level) {
+                $translation = $level->getTranslation('fr');
+                $levels[] = [
+                    'id' => $level->getId(),
+                    'minScore' => $level->getMinScore(),
+                    'image' => $level->getImage(),
+                    'name' => $translation ? $translation->getName() : "Niveau {$level->getId()}"
+                ];
+            }
+
             return [
                 'id' => $user->getId(),
                 'pseudo' => $user->getPseudo(),
                 'email' => $user->getEmail(),
                 'role' => $user->getRoles(),
                 'score' => $user->getScore(),
-                'level' => $user->getLevels(),
+                'level' => $levels,
                 'money' => $user->getMoney(),
                 'profilePicture' => $user->getProfilePicture(),
                 'createdAt' => $user->getCreatedAt()?->format('Y-m-d H:i:s')

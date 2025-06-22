@@ -87,7 +87,7 @@ function BottomNavBar() {
 			label: t("global.play"),
 			icon: "Play",
 			isCenter: true,
-			to: "/play",
+			to: "/gameboard?type=classic",
 		},
 		{
 			id: "leaderboard",
