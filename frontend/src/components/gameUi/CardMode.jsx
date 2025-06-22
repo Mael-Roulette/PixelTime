@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router";
+import { useTranslation } from "react-i18next";
 
 const CardMode = ({ title, description, type, image }) => {
 	const [isReadingDescription, setIsReadingDescription] = useState(false);
@@ -7,6 +8,8 @@ const CardMode = ({ title, description, type, image }) => {
 	const handleDescriptionClick = () => {
 		setIsReadingDescription(!isReadingDescription);
 	};
+
+	const { t } = useTranslation();
 
 	return (
 		<div className='card-mode' style={{ backgroundImage: `url(${image})` }}>
@@ -25,7 +28,7 @@ const CardMode = ({ title, description, type, image }) => {
 				to={`/gameboard?type=${type}`}
 				className='card-mode-link button-primary'
 			>
-				Jouer
+				{t("global.play")}
 			</NavLink>
 
 			<div className={`card-mode-description ${isReadingDescription ? "active" : ""}`}>
