@@ -52,17 +52,19 @@ export default function Catalog() {
 				</p>
 
 				<ul className="catalog-list">
-					{cards.map((card) => {
-						return (
-							<li key={card.id} className='catalog-list-item'>
-								<div className='flip-card'>
-									<div className='flip-card-inner'>
-										<Card card={card} isCatalog={true} />
+					{cards
+						.sort((a, b) => a.year - b.year)
+						.map((card) => {
+							return (
+								<li key={card.id} className='catalog-list-item'>
+									<div className='flip-card'>
+										<div className='flip-card-inner'>
+											<Card card={card} isCatalog={true} />
+										</div>
 									</div>
-								</div>
-							</li>
-						);
-					})}
+								</li>
+							);
+						})}
 				</ul>
 			</main>
 
