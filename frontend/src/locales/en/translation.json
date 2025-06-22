@@ -58,7 +58,8 @@
 			"passwordTooShort": "Password must be at least 6 characters long",
 			"passwordFormat": "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
 			"confirmPasswordRequired": "Confirm password is required",
-			"registrationFailed": "Registration failed, please try again."
+			"registrationFailed": "Registration failed, please try again.",
+			"passwordMismatch": "Passwords do not match"
 		}
 	},
 
