@@ -122,7 +122,7 @@ const Profile = () => {
 				<div className='profile-link'>
 					{user.roles && user.roles.includes("ROLE_ADMIN") && (
 						<NavLink to='/admin' className='button-tertiary'>
-							Accèder à l'espace d'administration
+							Accéder à l'espace d'administration
 						</NavLink>
 					)}
 
