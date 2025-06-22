@@ -22,6 +22,7 @@ Le but ? Classer des événements vidéoludiques (sorties de jeux, inventions ma
 
 - 👥 Suppression et gestion des utilisateurs
 - 🃏 Visualisation et ajout de cartes depuis une interface dédiée
+- 📈 Visualisation des niveaux et du nombre de joueurs dans chaque niveau
 
 ---
 
@@ -49,12 +50,17 @@ cd pixeltime
 ```bash
 cd backend
 composer install
+mkdir config/jwt
+php bin/console lexik:jwt:generate-keypair
 ```
 
 Crée un fichier `.env.local` avec ta configuration :
 
 ```dotenv
 DATABASE_URL="mysql://user:password@127.0.0.1:3306/pixeltime"
+JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
+JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
+JWT_PASSPHRASE=pixeltime
 ```
 
 Puis :
